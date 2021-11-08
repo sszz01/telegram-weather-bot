@@ -12,8 +12,8 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=["start"])
 async def start_command(message: types.Message):
-    await message.reply("Hey, I'm Weather Bot!\nSo, let's get started. Just type any city or place name, "
-                        "to receive its weather information")
+    await message.reply("Hey, I'm Weather Bot! So, let's get started \U0001F603"
+                        "\nJust type any city or place to receive its weather information!")
 
 
 @dp.message_handler()
@@ -34,7 +34,8 @@ async def get_weather(message: types.Message):
 
     try:
         r = requests.get(
-        f"http://api.openweathermap.org/data/2.5/weather?q={message.text}, {message.text}&appid={ow_token}&units=metric"
+            f"http://api.openweathermap.org/data/2.5/weather?q={message.text}, {message.text}&appid={ow_token}"
+            f"&units=metric"
         )
         data = r.json()
         pprint(data)
