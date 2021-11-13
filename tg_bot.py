@@ -39,7 +39,7 @@ async def get_weather(message: types.Message):
 
 
 async def get_weather_eng(message: types.Message):
-    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state
     json_to_smile = {"Clear": "Clear sky \U00002600",
                      "Rain": "Rainy \U00002614",
                      "Clouds": "Cloudy \U00002601",
@@ -60,6 +60,10 @@ async def get_weather_eng(message: types.Message):
         )
         data = r.json()
         pprint(data)
+        r1 = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={message.text},{message.text}"
+                          f"&limit=3&appid={ow_token}")
+        data1 = r1.json()
+        # pprint(data1)
         city = data["name"]
         current_w = round(data["main"]["temp"])
         wind_sp = round(data["wind"]["speed"])
@@ -78,6 +82,12 @@ async def get_weather_eng(message: types.Message):
         loc_time = data["dt"]
         lat = data["coord"]["lat"]
         lon = data["coord"]["lon"]
+
+        r2 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
+                          f"hourly,daily,alerts&units=imperial&appid={ow_token}")
+        data2 = r2.json()
+        # pprint(data2)
+        dew_p = round(data2["current"]["dew_point"])
 
         vis = round(vis / 1000)
 
@@ -810,9 +820,6 @@ async def get_weather_eng(message: types.Message):
         elif country == "UG":
             full_country_name = "Uganda"
             country_flag = "\U0001F1FA\U0001F1EC"
-        elif country == "US":
-            full_country_name = "United States"
-            country_flag = "\U0001F1FA\U0001F1F8"
         elif country == "UY":
             full_country_name = "Uruguay"
             country_flag = "\U0001F1FA\U0001F1FE"
@@ -877,7 +884,7 @@ async def get_weather_eng(message: types.Message):
         if weather_description in json_to_smile:
             wd = json_to_smile[weather_description]
         else:
-            wd = "I couldn't recognize the weather condition in this place. Maybe you can?"
+            wd = "I couldn't recognize the weather condition in this place. Maybe you can? \U0001F914"
 
         w_dir = ["North", "North North East", "North East", "East North East", "East", "East South East", "South East",
                  "South South East",
@@ -915,19 +922,44 @@ async def get_weather_eng(message: types.Message):
         tzsuns = ts2.strftime("%H:%M")
         tz_loc_time_1 = tl.strftime("%d.%m.%Y")
 
-        await message.reply(
-            f"\U0001F4C5 Local time: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-            f"\U0001F4CD Location: {lat}° N,  {lon}° W\n"
-            f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
-            f"Temperature: {current_w}°F,  {wd}\n"
-            f"\U0001F321Max Temperature for Today: {max_temp}°F\n\U0001F321Min Temperature for Today: {min_temp}°F\n"
-            f"\U0001F321Feels like: {fls_like}°F\n"
-            f"\U0001F4A6Humidity: {humidity}%\n\U0001F4A8Wind speed: {wind_sp} mi/h\n"
-            f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
-            f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
-            f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
-            f"\nThanks for using Weather Bot!\U0001F601"
-        )
+        if country == "US":
+            full_country_name = "USA"
+            country_flag = "\U0001F1FA\U0001F1F8"
+            us_state = data1[0]["state"]
+            await message.reply(
+                f"\U0001F4C5 Local time: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Location: {lat}° N,  {lon}° W\n"
+                f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
+                f"\n\n\U0001F321"
+                f"Temperature: {current_w}°F,  {wd}\n"
+                f"\U0001F321Max Temperature for Today: {max_temp}°F\n\U0001F321Min Temperature for Today: {min_temp}"
+                f"°F\n"
+                f"\U0001F321Feels like: {fls_like}°F\n"
+                f"\U0001F33FDew point: {dew_p}°F\n"
+                f"\U0001F4A6Humidity: {humidity}%\n"
+                f"\U0001F4A8Wind speed: {wind_sp} mi/h\n"
+                f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
+                f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
+                f"\nThanks for using Weather Bot!\U0001F601"
+            )
+        else:
+            await message.reply(
+                f"\U0001F4C5 Local time: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Location: {lat}° N,  {lon}° W\n"
+                f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
+                f"Temperature: {current_w}°F,  {wd}\n"
+                f"\U0001F321Max Temperature for Today: {max_temp}°F\n\U0001F321Min Temperature for Today: {min_temp}"
+                f"°F\n"
+                f"\U0001F321Feels like: {fls_like}°F\n"
+                f"\U0001F33FDew point: {dew_p}°F\n"
+                f"\U0001F4A6Humidity: {humidity}%\n"
+                f"\U0001F4A8Wind speed: {wind_sp} mi/h\n"
+                f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
+                f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
+                f"\nThanks for using Weather Bot!\U0001F601"
+            )
 
     except Exception as ex:
         await message.reply("City or place are not found. Could you check your input once again please? \U0001F643")
@@ -936,7 +968,7 @@ async def get_weather_eng(message: types.Message):
 
 @dp.message_handler()
 async def get_weather_rus(message: types.Message):
-    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state1, us_state_rus
     json_to_smile = {"Clear": "Ясно \U00002600",
                      "Rain": "Дождь \U00002614",
                      "Clouds": "Пасмурно \U00002601",
@@ -957,6 +989,12 @@ async def get_weather_rus(message: types.Message):
         )
         data = r.json()
         pprint(data)
+        r2 = requests.get(
+            f"http://api.openweathermap.org/geo/1.0/direct?q={message.text},{message.text}"
+            f"&limit=3&appid={ow_token}"
+        )
+        data2 = r2.json()
+        # pprint(data2)
         city = data["name"]
         current_w = round(data["main"]["temp"])
         wind_sp = round(data["wind"]["speed"])
@@ -975,6 +1013,12 @@ async def get_weather_rus(message: types.Message):
         loc_time = data["dt"]
         lat = data["coord"]["lat"]
         lon = data["coord"]["lon"]
+
+        r1 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
+                          f"hourly,daily,alerts&units=metric&appid={ow_token}")
+        data1 = r1.json()
+        # pprint(data2)
+        dew_p = round(data1["current"]["dew_point"])
 
         vis = round(vis / 1000)
 
@@ -1707,9 +1751,6 @@ async def get_weather_rus(message: types.Message):
         elif country == "UG":
             full_country_name = "Уганда"
             country_flag = "\U0001F1FA\U0001F1EC"
-        elif country == "US":
-            full_country_name = "США"
-            country_flag = "\U0001F1FA\U0001F1F8"
         elif country == "UY":
             full_country_name = "Уругвай"
             country_flag = "\U0001F1FA\U0001F1FE"
@@ -1774,7 +1815,7 @@ async def get_weather_rus(message: types.Message):
         if weather_description in json_to_smile:
             wd = json_to_smile[weather_description]
         else:
-            wd = "У меня не получилось узнать погодные условия в этом месте. Может вы можете?"
+            wd = "У меня не получилось узнать погодные условия в этом месте. Может у вас получится? \U0001F914"
 
         w_dir = ["Северный", "Северо-Северо-Восточный", "Северо-Западный", "Восточно-Северо-Восточный", "Восточный",
                  "Восточно-Юго-Восточный", "Юго-Восточный", "Юго-Юго-Восточный",
@@ -1813,19 +1854,147 @@ async def get_weather_rus(message: types.Message):
         tzsuns = ts2.strftime("%H:%M")
         tz_loc_time_1 = tl.strftime("%d.%m.%Y")
 
-        await message.reply(
-            f"\U0001F4C5 Местное время: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-            f"\U0001F4CD Локация: {lat}° с. ш.,  {lon}° в. д.\n"
-            f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
-            f"Температура: {current_w}°C,  {wd}\n"
-            f"\U0001F321Макс.температура на сегодня: {max_temp}°C\n\U0001F321Мин.температура на сегодня: {min_temp}°C\n"
-            f"\U0001F321Ощущается как: {fls_like}°C\n"
-            f"\U0001F4A6Влажность: {humidity}%\n\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
-            f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
-            f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
-            f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
-            f"\nСпасибо, что используете Weather Bot!\U0001F601"
-        )
+        if country == "US":
+            full_country_name = "США"
+            country_flag = "\U0001F1FA\U0001F1F8"
+            us_state1 = data2[0]["state"]
+            if us_state1 == "AL":
+                us_state_rus = "Алабама"
+            elif us_state1 == "AK":
+                us_state_rus = "Аляска"
+            elif us_state1 == "AZ":
+                us_state_rus = "Аризона"
+            elif us_state1 == "AR":
+                us_state_rus = "Арканзас"
+            elif us_state1 == "CA":
+                us_state_rus = "Калифорния"
+            elif us_state1 == "CO":
+                us_state_rus = "Колорадо"
+            elif us_state1 == "CT":
+                us_state_rus = "Коннектикут"
+            elif us_state1 == "DE":
+                us_state_rus = "Дэлавер"
+            elif us_state1 == "DC":
+                us_state_rus = ""
+            elif us_state1 == "FL":
+                us_state_rus = "Флорида"
+            elif us_state1 == "GA":
+                us_state_rus = "Джорджия"
+            elif us_state1 == "HI":
+                us_state_rus = "Гавайи"
+            elif us_state1 == "ID":
+                us_state_rus = "Айдахо"
+            elif us_state1 == "IL":
+                us_state_rus = "Иллинойс"
+            elif us_state1 == "IN":
+                us_state_rus = "Индиана"
+            elif us_state1 == "IA":
+                us_state_rus = "Айова"
+            elif us_state1 == "KS":
+                us_state_rus = "Канзас"
+            elif us_state1 == "KY":
+                us_state_rus = "Кентукки"
+            elif us_state1 == "LA":
+                us_state_rus = "Луизиана"
+            elif us_state1 == "ME":
+                us_state_rus = "Мэн"
+            elif us_state1 == "MD":
+                us_state_rus = "Мэрилэнд"
+            elif us_state1 == "MA":
+                us_state_rus = "Массачусетс"
+            elif us_state1 == "MI":
+                us_state_rus = "Мичиган"
+            elif us_state1 == "MN":
+                us_state_rus = "Миннесота"
+            elif us_state1 == "MS":
+                us_state_rus = "Миссисипи"
+            elif us_state1 == "MO":
+                us_state_rus = "Миссури"
+            elif us_state1 == "MT":
+                us_state_rus = "Монтана"
+            elif us_state1 == "NE":
+                us_state_rus = "Небраска"
+            elif us_state1 == "NV":
+                us_state_rus = "Невада"
+            elif us_state1 == "NH":
+                us_state_rus = "Нью-Гэмпшир"
+            elif us_state1 == "NJ":
+                us_state_rus = "Нью-Джерси"
+            elif us_state1 == "NM":
+                us_state_rus = "Нью-Мексико"
+            elif us_state1 == "NY":
+                us_state_rus = "Нью-Йорк"
+            elif us_state1 == "NC":
+                us_state_rus = "Северная Каролина"
+            elif us_state1 == "ND":
+                us_state_rus = "Северная Дакота"
+            elif us_state1 == "OH":
+                us_state_rus = "Огайо"
+            elif us_state1 == "OK":
+                us_state_rus = "Оклахома"
+            elif us_state1 == "OR":
+                us_state_rus = "Орегон"
+            elif us_state1 == "PA":
+                us_state_rus = "Пенсильвания"
+            elif us_state1 == "RI":
+                us_state_rus = "Род-Айленд"
+            elif us_state1 == "SC":
+                us_state_rus = "Южная Каролина"
+            elif us_state1 == "SD":
+                us_state_rus = "Южная Дакота"
+            elif us_state1 == "TN":
+                us_state_rus = "Теннесси"
+            elif us_state1 == "TX":
+                us_state_rus = "Техас"
+            elif us_state1 == "UT":
+                us_state_rus = "Юта"
+            elif us_state1 == "VT":
+                us_state_rus = "Вермонт"
+            elif us_state1 == "VA":
+                us_state_rus = "Виргиния"
+            elif us_state1 == "WA":
+                us_state_rus = "Вашингтон"
+            elif us_state1 == "WV":
+                us_state_rus = "Южная Виргиния"
+            elif us_state1 == "WI":
+                us_state_rus = "Висконсин"
+            elif us_state1 == "WY":
+                us_state_rus = "Вайоминг"
+            elif us_state == "DC":
+                us_state_rus = "D.C"
+            await message.reply(
+                f"\U0001F4C5 Местное время: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Локация: {lat}° с. ш.,  {lon}° в. д.\n"
+                f"\nНа данный момент, погода в {city}, {us_state_rus}, {full_country_name}{country_flag}:\n\n\U0001F321"
+                f"Температура: {current_w}°C,  {wd}\n"
+                f"\U0001F321Макс.температура за сегодня: {max_temp}°C\n\U0001F321"
+                f"Мин.температура за сегодня: {min_temp}°C\n"
+                f"\U0001F321Ощущается как: {fls_like}°C\n"
+                f"\U0001F33FТочка росы: {dew_p}°С\n"
+                f"\U0001F4A6Влажность: {humidity}%\n\U0001F33F"
+                f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
+                f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
+                f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
+                f"\nСпасибо, что используете Weather Bot!\U0001F601"
+            )
+        else:
+            await message.reply(
+                f"\U0001F4C5 Местное время: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Локация: {lat}° с. ш.,  {lon}° в. д.\n"
+                f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
+                f"Температура: {current_w}°C,  {wd}\n"
+                f"\U0001F321Макс.температура за сегодня: {max_temp}°C\n\U0001F321"
+                f"Мин.температура за сегодня: {min_temp}°C\n"
+                f"\U0001F321Ощущается как: {fls_like}°C\n"
+                f"\U0001F33FТочка росы: {dew_p}°С\n"
+                f"\U0001F4A6Влажность: {humidity}%\n"
+                f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
+                f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
+                f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
+                f"\nСпасибо, что используете Weather Bot!\U0001F601"
+            )
 
     except Exception as ex:
         await message.reply(
@@ -1834,7 +2003,7 @@ async def get_weather_rus(message: types.Message):
 
 
 @dp.callback_query_handler(text="eng")
-async def setLangEng(call: CallbackQuery):
+async def setlangeng(call: CallbackQuery):
     global lang
     lang = "eng"
     await bot.delete_message(call.from_user.id, call.message.message_id)
@@ -1844,7 +2013,7 @@ async def setLangEng(call: CallbackQuery):
 
 
 @dp.callback_query_handler(text="rus")
-async def setLangRus(call: CallbackQuery):
+async def setlangrus(call: CallbackQuery):
     global lang
     lang = "rus"
     await bot.delete_message(call.from_user.id, call.message.message_id)
