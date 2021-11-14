@@ -956,7 +956,7 @@ async def get_weather_eng(message: types.Message):
         else:
             await message.reply(
                 f"\U0001F4C5 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                f"\U0001F4CD Location: \n{lat}° N,  {lon}° W\n"
+                f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
                 f"Temperature: {current_w}°F,  {wd}\n"
                 f"\U0001F4C8Max Temperature for Today: {max_temp}°F\n\U0001F4C9Min Temperature for Today: {min_temp}"
