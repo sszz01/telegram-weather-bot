@@ -937,12 +937,12 @@ async def get_weather_eng(message: types.Message):
             country_flag = "\U0001F1FA\U0001F1F8"
             us_state = data1[0]["state"]
             await message.reply(
-                f"\U0001F4C5 Local time: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                f"\U0001F4CD Location: {lat}° N,  {lon}° W\n"
+                f"\U0001F4C5 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
                 f"\n\n\U0001F321"
                 f"Temperature: {current_w}°F,  {wd}\n"
-                f"\U0001F321Max Temperature for Today: {max_temp}°F\n\U0001F321Min Temperature for Today: {min_temp}"
+                f"\U0001F4C8Max Temperature for Today: {max_temp}°F\n\U0001F4C9Min Temperature for Today: {min_temp}"
                 f"°F\n"
                 f"\U0001F321Feels like: {fls_like}°F\n"
                 f"\U0001F33FDew point: {dew_p}°F\n"
@@ -955,11 +955,11 @@ async def get_weather_eng(message: types.Message):
             )
         else:
             await message.reply(
-                f"\U0001F4C5 Local time: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                f"\U0001F4CD Location: {lat}° N,  {lon}° W\n"
+                f"\U0001F4C5 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Location: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
                 f"Temperature: {current_w}°F,  {wd}\n"
-                f"\U0001F321Max Temperature for Today: {max_temp}°F\n\U0001F321Min Temperature for Today: {min_temp}"
+                f"\U0001F4C8Max Temperature for Today: {max_temp}°F\n\U0001F4C9Min Temperature for Today: {min_temp}"
                 f"°F\n"
                 f"\U0001F321Feels like: {fls_like}°F\n"
                 f"\U0001F33FDew point: {dew_p}°F\n"
@@ -1971,15 +1971,15 @@ async def get_weather_rus(message: types.Message):
             elif us_state1 == "WY":
                 us_state_rus = "Вайоминг"
             await message.reply(
-                f"\U0001F4C5 Местное время: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                f"\U0001F4CD Локация: {lat}° с. ш.,  {lon}° в. д.\n"
+                f"\U0001F4C5 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
                 f"\nНа данный момент, погода в {city}, {us_state_rus}, {full_country_name}{country_flag}:\n\n\U0001F321"
                 f"Температура: {current_w}°C,  {wd}\n"
-                f"\U0001F321Макс.температура за сегодня: {max_temp}°C\n\U0001F321"
-                f"Мин.температура за сегодня: {min_temp}°C\n"
+                f"\U0001F4C8Макс. температура за сегодня: {max_temp}°C\n\U0001F4C9"
+                f"Мин. температура за сегодня: {min_temp}°C\n"
                 f"\U0001F321Ощущается как: {fls_like}°C\n"
                 f"\U0001F33FТочка росы: {dew_p}°С\n"
-                f"\U0001F4A6Влажность: {humidity}%\n\U0001F33F"
+                f"\U0001F4A6Влажность: {humidity}%\n"
                 f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
@@ -1988,12 +1988,12 @@ async def get_weather_rus(message: types.Message):
             )
         else:
             await message.reply(
-                f"\U0001F4C5 Местное время: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                f"\U0001F4CD Локация: {lat}° с. ш.,  {lon}° в. д.\n"
+                f"\U0001F4C5 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
                 f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
                 f"Температура: {current_w}°C,  {wd}\n"
-                f"\U0001F321Макс.температура за сегодня: {max_temp}°C\n\U0001F321"
-                f"Мин.температура за сегодня: {min_temp}°C\n"
+                f"\U0001F4C8Макс. температура за сегодня: {max_temp}°C\n\U0001F4C9"
+                f"Мин. температура за сегодня: {min_temp}°C\n"
                 f"\U0001F321Ощущается как: {fls_like}°C\n"
                 f"\U0001F33FТочка росы: {dew_p}°С\n"
                 f"\U0001F4A6Влажность: {humidity}%\n"
