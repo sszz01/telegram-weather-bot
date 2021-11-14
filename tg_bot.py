@@ -10,6 +10,7 @@ from pprint import pprint
 bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
 lang = ""
+i = 0
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -23,8 +24,17 @@ lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
 
 @dp.message_handler(commands=["start"])
 async def start_command(message: types.Message):
-    await message.reply("Hey, I'm Weather Bot! So, let's get started \U0001F603"
-                        "\nChoose the most suitable to you language first: ", reply_markup=lang_buttons)
+    global i
+    i += 1
+    if i == 1:
+        await message.reply("Hey, I'm Weather Bot! So, let's get started \U0001F603"
+                            "\nChoose the most suitable to you language first:", reply_markup=lang_buttons)
+    elif lang == "eng":
+        await message.reply("Welcome Back! \U0001F609\nChoose a new bot language:", reply_markup=lang_buttons)
+    elif lang == "rus":
+        await message.reply("Приветствую! \U0001F609\nВыберите новый язык бота:", reply_markup=lang_buttons)
+    else:
+        print("start error occurred")
 
 
 @dp.message_handler()
@@ -1875,7 +1885,7 @@ async def get_weather_rus(message: types.Message):
             elif us_state1 == "DE":
                 us_state_rus = "Дэлавер"
             elif us_state1 == "DC":
-                us_state_rus = ""
+                us_state_rus = "округ Колумбия"
             elif us_state1 == "FL":
                 us_state_rus = "Флорида"
             elif us_state1 == "GA":
@@ -1960,8 +1970,6 @@ async def get_weather_rus(message: types.Message):
                 us_state_rus = "Висконсин"
             elif us_state1 == "WY":
                 us_state_rus = "Вайоминг"
-            elif us_state == "DC":
-                us_state_rus = "D.C"
             await message.reply(
                 f"\U0001F4C5 Местное время: {tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
                 f"\U0001F4CD Локация: {lat}° с. ш.,  {lon}° в. д.\n"
