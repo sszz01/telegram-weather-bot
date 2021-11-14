@@ -2014,7 +2014,9 @@ async def get_weather_rus(message: types.Message):
 async def setlangeng(call: CallbackQuery):
     global lang
     lang = "eng"
+    sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
     await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_sticker(call.from_user.id, sti)
     await bot.send_message(call.from_user.id,
                            "Done!\nYour chosen language has been set. \U0001F603\n"
                            "Now just type any city or place name to receive its weather information! \U0001F5FA")
@@ -2024,7 +2026,9 @@ async def setlangeng(call: CallbackQuery):
 async def setlangrus(call: CallbackQuery):
     global lang
     lang = "rus"
+    sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
     await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_sticker(call.from_user.id, sti)
     await bot.send_message(call.from_user.id,
                            "Готово!\nВыбранный вами язык установлен! \U0001F603\n"
                            "Теперь просто введите название любого города или места, чтобы получить информацию о "
