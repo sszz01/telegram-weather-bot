@@ -1,5 +1,6 @@
 import requests
 import datetime
+import re
 from config import bot_token, ow_token
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
@@ -34,15 +35,28 @@ async def start_command(message: types.Message):
     elif lang == "rus":
         await message.reply("Приветствую! \U0001F609\nВыберите новый язык бота:", reply_markup=lang_buttons)
     else:
-        print("start error occurred")
+        await message.reply("You haven't chosen a bot language yet. Please, choose your desired language above "
+                            "to make your bot work properly \U0001F642")
 
 
 @dp.message_handler()
 async def get_weather(message: types.Message):
     if lang == "eng":
-        await get_weather_eng(message)
+        eng = message.text
+        reg = re.compile(r'[a-zA-Z]')
+        if reg.match(eng):
+            await get_weather_eng(message)
+        else:
+            await message.reply("Your input does not match the language you selected. "
+                                "Could you check your input once again please? \U0001F643")
     elif lang == "rus":
-        await get_weather_rus(message)
+        eng = message.text
+        reg = re.compile(r'[а-яА-Я]')
+        if reg.match(eng):
+            await get_weather_rus(message)
+        else:
+            await message.reply("Ваш ввод не соответствует выбранному вами языку. "
+                                "Не могли бы вы проверить свой ввод еще раз? \U0001F643")
     else:
         await message.reply("You haven't chosen a bot language yet. Please, type /start\n"
                             "and choose your desired language to make your bot work properly \U0001F642")
