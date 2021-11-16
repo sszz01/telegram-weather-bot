@@ -49,8 +49,9 @@ async def get_weather(message: types.Message):
 
 
 async def get_weather_eng(message: types.Message):
-    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state
-    json_to_smile = {"Clear": "Clear sky \U00002600",
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state, ap_text
+    json_to_smile = {
+                     "Clear": "Clear sky \U00002600",
                      "Rain": "Rainy \U00002614",
                      "Clouds": "Cloudy \U00002601",
                      "Drizzle": "Drizzle \U0001F326",
@@ -73,7 +74,7 @@ async def get_weather_eng(message: types.Message):
         r1 = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={message.text},{message.text}"
                           f"&limit=3&appid={ow_token}")
         data1 = r1.json()
-        # pprint(data1)
+        pprint(data1)
         city = data["name"]
         current_w = round(data["main"]["temp"])
         wind_sp = round(data["wind"]["speed"])
@@ -98,6 +99,10 @@ async def get_weather_eng(message: types.Message):
         data2 = r2.json()
         # pprint(data2)
         dew_p = round(data2["current"]["dew_point"])
+        r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
+        data3 = r3.json()
+        # pprint(data3)
+        ap_lvl = data3["list"][0]["main"]["aqi"]
 
         vis = round(vis / 1000)
 
@@ -922,10 +927,22 @@ async def get_weather_eng(message: types.Message):
         ts1 = datetime.datetime.fromtimestamp(tzsunr)
         ts2 = datetime.datetime.fromtimestamp(tzsuns)
 
-        if tl.hour >= ts1.hour and tl.hour < ts2.hour:
+        if ts1.hour <= tl.hour < ts2.hour:
             day_emoji = "\U00002600"
         else:
             day_emoji = "\U0001F319"
+
+        match ap_lvl:
+            case 1:
+                ap_text = "Good"
+            case 2:
+                ap_text = "Fair"
+            case 3:
+                ap_text = "Moderate"
+            case 4:
+                ap_text = "Poor"
+            case 5:
+                ap_text = "Very Poor"
 
         tz_loc_time = tl.strftime("%H:%M")
         tzsunr = ts1.strftime("%H:%M")
@@ -950,6 +967,7 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F4A8Wind speed: {wind_sp} mi/h\n"
                 f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
                 f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
                 f"\nThanks for using Weather Bot!\U0001F601"
             )
@@ -967,6 +985,7 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F4A8Wind speed: {wind_sp} mi/h\n"
                 f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
                 f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
                 f"\nThanks for using Weather Bot!\U0001F601"
             )
@@ -978,8 +997,9 @@ async def get_weather_eng(message: types.Message):
 
 @dp.message_handler()
 async def get_weather_rus(message: types.Message):
-    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state1, us_state_rus
-    json_to_smile = {"Clear": "Ясно \U00002600",
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state1, us_state_rus, ap_text1
+    json_to_smile = {
+                     "Clear": "Ясно \U00002600",
                      "Rain": "Дождь \U00002614",
                      "Clouds": "Пасмурно \U00002601",
                      "Drizzle": "Морось \U0001F326",
@@ -999,11 +1019,11 @@ async def get_weather_rus(message: types.Message):
         )
         data = r.json()
         pprint(data)
-        r2 = requests.get(
+        r1 = requests.get(
             f"http://api.openweathermap.org/geo/1.0/direct?q={message.text},{message.text}"
             f"&limit=3&appid={ow_token}"
         )
-        data2 = r2.json()
+        data2 = r1.json()
         # pprint(data2)
         city = data["name"]
         current_w = round(data["main"]["temp"])
@@ -1024,11 +1044,15 @@ async def get_weather_rus(message: types.Message):
         lat = data["coord"]["lat"]
         lon = data["coord"]["lon"]
 
-        r1 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
+        r2 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
                           f"hourly,daily,alerts&units=metric&appid={ow_token}")
-        data1 = r1.json()
-        # pprint(data2)
+        data1 = r2.json()
+        # pprint(data1)
         dew_p = round(data1["current"]["dew_point"])
+        r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
+        data3 = r3.json()
+        # pprint(data3)
+        ap_lvl = data3["list"][0]["main"]["aqi"]
 
         vis = round(vis / 1000)
 
@@ -1854,7 +1878,7 @@ async def get_weather_rus(message: types.Message):
         ts1 = datetime.datetime.fromtimestamp(tzsunr)
         ts2 = datetime.datetime.fromtimestamp(tzsuns)
 
-        if tl.hour >= ts1.hour and tl.hour < ts2.hour:
+        if ts1.hour <= tl.hour < ts2.hour:
             day_emoji = "\U00002600"
         else:
             day_emoji = "\U0001F319"
@@ -1863,6 +1887,18 @@ async def get_weather_rus(message: types.Message):
         tzsunr = ts1.strftime("%H:%M")
         tzsuns = ts2.strftime("%H:%M")
         tz_loc_time_1 = tl.strftime("%d.%m.%Y")
+
+        match ap_lvl:
+            case 1:
+                ap_text1 = "Хороший"
+            case 2:
+                ap_text1 = "Удовлетворительный"
+            case 3:
+                ap_text1 = "Умеренный"
+            case 4:
+                ap_text1 = "Загрязненный"
+            case 5:
+                ap_text1 = "Очень загрязненный"
 
         if country == "US":
             full_country_name = "США"
@@ -1983,6 +2019,7 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
                 f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
                 f"\nСпасибо, что используете Weather Bot!\U0001F601"
             )
@@ -2000,6 +2037,7 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
                 f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
                 f"\nСпасибо, что используете Weather Bot!\U0001F601"
             )
