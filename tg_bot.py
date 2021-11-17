@@ -88,7 +88,7 @@ async def get_weather_eng(message: types.Message):
         r1 = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={message.text},{message.text}"
                           f"&limit=3&appid={ow_token}")
         data1 = r1.json()
-        pprint(data1)
+        # pprint(data1)
         city = data["name"]
         current_w = round(data["main"]["temp"])
         wind_sp = round(data["wind"]["speed"])
@@ -113,6 +113,7 @@ async def get_weather_eng(message: types.Message):
         data2 = r2.json()
         # pprint(data2)
         dew_p = round(data2["current"]["dew_point"])
+
         r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
         data3 = r3.json()
         # pprint(data3)
@@ -1063,6 +1064,7 @@ async def get_weather_rus(message: types.Message):
         data1 = r2.json()
         # pprint(data1)
         dew_p = round(data1["current"]["dew_point"])
+
         r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
         data3 = r3.json()
         # pprint(data3)
