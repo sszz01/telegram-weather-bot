@@ -65,18 +65,18 @@ async def get_weather(message: types.Message):
 async def get_weather_eng(message: types.Message):
     global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state, ap_text
     json_to_smile = {
-                     "Clear": "Clear sky \U00002600",
-                     "Rain": "Rainy \U00002614",
-                     "Clouds": "Cloudy \U00002601",
-                     "Drizzle": "Drizzle \U0001F326",
-                     "Thunderstorm": "Thunderstorm \U000026A1",
-                     "Snow": "Snow \U0001F328",
-                     "Fog": "Foggy \U0001F32B",
-                     "Tornado": "Tornado \U0001F32A",
-                     "Mist": "Mist \U0001F301",
-                     "Haze": "Haze \U0001F636\U0000200D\U0001F32B\U0000FE0F",
-                     "Few clouds": "Few clouds \U0001F324"
-                     }
+        "Clear": "Clear sky \U00002600",
+        "Rain": "Rainy \U00002614",
+        "Clouds": "Cloudy \U00002601",
+        "Drizzle": "Drizzle \U0001F326",
+        "Thunderstorm": "Thunderstorm \U000026A1",
+        "Snow": "Snow \U0001F328",
+        "Fog": "Foggy \U0001F32B",
+        "Tornado": "Tornado \U0001F32A",
+        "Mist": "Mist \U0001F301",
+        "Haze": "Haze \U0001F636\U0000200D\U0001F32B\U0000FE0F",
+        "Few clouds": "Few clouds \U0001F324"
+    }
 
     try:
         r = requests.get(
@@ -113,6 +113,7 @@ async def get_weather_eng(message: types.Message):
         data2 = r2.json()
         # pprint(data2)
         dew_p = round(data2["current"]["dew_point"])
+        uvi = round(data2["current"]["uvi"])
 
         r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
         data3 = r3.json()
@@ -964,6 +965,19 @@ async def get_weather_eng(message: types.Message):
         tzsuns = ts2.strftime("%H:%M")
         tz_loc_time_1 = tl.strftime("%d.%m.%Y")
 
+        if uvi == 0:
+            uvi_text = "Harmless"
+        elif uvi == 1 or 2:
+            uvi_text = "Low"
+        elif uvi == 3 or 4 or 5:
+            uvi_text = "Moderate"
+        elif uvi == 6 or 7:
+            uvi_text = "High"
+        elif uvi == 8 or 9 or 10:
+            uvi_text = "Very High"
+        else:
+            uvi_text = "Extreme risk"
+
         if country == "US":
             full_country_name = "USA"
             country_flag = "\U0001F1FA\U0001F1F8"
@@ -983,6 +997,7 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
                 f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
+                f"\U00003030UV Index: {uvi} ({uvi_text})\n"
                 f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
                 f"\nThanks for using Weather Bot!\U0001F601"
             )
@@ -1001,6 +1016,7 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
                 f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
+                f"\U00003030UV Index: {uvi} ({uvi_text})\n"
                 f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
                 f"\nThanks for using Weather Bot!\U0001F601"
             )
@@ -1014,18 +1030,18 @@ async def get_weather_eng(message: types.Message):
 async def get_weather_rus(message: types.Message):
     global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state1, us_state_rus, ap_text1
     json_to_smile = {
-                     "Clear": "Ясно \U00002600",
-                     "Rain": "Дождь \U00002614",
-                     "Clouds": "Пасмурно \U00002601",
-                     "Drizzle": "Морось \U0001F326",
-                     "Thunderstorm": "Гроза \U000026A1",
-                     "Snow": "Снег \U0001F328",
-                     "Fog": "Туман \U0001F32B",
-                     "Tornado": "Торнадо \U0001F32A",
-                     "Mist": "Дымка \U0001F301",
-                     "Haze": "Мгла \U0001F636\U0000200D\U0001F32B\U0000FE0F",
-                     "Few clouds": "Облачно \U0001F324"
-                     }
+        "Clear": "Ясно \U00002600",
+        "Rain": "Дождь \U00002614",
+        "Clouds": "Пасмурно \U00002601",
+        "Drizzle": "Морось \U0001F326",
+        "Thunderstorm": "Гроза \U000026A1",
+        "Snow": "Снег \U0001F328",
+        "Fog": "Туман \U0001F32B",
+        "Tornado": "Торнадо \U0001F32A",
+        "Mist": "Дымка \U0001F301",
+        "Haze": "Мгла \U0001F636\U0000200D\U0001F32B\U0000FE0F",
+        "Few clouds": "Облачно \U0001F324"
+    }
 
     try:
         r = requests.get(
@@ -1064,6 +1080,7 @@ async def get_weather_rus(message: types.Message):
         data1 = r2.json()
         # pprint(data1)
         dew_p = round(data1["current"]["dew_point"])
+        uvi = round(data1["current"]["uvi"])
 
         r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
         data3 = r3.json()
@@ -1916,112 +1933,126 @@ async def get_weather_rus(message: types.Message):
             case 5:
                 ap_text1 = "Очень загрязненный"
 
+        if uvi == 0:
+            uvi_text = "Безопасный"
+        elif uvi == 1 or 2:
+            uvi_text = "Низкий"
+        elif uvi == 3 or 4 or 5:
+            uvi_text = "Умеренный"
+        elif uvi == 6 or 7:
+            uvi_text = "Высокий"
+        elif uvi == 8 or 9 or 10:
+            uvi_text = "Очень высокий"
+        else:
+            uvi_text = "Чрезмерный"
+
         if country == "US":
             full_country_name = "США"
             country_flag = "\U0001F1FA\U0001F1F8"
             us_state1 = data2[0]["state"]
-            if us_state1 == "AL":
-                us_state_rus = "Алабама"
-            elif us_state1 == "AK":
-                us_state_rus = "Аляска"
-            elif us_state1 == "AZ":
-                us_state_rus = "Аризона"
-            elif us_state1 == "AR":
-                us_state_rus = "Арканзас"
-            elif us_state1 == "CA":
-                us_state_rus = "Калифорния"
-            elif us_state1 == "CO":
-                us_state_rus = "Колорадо"
-            elif us_state1 == "CT":
-                us_state_rus = "Коннектикут"
-            elif us_state1 == "DE":
-                us_state_rus = "Дэлавер"
-            elif us_state1 == "DC":
-                us_state_rus = "округ Колумбия"
-            elif us_state1 == "FL":
-                us_state_rus = "Флорида"
-            elif us_state1 == "GA":
-                us_state_rus = "Джорджия"
-            elif us_state1 == "HI":
-                us_state_rus = "Гавайи"
-            elif us_state1 == "ID":
-                us_state_rus = "Айдахо"
-            elif us_state1 == "IL":
-                us_state_rus = "Иллинойс"
-            elif us_state1 == "IN":
-                us_state_rus = "Индиана"
-            elif us_state1 == "IA":
-                us_state_rus = "Айова"
-            elif us_state1 == "KS":
-                us_state_rus = "Канзас"
-            elif us_state1 == "KY":
-                us_state_rus = "Кентукки"
-            elif us_state1 == "LA":
-                us_state_rus = "Луизиана"
-            elif us_state1 == "ME":
-                us_state_rus = "Мэн"
-            elif us_state1 == "MD":
-                us_state_rus = "Мэрилэнд"
-            elif us_state1 == "MA":
-                us_state_rus = "Массачусетс"
-            elif us_state1 == "MI":
-                us_state_rus = "Мичиган"
-            elif us_state1 == "MN":
-                us_state_rus = "Миннесота"
-            elif us_state1 == "MS":
-                us_state_rus = "Миссисипи"
-            elif us_state1 == "MO":
-                us_state_rus = "Миссури"
-            elif us_state1 == "MT":
-                us_state_rus = "Монтана"
-            elif us_state1 == "NE":
-                us_state_rus = "Небраска"
-            elif us_state1 == "NV":
-                us_state_rus = "Невада"
-            elif us_state1 == "NH":
-                us_state_rus = "Нью-Гэмпшир"
-            elif us_state1 == "NJ":
-                us_state_rus = "Нью-Джерси"
-            elif us_state1 == "NM":
-                us_state_rus = "Нью-Мексико"
-            elif us_state1 == "NY":
-                us_state_rus = "Нью-Йорк"
-            elif us_state1 == "NC":
-                us_state_rus = "Северная Каролина"
-            elif us_state1 == "ND":
-                us_state_rus = "Северная Дакота"
-            elif us_state1 == "OH":
-                us_state_rus = "Огайо"
-            elif us_state1 == "OK":
-                us_state_rus = "Оклахома"
-            elif us_state1 == "OR":
-                us_state_rus = "Орегон"
-            elif us_state1 == "PA":
-                us_state_rus = "Пенсильвания"
-            elif us_state1 == "RI":
-                us_state_rus = "Род-Айленд"
-            elif us_state1 == "SC":
-                us_state_rus = "Южная Каролина"
-            elif us_state1 == "SD":
-                us_state_rus = "Южная Дакота"
-            elif us_state1 == "TN":
-                us_state_rus = "Теннесси"
-            elif us_state1 == "TX":
-                us_state_rus = "Техас"
-            elif us_state1 == "UT":
-                us_state_rus = "Юта"
-            elif us_state1 == "VT":
-                us_state_rus = "Вермонт"
-            elif us_state1 == "VA":
-                us_state_rus = "Виргиния"
-            elif us_state1 == "WA":
-                us_state_rus = "Вашингтон"
-            elif us_state1 == "WV":
-                us_state_rus = "Южная Виргиния"
-            elif us_state1 == "WI":
-                us_state_rus = "Висконсин"
-            elif us_state1 == "WY":
-                us_state_rus = "Вайоминг"
+            match us_state1:
+                case "AL":
+                    us_state_rus = "Алабама"
+                case "AK":
+                    us_state_rus = "Аляска"
+                case "AZ":
+                    us_state_rus = "Аризона"
+                case "AR":
+                    us_state_rus = "Арканзас"
+                case "CA":
+                    us_state_rus = "Калифорния"
+                case "CO":
+                    us_state_rus = "Колорадо"
+                case "CT":
+                    us_state_rus = "Коннектикут"
+                case "DE":
+                    us_state_rus = "Дэлавер"
+                case "DC":
+                    us_state_rus = "округ Колумбия"
+                case "FL":
+                    us_state_rus = "Флорида"
+                case "GA":
+                    us_state_rus = "Джорджия"
+                case "HI":
+                    us_state_rus = "Гавайи"
+                case "ID":
+                    us_state_rus = "Айдахо"
+                case "IL":
+                    us_state_rus = "Иллинойс"
+                case "IN":
+                    us_state_rus = "Индиана"
+                case "IA":
+                    us_state_rus = "Айова"
+                case "KS":
+                    us_state_rus = "Канзас"
+                case "KY":
+                    us_state_rus = "Кентукки"
+                case "LA":
+                    us_state_rus = "Луизиана"
+                case "ME":
+                    us_state_rus = "Мэн"
+                case "MD":
+                    us_state_rus = "Мэрилэнд"
+                case "MA":
+                    us_state_rus = "Массачусетс"
+                case "MI":
+                    us_state_rus = "Мичиган"
+                case "MN":
+                    us_state_rus = "Миннесота"
+                case "MS":
+                    us_state_rus = "Миссисипи"
+                case "MO":
+                    us_state_rus = "Миссури"
+                case "MT":
+                    us_state_rus = "Монтана"
+                case "NE":
+                    us_state_rus = "Небраска"
+                case "NV":
+                    us_state_rus = "Невада"
+                case "NH":
+                    us_state_rus = "Нью-Гэмпшир"
+                case "NJ":
+                    us_state_rus = "Нью-Джерси"
+                case "NM":
+                    us_state_rus = "Нью-Мексико"
+                case "NY":
+                    us_state_rus = "Нью-Йорк"
+                case "NC":
+                    us_state_rus = "Северная Каролина"
+                case "ND":
+                    us_state_rus = "Северная Дакота"
+                case "OH":
+                    us_state_rus = "Огайо"
+                case "OK":
+                    us_state_rus = "Оклахома"
+                case "OR":
+                    us_state_rus = "Орегон"
+                case "PA":
+                    us_state_rus = "Пенсильвания"
+                case "RI":
+                    us_state_rus = "Род-Айленд"
+                case "SC":
+                    us_state_rus = "Южная Каролина"
+                case "SD":
+                    us_state_rus = "Южная Дакота"
+                case "TN":
+                    us_state_rus = "Теннесси"
+                case "TX":
+                    us_state_rus = "Техас"
+                case "UT":
+                    us_state_rus = "Юта"
+                case "VT":
+                    us_state_rus = "Вермонт"
+                case "VA":
+                    us_state_rus = "Виргиния"
+                case "WA":
+                    us_state_rus = "Вашингтон"
+                case "WV":
+                    us_state_rus = "Южная Виргиния"
+                case "WI":
+                    us_state_rus = "Висконсин"
+                case "WY":
+                    us_state_rus = "Вайоминг"
             await message.reply(
                 f"\U0001F4C5 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
                 f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
@@ -2036,6 +2067,7 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
                 f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
+                f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
                 f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
                 f"\nСпасибо, что используете Weather Bot!\U0001F601"
             )
@@ -2054,6 +2086,7 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
                 f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
+                f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
                 f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
                 f"\nСпасибо, что используете Weather Bot!\U0001F601"
             )
