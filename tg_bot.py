@@ -983,7 +983,8 @@ async def get_weather_eng(message: types.Message):
             country_flag = "\U0001F1FA\U0001F1F8"
             us_state = data1[0]["state"]
             await message.reply(
-                f"\U0001F4C5 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
                 f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
                 f"\n\n\U0001F321"
@@ -998,12 +999,12 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
                 f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
                 f"\U00003030UV Index: {uvi} ({uvi_text})\n"
-                f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
                 f"\nThanks for using Weather Bot!\U0001F601"
             )
         else:
             await message.reply(
-                f"\U0001F4C5 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
                 f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
                 f"Temperature: {current_w}°F,  {wd}\n"
@@ -1017,7 +1018,6 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
                 f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
                 f"\U00003030UV Index: {uvi} ({uvi_text})\n"
-                f"\U0001F305Sunrise time: {tzsunr}\n\U0001F307Sunset time: {tzsuns}\n"
                 f"\nThanks for using Weather Bot!\U0001F601"
             )
 
@@ -2054,7 +2054,8 @@ async def get_weather_rus(message: types.Message):
                 case "WY":
                     us_state_rus = "Вайоминг"
             await message.reply(
-                f"\U0001F4C5 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
                 f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
                 f"\nНа данный момент, погода в {city}, {us_state_rus}, {full_country_name}{country_flag}:\n\n\U0001F321"
                 f"Температура: {current_w}°C,  {wd}\n"
@@ -2068,12 +2069,12 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
                 f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
                 f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
-                f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
                 f"\nСпасибо, что используете Weather Bot!\U0001F601"
             )
         else:
             await message.reply(
-                f"\U0001F4C5 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
                 f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
                 f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
                 f"Температура: {current_w}°C,  {wd}\n"
@@ -2087,7 +2088,6 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
                 f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
                 f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
-                f"\U0001F305Восход солнца в: {tzsunr}\n\U0001F307Закат солнца в: {tzsuns}\n"
                 f"\nСпасибо, что используете Weather Bot!\U0001F601"
             )
 
