@@ -12,6 +12,10 @@ bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
 lang = ""
 i = 0
+tformat = ""
+format_sign = ""
+ws_sign = ""
+j = 0
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -19,6 +23,22 @@ lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA", callback_data="rus")
+    ]
+])
+format_buttons = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Metric", callback_data="met"),
+    ],
+    [
+        InlineKeyboardButton(text="Imperial", callback_data="imp")
+    ]
+])
+format_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Метрическая", callback_data="met"),
+    ],
+    [
+        InlineKeyboardButton(text="Имперская", callback_data="imp")
     ]
 ])
 
@@ -30,18 +50,24 @@ async def start_command(message: types.Message):
     if i == 1:
         await message.reply("Hey, I'm Weather Bot! So, let's get started \U0001F603"
                             "\nChoose the most suitable to you language first:", reply_markup=lang_buttons)
-    elif lang == "eng":
-        await message.reply("Welcome Back! \U0001F609\nChoose a new bot language:", reply_markup=lang_buttons)
-    elif lang == "rus":
-        await message.reply("Приветствую! \U0001F609\nВыберите новый язык бота:", reply_markup=lang_buttons)
+    elif j >= 2 and lang == "eng":
+        await message.reply("Welcome to the bot settings! \U0001F609\nChoose a new bot language:",
+                            reply_markup=lang_buttons)
+    elif j >= 2 and lang == "rus":
+        await message.reply("Добро пожаловать в настройки бота! \U0001F609\nВыберите новый язык бота:",
+                            reply_markup=lang_buttons)
+    elif j < 2 and lang == "rus":
+        await message.reply("Вы еще не полностью настроили бота.\nПожалуйста, завершите настройку системы измерений "
+                            "чтобы ваш бот работал корректно \U0001F642", reply_markup=format_buttons_rus)
     else:
-        await message.reply("You haven't chosen a bot language yet. Please, choose your desired language above "
-                            "to make your bot work properly \U0001F642")
+        i -= 1
+        await message.reply("You haven't fully set up a bot yet. Please, complete the language setup "
+                            "to continue \U0001F642", reply_markup=lang_buttons)
 
 
 @dp.message_handler()
 async def get_weather(message: types.Message):
-    if lang == "eng":
+    if lang == "eng" and tformat == "metric" or lang == "eng" and tformat == "imperial":
         eng = message.text
         reg = re.compile(r'[a-zA-Z]')
         if reg.match(eng):
@@ -49,7 +75,7 @@ async def get_weather(message: types.Message):
         else:
             await message.reply("Your input does not match the language you selected. "
                                 "Could you check your input once again please? \U0001F643")
-    elif lang == "rus":
+    elif lang == "rus" and tformat == "metric" or lang == "rus" and tformat == "imperial":
         eng = message.text
         reg = re.compile(r'[а-яА-Я]')
         if reg.match(eng):
@@ -58,8 +84,8 @@ async def get_weather(message: types.Message):
             await message.reply("Ваш ввод не соответствует выбранному вами языку. "
                                 "Не могли бы вы проверить свой ввод еще раз? \U0001F643")
     else:
-        await message.reply("You haven't chosen a bot language yet. Please, type /start\n"
-                            "and choose your desired language to make your bot work properly \U0001F642")
+        await message.reply("You haven't set up a bot yet. Please, type /start\n"
+                            "and set up a bot to make your bot work properly \U0001F642")
 
 
 async def get_weather_eng(message: types.Message):
@@ -81,7 +107,7 @@ async def get_weather_eng(message: types.Message):
     try:
         r = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={message.text}, {message.text}&appid={ow_token}"
-            f"&units=imperial&lang=en"
+            f"&units={tformat}&lang=en"
         )
         data = r.json()
         pprint(data)
@@ -109,7 +135,7 @@ async def get_weather_eng(message: types.Message):
         lon = data["coord"]["lon"]
 
         r2 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
-                          f"hourly,daily,alerts&units=imperial&appid={ow_token}")
+                          f"hourly,daily,alerts&units={tformat}&appid={ow_token}")
         data2 = r2.json()
         # pprint(data2)
         dew_p = round(data2["current"]["dew_point"])
@@ -988,13 +1014,14 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
                 f"\n\n\U0001F321"
-                f"Temperature: {current_w}°F,  {wd}\n"
-                f"\U0001F4C8Max Temperature for Today: {max_temp}°F\n\U0001F4C9Min Temperature for Today: {min_temp}"
-                f"°F\n"
-                f"\U0001F321Feels like: {fls_like}°F\n"
-                f"\U0001F33FDew point: {dew_p}°F\n"
+                f"Temperature: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Min Temperature for Today: {min_temp}"
+                f"{format_sign}\n"
+                f"\U0001F321Feels like: {fls_like}{format_sign}\n"
+                f"\U0001F33FDew point: {dew_p}{format_sign}\n"
                 f"\U0001F4A6Humidity: {humidity}%\n"
-                f"\U0001F4A8Wind speed: {wind_sp} mi/h\n"
+                f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
                 f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
                 f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
@@ -1007,13 +1034,14 @@ async def get_weather_eng(message: types.Message):
                 f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
                 f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
                 f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
-                f"Temperature: {current_w}°F,  {wd}\n"
-                f"\U0001F4C8Max Temperature for Today: {max_temp}°F\n\U0001F4C9Min Temperature for Today: {min_temp}"
-                f"°F\n"
-                f"\U0001F321Feels like: {fls_like}°F\n"
-                f"\U0001F33FDew point: {dew_p}°F\n"
+                f"Temperature: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Min Temperature for Today: {min_temp}"
+                f"{format_sign}\n"
+                f"\U0001F321Feels like: {fls_like}{format_sign}\n"
+                f"\U0001F33FDew point: {dew_p}{format_sign}\n"
                 f"\U0001F4A6Humidity: {humidity}%\n"
-                f"\U0001F4A8Wind speed: {wind_sp} mi/h\n"
+                f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
                 f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
                 f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
                 f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
@@ -1046,7 +1074,7 @@ async def get_weather_rus(message: types.Message):
     try:
         r = requests.get(
             f"http://api.openweathermap.org/data/2.5/weather?q={message.text}, {message.text}&appid={ow_token}"
-            f"&units=metric&lang=ru"
+            f"&units={tformat}&lang=ru"
         )
         data = r.json()
         pprint(data)
@@ -1076,7 +1104,7 @@ async def get_weather_rus(message: types.Message):
         lon = data["coord"]["lon"]
 
         r2 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
-                          f"hourly,daily,alerts&units=metric&appid={ow_token}")
+                          f"hourly,daily,alerts&units={tformat}&appid={ow_token}")
         data1 = r2.json()
         # pprint(data1)
         dew_p = round(data1["current"]["dew_point"])
@@ -2058,13 +2086,13 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
                 f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
                 f"\nНа данный момент, погода в {city}, {us_state_rus}, {full_country_name}{country_flag}:\n\n\U0001F321"
-                f"Температура: {current_w}°C,  {wd}\n"
-                f"\U0001F4C8Макс. температура за сегодня: {max_temp}°C\n\U0001F4C9"
-                f"Мин. температура за сегодня: {min_temp}°C\n"
-                f"\U0001F321Ощущается как: {fls_like}°C\n"
-                f"\U0001F33FТочка росы: {dew_p}°С\n"
+                f"Температура: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
+                f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
+                f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
                 f"\U0001F4A6Влажность: {humidity}%\n"
-                f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
+                f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
                 f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
@@ -2077,13 +2105,13 @@ async def get_weather_rus(message: types.Message):
                 f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
                 f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
                 f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
-                f"Температура: {current_w}°C,  {wd}\n"
-                f"\U0001F4C8Макс. температура за сегодня: {max_temp}°C\n\U0001F4C9"
-                f"Мин. температура за сегодня: {min_temp}°C\n"
-                f"\U0001F321Ощущается как: {fls_like}°C\n"
-                f"\U0001F33FТочка росы: {dew_p}°С\n"
+                f"Температура: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
+                f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
+                f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
                 f"\U0001F4A6Влажность: {humidity}%\n"
-                f"\U0001F4A8Скорость ветра: {wind_sp} м/с\n"
+                f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
                 f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
                 f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
                 f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
@@ -2099,27 +2127,102 @@ async def get_weather_rus(message: types.Message):
 
 @dp.callback_query_handler(text="eng")
 async def setlangeng(call: CallbackQuery):
-    global lang
+    global lang, j, i
     lang = "eng"
-    sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
-    await bot.delete_message(call.from_user.id, call.message.message_id)
-    await bot.send_sticker(call.from_user.id, sti)
-    await bot.send_message(call.from_user.id,
-                           "Done!\nYour chosen language has been set. \U0001F603\n"
-                           "Now just type any city or place name to receive its weather information! \U0001F5FA")
+    if i <= 1:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        await bot.send_message(call.from_user.id,
+                               "English language has been successfully established! "
+                               "\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8"
+                               "\nYou're almost done setting up a bot! \U0001F609\n"
+                               "Finally, what system of units you'd like to receive weather information in?",
+                               reply_markup=format_buttons)
+        print("here")
+        j += 1
+    else:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        await bot.send_message(call.from_user.id,
+                               "Done!\nYour bot is now ready to go! \U0001F603\n"
+                               "Now just type any city or place name to receive its weather information! \U0001F5FA")
+        print("here1")
+        j += 1
 
 
 @dp.callback_query_handler(text="rus")
 async def setlangrus(call: CallbackQuery):
-    global lang
+    global lang, j, i
     lang = "rus"
-    sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+    if i <= 1:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        await bot.send_message(call.from_user.id,
+                               "Русский язык успешно установлен! \U0001F1F7\U0001F1FA"
+                               "\nВы почти закончили настройку бота! Остался всего последний шаг! \U0001F609\n"
+                               "Выберите, в какой системе измерения вы бы хотели получать данные о погоде?",
+                               reply_markup=format_buttons_rus)
+        print("here2")
+        j += 1
+
+    else:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        await bot.send_message(call.from_user.id,
+                               "Готово!\nБот полностью готов к работе! \U0001F603\n"
+                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                               "погоде! \U0001F5FA")
+        print("here3")
+        j += 1
+
+
+@dp.callback_query_handler(text="met")
+async def setmetric(call: CallbackQuery):
+    global tformat, format_sign, ws_sign, j
+    j += 1
+    tformat = "metric"
+    format_sign = "°C"
     await bot.delete_message(call.from_user.id, call.message.message_id)
+    sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
     await bot.send_sticker(call.from_user.id, sti)
-    await bot.send_message(call.from_user.id,
-                           "Готово!\nВыбранный вами язык установлен! \U0001F603\n"
-                           "Теперь просто введите название любого города или места, чтобы получить информацию о "
-                           "погоде! \U0001F5FA")
+    if lang == "eng" and j >= 2:
+        ws_sign = "m\s"
+        await bot.send_message(call.from_user.id,
+                               "Done!\nYour bot is now ready to go! \U0001F603\n"
+                               "Now just type any city or place name to receive its weather information! \U0001F5FA")
+        print("here4")
+    elif lang == "rus" and j >= 2:
+        ws_sign = "м\с"
+        await bot.send_message(call.from_user.id,
+                               "Готово!\nБот полностью готов к работе! \U0001F603\n"
+                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                               "погоде! \U0001F5FA")
+        print("here5")
+
+
+@dp.callback_query_handler(text="imp")
+async def setimperial(call: CallbackQuery):
+    global tformat, format_sign, ws_sign, j
+    j += 1
+    tformat = "imperial"
+    format_sign = "°F"
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+    await bot.send_sticker(call.from_user.id, sti)
+    if lang == "eng" and j >= 2:
+        ws_sign = "mi\h"
+        await bot.send_message(call.from_user.id,
+                               "Done!\nYour bot is now ready to go! \U0001F603\n"
+                               "Now just type any city or place name to receive its weather information! \U0001F5FA")
+        print("here6")
+    elif lang == "rus" and j >= 2:
+        ws_sign = "миль\ч"
+        await bot.send_message(call.from_user.id,
+                               "Готово!\nБот полностью готов к работе! \U0001F603\n"
+                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                               "погоде! \U0001F5FA")
+        print("here7")
+
 
 
 if __name__ == "__main__":
