@@ -56,6 +56,9 @@ async def start_command(message: types.Message):
     elif j >= 2 and lang == "rus":
         await message.reply("Добро пожаловать в настройки бота! \U0001F609\nВыберите новый язык бота:",
                             reply_markup=lang_buttons)
+    elif j < 2 and lang == "eng":
+        await message.reply("Вы еще не полностью настроили бота.\nПожалуйста, завершите настройку системы измерений "
+                            "чтобы ваш бот работал корректно \U0001F642", reply_markup=format_buttons)
     elif j < 2 and lang == "rus":
         await message.reply("Вы еще не полностью настроили бота.\nПожалуйста, завершите настройку системы измерений "
                             "чтобы ваш бот работал корректно \U0001F642", reply_markup=format_buttons_rus)
