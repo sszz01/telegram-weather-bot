@@ -57,8 +57,8 @@ async def start_command(message: types.Message):
         await message.reply("Добро пожаловать в настройки бота! \U0001F609\nВыберите новый язык бота:",
                             reply_markup=lang_buttons)
     elif j < 2 and lang == "eng":
-        await message.reply("Вы еще не полностью настроили бота.\nПожалуйста, завершите настройку системы измерений "
-                            "чтобы ваш бот работал корректно \U0001F642", reply_markup=format_buttons)
+        await message.reply("You haven't fully set up a bot yet. Please, complete the system of units setup "
+                            "to make your bot work correctly \U0001F642", reply_markup=format_buttons)
     elif j < 2 and lang == "rus":
         await message.reply("Вы еще не полностью настроили бота.\nПожалуйста, завершите настройку системы измерений "
                             "чтобы ваш бот работал корректно \U0001F642", reply_markup=format_buttons_rus)
@@ -87,8 +87,19 @@ async def get_weather(message: types.Message):
             await message.reply("Ваш ввод не соответствует выбранному вами языку. "
                                 "Не могли бы вы проверить свой ввод еще раз? \U0001F643")
     else:
-        await message.reply("You haven't set up a bot yet. Please, type /start\n"
-                            "and set up a bot to make your bot work properly \U0001F642")
+        if i < 1:
+            await message.reply("You haven't set up a bot yet. Please, type /start "
+                                "and set up a bot to make your bot work properly \U0001F642")
+        elif j < 1:
+            await message.reply("You haven't fully set up a bot yet. Please, complete the language setup "
+                                "to continue \U0001F642", reply_markup=lang_buttons)
+        elif j == 1 and lang == "eng":
+            await message.reply("You haven't fully set up a bot yet. Please, complete the system of units setup "
+                                "to make your bot work correctly \U0001F642", reply_markup=format_buttons)
+        elif j == 1 and lang == "rus":
+            await message.reply(
+                "Вы еще не полностью настроили бота.\nПожалуйста, завершите настройку системы измерений "
+                "чтобы ваш бот работал корректно \U0001F642", reply_markup=format_buttons_rus)
 
 
 async def get_weather_eng(message: types.Message):
@@ -2225,7 +2236,6 @@ async def setimperial(call: CallbackQuery):
                                "Теперь просто введите название любого города или места, чтобы получить информацию о "
                                "погоде! \U0001F5FA")
         print("here7")
-
 
 
 if __name__ == "__main__":
