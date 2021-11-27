@@ -27,7 +27,9 @@ e3 = 0
 stickers = ["C:/Users/zasha/telegram/cherry.tgs", "C:/Users/zasha/telegram/cherry1.tgs",
             "C:/Users/zasha/telegram/cherry2.tgs", "C:/Users/zasha/telegram/sus.tgs", "C:/Users/zasha/telegram/sus1.tgs"
             "C:/Users/zasha/telegram/marshmallow1.tgs", "C:/Users/zasha/telegram/bear.tgs",
-            "C:/Users/zasha/telegram/bear1.tgs", "C:/Users/zasha/telegram/bear2.tgs"]
+            "C:/Users/zasha/telegram/bear1.tgs", "C:/Users/zasha/telegram/bear2.tgs",
+            "C:/Users/zasha/telegram/bear3.tgs", "C:/Users/zasha/telegram/bear4.tgs",
+            "C:/Users/zasha/telegram/babyyoda.tgs", "C:/Users/zasha/telegram/babyyoda1.tgs"]
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -163,7 +165,7 @@ async def start_command(message: [types.Message, types.CallbackQuery]):
 
 @dp.message_handler()
 async def get_weather(message: types.Message):
-    if lang == "eng" and tformat == "metric" or lang == "eng" and tformat == "imperial":
+    if j >= 2 and lang == "eng":
         eng = message.text
         reg = re.compile(r'[a-zA-Z]')
         if k >= 1:
@@ -173,7 +175,7 @@ async def get_weather(message: types.Message):
         else:
             await message.reply("Your input does not match the language you selected. "
                                 "Could you check your input once again please? \U0001F643")
-    elif lang == "rus" and tformat == "metric" or lang == "rus" and tformat == "imperial":
+    elif j >= 2 and lang == "rus":
         eng = message.text
         reg = re.compile(r'[а-яА-Я]')
         if k >= 1:
@@ -2230,7 +2232,7 @@ async def get_weather_rus(message: types.Message):
 
 @dp.callback_query_handler(text="eng")
 async def setlangeng(call: CallbackQuery):
-    global lang, j, i, k, e, e1, stickers
+    global lang, j, i, k, e, e1, stickers, ws_sign, tformat
     lang = "eng"
     if i <= 1:
         await bot.delete_message(call.from_user.id, call.message.message_id)
@@ -2246,6 +2248,10 @@ async def setlangeng(call: CallbackQuery):
         await call.answer("You're already using English as your main language. Please choose the new one \U0001F609",
                           show_alert=True)
     elif j >= 2:
+        if lang == "eng" and tformat == "metric":
+            ws_sign = "m\s"
+        elif lang == "eng" and tformat == "imperial":
+            ws_sign = "mi\h"
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
@@ -2273,7 +2279,7 @@ async def setlangeng(call: CallbackQuery):
 
 @dp.callback_query_handler(text="rus")
 async def setlangrus(call: CallbackQuery):
-    global lang, j, i, k, e1, e
+    global lang, j, i, k, e1, e, ws_sign, tformat
     lang = "rus"
     if i <= 1:
         await bot.delete_message(call.from_user.id, call.message.message_id)
@@ -2289,6 +2295,10 @@ async def setlangrus(call: CallbackQuery):
                           "Пожалуйста, выберите новый системный язык \U0001F609",
                           show_alert=True)
     elif j >= 2:
+        if lang == "rus" and tformat == "metric":
+            ws_sign = "м\с"
+        elif lang == "rus" and tformat == "imperial":
+            ws_sign = "миль/ч"
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
