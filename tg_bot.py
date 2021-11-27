@@ -1,3 +1,5 @@
+import random
+
 import requests
 import datetime
 import re
@@ -22,6 +24,10 @@ e = 0
 e1 = 0
 e2 = 0
 e3 = 0
+stickers = ["C:/Users/zasha/telegram/cherry.tgs", "C:/Users/zasha/telegram/cherry1.tgs",
+            "C:/Users/zasha/telegram/cherry2.tgs", "C:/Users/zasha/telegram/sus.tgs", "C:/Users/zasha/telegram/sus1.tgs"
+            "C:/Users/zasha/telegram/marshmallow1.tgs", "C:/Users/zasha/telegram/bear.tgs",
+            "C:/Users/zasha/telegram/bear1.tgs", "C:/Users/zasha/telegram/bear2.tgs"]
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -152,7 +158,7 @@ async def start_command(message: [types.Message, types.CallbackQuery]):
                             reply_markup=ch_buttons_rus)
     else:
         i -= 1
-        # await message.delete()
+        await message.delete()
 
 
 @dp.message_handler()
@@ -2224,7 +2230,7 @@ async def get_weather_rus(message: types.Message):
 
 @dp.callback_query_handler(text="eng")
 async def setlangeng(call: CallbackQuery):
-    global lang, j, i, k, e, e1
+    global lang, j, i, k, e, e1, stickers
     lang = "eng"
     if i <= 1:
         await bot.delete_message(call.from_user.id, call.message.message_id)
@@ -2239,6 +2245,18 @@ async def setlangeng(call: CallbackQuery):
     elif e >= 1:
         await call.answer("You're already using English as your main language. Please choose the new one \U0001F609",
                           show_alert=True)
+    elif j >= 2:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open(random.choice(stickers), "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        await bot.send_message(call.from_user.id,
+                               "Done!\nThe settings has been changed. \U0001F603\n"
+                               "Now just type any city or place name to receive its weather information! \U0001F5FA")
+        print("here1")
+        j += 1
+        k -= k
+        e -= e
+        e1 -= e1
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
@@ -2246,7 +2264,7 @@ async def setlangeng(call: CallbackQuery):
         await bot.send_message(call.from_user.id,
                                "Done!\nYour bot is now ready to go! \U0001F603\n"
                                "Now just type any city or place name to receive its weather information! \U0001F5FA")
-        print("here1")
+        print("here2")
         j += 1
         k -= k
         e -= e
@@ -2264,12 +2282,25 @@ async def setlangrus(call: CallbackQuery):
                                "\nВы почти закончили настройку бота! Остался всего последний шаг! \U0001F609\n"
                                "Выберите, в какой системе измерения вы бы хотели получать данные о погоде?",
                                reply_markup=format_buttons_rus)
-        print("here2")
+        print("here3")
         j += 1
     elif e1 >= 1:
         await call.answer("Вы уже используете русский в качестве вашего основного языка."
                           "Пожалуйста, выберите новый системный язык \U0001F609",
                           show_alert=True)
+    elif j >= 2:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open(random.choice(stickers), "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        await bot.send_message(call.from_user.id,
+                               "Готово!\nПараметры бота изменены. \U0001F603\n"
+                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                               "погоде! \U0001F5FA")
+        print("here4")
+        j += 1
+        k -= k
+        e1 -= e1
+        e -= e
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
@@ -2278,7 +2309,7 @@ async def setlangrus(call: CallbackQuery):
                                "Готово!\nБот полностью готов к работе! \U0001F603\n"
                                "Теперь просто введите название любого города или места, чтобы получить информацию о "
                                "погоде! \U0001F5FA")
-        print("here3")
+        print("here5")
         j += 1
         k -= k
         e1 -= e1
@@ -2299,6 +2330,31 @@ async def setmetric(call: CallbackQuery):
         await call.answer("Вы уже используете метрическую систему в качестве вашей основной. "
                           "Пожалуйста, выберите новую систему измерения \U0001F609",
                           show_alert=True)
+    elif j > 2:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open(random.choice(stickers), "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        if lang == "eng" and j >= 2:
+            ws_sign = "m\s"
+            await bot.send_message(call.from_user.id,
+                                   "Done!\nThe settings has been changed. \U0001F603\n"
+                                   "Now just type any city or place name to receive its weather information! "
+                                   "\U0001F5FA")
+            k -= k
+            e2 -= e2
+            e3 -= e3
+            print("here6")
+        elif lang == "rus" and j >= 2:
+            ws_sign = "м\с"
+            await bot.send_message(call.from_user.id,
+                                   "Готово!\nПараметры бота изменены. \U0001F603\n"
+                                   "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                                   "погоде! \U0001F5FA")
+            k -= k
+            e2 -= e2
+            e3 -= e3
+            print("here7")
+
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
@@ -2312,7 +2368,7 @@ async def setmetric(call: CallbackQuery):
             k -= k
             e2 -= e2
             e3 -= e3
-            print("here4")
+            print("here8")
         elif lang == "rus" and j >= 2:
             ws_sign = "м\с"
             await bot.send_message(call.from_user.id,
@@ -2322,7 +2378,7 @@ async def setmetric(call: CallbackQuery):
             k -= k
             e2 -= e2
             e3 -= e3
-            print("here5")
+            print("here9")
 
 
 @dp.callback_query_handler(text="imp")
@@ -2339,6 +2395,30 @@ async def setimperial(call: CallbackQuery):
         await call.answer("Вы уже используете имперскую систему в качестве вашей основной. "
                           "Пожалуйста, выберите новую систему измерения \U0001F609",
                           show_alert=True)
+    elif j > 2:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open(random.choice(stickers), "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        if lang == "eng" and j >= 2:
+            ws_sign = "mi\h"
+            await bot.send_message(call.from_user.id,
+                                   "Done!\nThe settings has been changed. \U0001F603\n"
+                                   "Now just type any city or place name to receive its weather information! "
+                                   "\U0001F5FA")
+            k -= k
+            e3 -= e3
+            e2 -= e2
+            print("here10")
+        elif lang == "rus" and j >= 2:
+            ws_sign = "миль\ч"
+            await bot.send_message(call.from_user.id,
+                                   "Готово!\nПараметры бота изменены. \U0001F603\n"
+                                   "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                                   "погоде! \U0001F5FA")
+            k -= k
+            e3 -= e3
+            e2 -= e2
+            print("here11")
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
@@ -2351,7 +2431,7 @@ async def setimperial(call: CallbackQuery):
             k -= k
             e3 -= e3
             e2 -= e2
-            print("here6")
+            print("here12")
         elif lang == "rus" and j >= 2:
             ws_sign = "миль\ч"
             await bot.send_message(call.from_user.id,
@@ -2361,7 +2441,7 @@ async def setimperial(call: CallbackQuery):
             k -= k
             e3 -= e3
             e2 -= e2
-            print("here7")
+            print("here13")
 
 
 @dp.callback_query_handler(text="lan")
@@ -2377,7 +2457,8 @@ async def choice1(call: CallbackQuery):
     if lang == "eng":
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=format_buttons1)
     elif lang == "rus":
-        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=format_buttons_rus1)
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id,
+                                            reply_markup=format_buttons_rus1)
 
 
 @dp.callback_query_handler(text="stop")
