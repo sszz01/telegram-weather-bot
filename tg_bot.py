@@ -31,12 +31,37 @@ lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
         InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA", callback_data="rus")
     ]
 ])
+lang_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Английский\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8", callback_data="eng"),
+    ],
+    [
+        InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA", callback_data="rus")
+    ],
+    [
+        InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
+    ]
+])
+lang_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="English\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8", callback_data="eng"),
+    ],
+    [
+        InlineKeyboardButton(text="Russian\U0001F1F7\U0001F1FA", callback_data="rus")
+    ],
+    [
+        InlineKeyboardButton(text="Back \U00002B05", callback_data="back")
+    ]
+])
 ch_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text="Language \U0001F22F", callback_data="lan"),
     ],
     [
         InlineKeyboardButton(text="System of units \U0001F4D0", callback_data="uni")
+    ],
+    [
+        InlineKeyboardButton(text="Quit \U0000274C", callback_data="stop")
     ]
 ])
 ch_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
@@ -45,6 +70,9 @@ ch_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Система измерений \U0001F4CF", callback_data="uni")
+    ],
+    [
+        InlineKeyboardButton(text="Выйти \U0000274C", callback_data="stop")
     ]
 ])
 format_buttons = InlineKeyboardMarkup(inline_keyboard=[
@@ -61,6 +89,28 @@ format_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Имперская", callback_data="imp")
+    ]
+])
+format_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Metric", callback_data="met"),
+    ],
+    [
+        InlineKeyboardButton(text="Imperial", callback_data="imp")
+    ],
+    [
+        InlineKeyboardButton(text="Back \U00002B05", callback_data="back")
+    ]
+])
+format_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Метрическая", callback_data="met"),
+    ],
+    [
+        InlineKeyboardButton(text="Имперская", callback_data="imp")
+    ],
+    [
+        InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
     ]
 ])
 
@@ -2296,8 +2346,8 @@ async def setimperial(call: CallbackQuery):
         if lang == "eng" and j >= 2:
             ws_sign = "mi\h"
             await bot.send_message(call.from_user.id,
-                               "Done!\nYour bot is now ready to go! \U0001F603\n"
-                               "Now just type any city or place name to receive its weather information! \U0001F5FA")
+                                   "Done!\nYour bot is now ready to go! \U0001F603\n"
+                                   "Now just type any city or place name to receive its weather information! \U0001F5FA")
             k -= k
             e3 -= e3
             e2 -= e2
@@ -2305,9 +2355,9 @@ async def setimperial(call: CallbackQuery):
         elif lang == "rus" and j >= 2:
             ws_sign = "миль\ч"
             await bot.send_message(call.from_user.id,
-                               "Готово!\nБот полностью готов к работе! \U0001F603\n"
-                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
-                               "погоде! \U0001F5FA")
+                                   "Готово!\nБот полностью готов к работе! \U0001F603\n"
+                                   "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                                   "погоде! \U0001F5FA")
             k -= k
             e3 -= e3
             e2 -= e2
@@ -2316,15 +2366,33 @@ async def setimperial(call: CallbackQuery):
 
 @dp.callback_query_handler(text="lan")
 async def choice(call: CallbackQuery):
-    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=lang_buttons)
+    if lang == "eng":
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=lang_buttons1)
+    elif lang == "rus":
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=lang_buttons_rus)
 
 
 @dp.callback_query_handler(text="uni")
 async def choice1(call: CallbackQuery):
     if lang == "eng":
-        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=format_buttons)
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=format_buttons1)
     elif lang == "rus":
-        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=format_buttons_rus)
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=format_buttons_rus1)
+
+
+@dp.callback_query_handler(text="stop")
+async def quitbtn(call: CallbackQuery):
+    global k
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    k -= k
+
+
+@dp.callback_query_handler(text="back")
+async def backbtn(call: CallbackQuery):
+    if lang == "eng":
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=ch_buttons)
+    elif lang == "rus":
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=ch_buttons_rus)
 
 
 if __name__ == "__main__":
