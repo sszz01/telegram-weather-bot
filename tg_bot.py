@@ -220,7 +220,7 @@ async def get_weather_eng(message: types.Message):
                           f"&limit=3&appid={ow_token}")
         data1 = r1.json()
         # pprint(data1)
-        city = data["name"]
+        city = data1[0]["name"]
         current_w = round(data["main"]["temp"])
         wind_sp = round(data["wind"]["speed"])
         pressure = data["main"]["pressure"]
@@ -1110,7 +1110,7 @@ async def get_weather_eng(message: types.Message):
             uvi_text = "Extreme risk"
 
         if country == "US":
-            if city == "United States of America":
+            if city == "United States":
                 await message.reply("You can't receive a weather information of a country or state. "
                                     "Please, enter a valid city or place \U0001F643")
             else:
