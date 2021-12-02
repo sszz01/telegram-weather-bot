@@ -194,7 +194,7 @@ async def get_weather(message: types.Message):
 
 
 async def get_weather_eng(message: types.Message):
-    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state, ap_text, us_state_eng
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state, ap_text
     json_to_smile = {
         "Clear": "Clear sky \U00002600",
         "Rain": "Rainy \U00002614",
@@ -220,7 +220,7 @@ async def get_weather_eng(message: types.Message):
                           f"&limit=3&appid={ow_token}")
         data1 = r1.json()
         # pprint(data1)
-        city = data1[0]["name"]
+        city = data["name"]
         current_w = round(data["main"]["temp"])
         wind_sp = round(data["wind"]["speed"])
         pressure = data["main"]["pressure"]
@@ -1110,166 +1110,10 @@ async def get_weather_eng(message: types.Message):
             uvi_text = "Extreme risk"
 
         if country == "US":
-            if city == "United States":
-                await message.reply("You can't receive a weather information of a country or state. "
-                                    "Please, enter a valid city or place \U0001F643")
-            else:
-                full_country_name = "USA"
-                country_flag = "\U0001F1FA\U0001F1F8"
-                us_state = data1[0]["state"]
-                match us_state:
-                    case "AL":
-                        us_state_eng = "Alabama"
-                    case "AK":
-                        us_state_eng = "Alaska"
-                    case "AZ":
-                        us_state_eng = "Arizona"
-                    case "AR":
-                        us_state_eng = "Arkansas"
-                    case "CA":
-                        us_state_eng = "California"
-                    case "CO":
-                        us_state_eng = "Colorado"
-                    case "CT":
-                        us_state_eng = "Connecticut"
-                    case "DE":
-                        us_state_eng = "Delaware"
-                    case "DC":
-                        us_state_eng = "district Columbia"
-                    case "FL":
-                        us_state_eng = "Florida"
-                    case "GA":
-                        us_state_eng = "Georgia"
-                    case "HI":
-                        us_state_eng = "Hawaii"
-                    case "ID":
-                        us_state_eng = "Idaho"
-                    case "IL":
-                        us_state_eng = "Illinois"
-                    case "IN":
-                        us_state_eng = "Indiana"
-                    case "IA":
-                        us_state_eng = "Iowa"
-                    case "KS":
-                        us_state_eng = "Kansas"
-                    case "KY":
-                        us_state_eng = "Kentucky"
-                    case "LA":
-                        us_state_eng = "Louisiana"
-                    case "ME":
-                        us_state_eng = "Men"
-                    case "MD":
-                        us_state_eng = "Maryland"
-                    case "MA":
-                        us_state_eng = "Massachusetts"
-                    case "MI":
-                        us_state_eng = "Michigan"
-                    case "MN":
-                        us_state_eng = "Minnesota"
-                    case "MS":
-                        us_state_eng = "Mississippi"
-                    case "MO":
-                        us_state_eng = "Missouri"
-                    case "MT":
-                        us_state_eng = "Montana"
-                    case "NE":
-                        us_state_eng = "Nebraska"
-                    case "NV":
-                        us_state_eng = "Nevada"
-                    case "NH":
-                        us_state_eng = "New Hampshire"
-                    case "NJ":
-                        us_state_eng = "New Jersey"
-                    case "NM":
-                        us_state_eng = "New Mexico"
-                    case "NY":
-                        us_state_eng = "New York"
-                    case "NC":
-                        us_state_eng = "North Carolina"
-                    case "ND":
-                        us_state_eng = "North Dakota"
-                    case "OH":
-                        us_state_eng = "Ohio"
-                    case "OK":
-                        us_state_eng = "Oklahoma"
-                    case "OR":
-                        us_state_eng = "Oregon"
-                    case "PA":
-                        us_state_eng = "Pennsylvania"
-                    case "RI":
-                        us_state_eng = "Rhode Island"
-                    case "SC":
-                        us_state_eng = "South Carolina"
-                    case "SD":
-                        us_state_eng = "South Dakota"
-                    case "TN":
-                        us_state_eng = "Tennessee"
-                    case "TX":
-                        us_state_eng = "Texas"
-                    case "UT":
-                        us_state_eng = "Utah"
-                    case "VT":
-                        us_state_eng = "Vermont"
-                    case "VA":
-                        us_state_eng = "Virginia"
-                    case "WA":
-                        us_state_eng = "Washington"
-                    case "WV":
-                        us_state_eng = "South Virginia"
-                    case "WI":
-                        us_state_eng = "Wisconsin"
-                    case "WY":
-                        us_state_eng = "Wyoming"
-                if city == us_state_eng:
-                    await message.reply("You can't receive a weather information of a country or state. "
-                                        "Please, enter a valid city or place \U0001F643")
-                elif us_state == "DC":
-                    await message.reply(
-                        f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                        f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
-                        f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
-                        f"\nAt the moment, the weather in {city} , {full_country_name}{country_flag} is:"
-                        f"\n\n\U0001F321"
-                        f"Temperature: {current_w}{format_sign},  {wd}\n"
-                        f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
-                        f"Min Temperature for Today: {min_temp}"
-                        f"{format_sign}\n"
-                        f"\U0001F321Feels like: {fls_like}{format_sign}\n"
-                        f"\U0001F33FDew point: {dew_p}{format_sign}\n"
-                        f"\U0001F4A6Humidity: {humidity}%\n"
-                        f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
-                        f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
-                        f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
-                        f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
-                        f"\U00003030UV Index: {uvi} ({uvi_text})\n"
-                        f"\nThanks for using Weather Bot!\U0001F601"
-                    )
-                else:
-                    await message.reply(
-                        f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                        f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
-                        f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
-                        f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
-                        f"\n\n\U0001F321"
-                        f"Temperature: {current_w}{format_sign},  {wd}\n"
-                        f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
-                        f"Min Temperature for Today: {min_temp}"
-                        f"{format_sign}\n"
-                        f"\U0001F321Feels like: {fls_like}{format_sign}\n"
-                        f"\U0001F33FDew point: {dew_p}{format_sign}\n"
-                        f"\U0001F4A6Humidity: {humidity}%\n"
-                        f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
-                        f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
-                        f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
-                        f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
-                        f"\U00003030UV Index: {uvi} ({uvi_text})\n"
-                        f"\nThanks for using Weather Bot!\U0001F601"
-                    )
-        else:
-            if city == full_country_name:
-                await message.reply("You can't get a weather information of a country. "
-                                    "Please, enter a valid city or place \U0001F643")
-            else:
+            full_country_name = "USA"
+            country_flag = "\U0001F1FA\U0001F1F8"
+            us_state = data1[0]["state"]
+            if us_state == "00":
                 await message.reply(
                     f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
                     f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
@@ -1289,6 +1133,47 @@ async def get_weather_eng(message: types.Message):
                     f"\U00003030UV Index: {uvi} ({uvi_text})\n"
                     f"\nThanks for using Weather Bot!\U0001F601"
                 )
+            else:
+                await message.reply(
+                    f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                    f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
+                    f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
+                    f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
+                    f"\n\n\U0001F321"
+                    f"Temperature: {current_w}{format_sign},  {wd}\n"
+                    f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
+                    f"Min Temperature for Today: {min_temp}"
+                    f"{format_sign}\n"
+                    f"\U0001F321Feels like: {fls_like}{format_sign}\n"
+                    f"\U0001F33FDew point: {dew_p}{format_sign}\n"
+                    f"\U0001F4A6Humidity: {humidity}%\n"
+                    f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
+                    f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
+                    f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                    f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
+                    f"\U00003030UV Index: {uvi} ({uvi_text})\n"
+                    f"\nThanks for using Weather Bot!\U0001F601"
+                )
+        else:
+            await message.reply(
+                f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
+                f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
+                f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
+                f"Temperature: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Min Temperature for Today: {min_temp}"
+                f"{format_sign}\n"
+                f"\U0001F321Feels like: {fls_like}{format_sign}\n"
+                f"\U0001F33FDew point: {dew_p}{format_sign}\n"
+                f"\U0001F4A6Humidity: {humidity}%\n"
+                f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
+                f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
+                f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
+                f"\U00003030UV Index: {uvi} ({uvi_text})\n"
+                f"\nThanks for using Weather Bot!\U0001F601"
+            )
 
     except Exception as ex:
         await message.reply("City or place are not found. Could you check your input once again please? \U0001F643")
@@ -2322,9 +2207,28 @@ async def get_weather_rus(message: types.Message):
                     us_state_rus = "Висконсин"
                 case "WY":
                     us_state_rus = "Вайоминг"
-            if city == us_state_rus:
-                await message.reply("Вы не можете получать информацию о погоде в стране или штате. "
-                                    "Пожалуйста, введите название города или места \U0001F643")
+                case "00":
+                    us_state_rus = ""
+            if us_state1 == "00":
+                await message.reply(
+                    f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                    f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
+                    f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                    f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}"
+                    f":\n\n\U0001F321"
+                    f"Температура: {current_w}{format_sign},  {wd}\n"
+                    f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
+                    f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
+                    f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
+                    f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
+                    f"\U0001F4A6Влажность: {humidity}%\n"
+                    f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
+                    f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
+                    f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                    f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
+                    f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
+                    f"\nСпасибо, что используете Weather Bot!\U0001F601"
+                )
             else:
                 await message.reply(
                     f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
@@ -2346,28 +2250,24 @@ async def get_weather_rus(message: types.Message):
                     f"\nСпасибо, что используете Weather Bot!\U0001F601"
                 )
         else:
-            if city == full_country_name:
-                await message.reply("Вы не можете получать информацию о погоде в стране или штате. "
-                                    "Пожалуйста, введите название города или места \U0001F643")
-            else:
-                await message.reply(
-                    f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
-                    f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
-                    f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
-                    f"Температура: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
-                    f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
-                    f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Влажность: {humidity}%\n"
-                    f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
-                    f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
-                    f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
-                    f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
-                    f"\nСпасибо, что используете Weather Bot!\U0001F601"
-                )
+            await message.reply(
+                f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
+                f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}:\n\n\U0001F321"
+                f"Температура: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
+                f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
+                f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
+                f"\U0001F4A6Влажность: {humidity}%\n"
+                f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
+                f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
+                f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
+                f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
+                f"\nСпасибо, что используете Weather Bot!\U0001F601"
+            )
 
     except Exception as ex:
         await message.reply(
