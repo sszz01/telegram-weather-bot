@@ -1,9 +1,8 @@
 import random
-
 import requests
 import datetime
 import re
-from config import bot_token, ow_token
+from config import bot_token, ow_token, admin
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -18,7 +17,6 @@ tformat = ""
 format_sign = ""
 ws_sign = ""
 j = 0
-admin = 906705539
 k = 0
 e = 0
 e1 = 0
@@ -2455,11 +2453,11 @@ async def setmetric(call: CallbackQuery):
     tformat = "metric"
     format_sign = "°C"
     if e2 >= 1 and lang == "eng":
-        await call.answer("You're already using metric system as your main system of units. "
+        await call.answer("You're already using metric system as default. "
                           "Please select another one \U0001F609",
                           show_alert=True)
     elif e2 >= 1 and lang == "rus":
-        await call.answer("Вы уже используете метрическую систему в качестве вашей основной. "
+        await call.answer("Вы уже используете метрическую систему по умолчанию. "
                           "Пожалуйста, выберите новую систему измерения \U0001F609",
                           show_alert=True)
     elif j > 3:
@@ -2520,11 +2518,11 @@ async def setimperial(call: CallbackQuery):
     tformat = "imperial"
     format_sign = "°F"
     if e3 >= 1 and lang == "eng":
-        await call.answer("You're already using imperial system as your main system of units. "
+        await call.answer("You're already using imperial system as default. "
                           "Please select another one \U0001F609",
                           show_alert=True)
     elif e3 >= 1 and lang == "rus":
-        await call.answer("Вы уже используете имперскую систему в качестве вашей основной. "
+        await call.answer("Вы уже используете имперскую систему по умолчанию. "
                           "Пожалуйста, выберите новую систему измерения \U0001F609",
                           show_alert=True)
     elif j > 3:
@@ -2584,15 +2582,14 @@ async def set12(call: CallbackQuery):
     y += 1
     timecall = "12"
     if e4 >= 1 and lang == "eng":
-        await call.answer("You're already using 12-hour format as your main time format. "
+        await call.answer("You're already using 12-hour format as default. "
                           "Please select another one \U0001F609",
                           show_alert=True)
     elif e4 >= 1 and lang == "rus":
-        await call.answer("Вы уже используете 12-часовой формат в качестве вашего основного. "
+        await call.answer("Вы уже используете 12-часовой формат по умолчанию. "
                           "Пожалуйста, выберите новый временной формат \U0001F609",
                           show_alert=True)
     elif j > 3:
-        y += 1
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
@@ -2648,11 +2645,11 @@ async def set24(call: CallbackQuery):
     y -= y
     timecall = "24"
     if e5 >= 1 and lang == "eng":
-        await call.answer("You're already using 24-hour format as your main time format. "
+        await call.answer("You're already using 24-hour format as default. "
                           "Please select another one \U0001F609",
                           show_alert=True)
     elif e5 >= 1 and lang == "rus":
-        await call.answer("Вы уже используете 24-часовой формат в качестве вашего основного. "
+        await call.answer("Вы уже используете 24-часовой формат по умолчанию. "
                           "Пожалуйста, выберите новый временной формат \U0001F609",
                           show_alert=True)
     elif j > 3:
