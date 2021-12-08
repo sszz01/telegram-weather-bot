@@ -2,7 +2,7 @@ import random
 import requests
 import datetime
 import re
-from config import bot_token, ow_token, admin
+from config import bot_token, ow_token
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -36,7 +36,8 @@ stickers = ["C:/Users/zasha/telegram/cherry.tgs", "C:/Users/zasha/telegram/cherr
             "C:/Users/zasha/telegram/frog.tgs", "C:/Users/zasha/telegram/hand.tgs",
             "C:/Users/zasha/telegram/tendy.tgs", "C:/Users/zasha/telegram/hedgehog.tgs",
             "C:/Users/zasha/telegram/fish.tgs", "C:/Users/zasha/telegram/fish1.tgs",
-            "C:/Users/zasha/telegram/fish2.tgs", "C:/Users/zasha/telegram/strwberry.tgs"]
+            "C:/Users/zasha/telegram/fish2.tgs", "C:/Users/zasha/telegram/strwberry.tgs",
+            "C:/Users/zasha/telegram/fish3.tgs", "C:/Users/zasha/telegram/fish4.tgs"]
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -70,30 +71,30 @@ lang_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
 ])
 ch_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text="Language \U0001F22F", callback_data="lan"),
+        InlineKeyboardButton(text="Language  \U0001F22F", callback_data="lan"),
     ],
     [
-        InlineKeyboardButton(text="System of units \U0001F4D0", callback_data="uni")
+        InlineKeyboardButton(text="System of units  \U0001F4D0", callback_data="uni")
     ],
     [
-        InlineKeyboardButton(text="Time format \U0001F552", callback_data="time1")
+        InlineKeyboardButton(text="Time format  \U0001F552", callback_data="time1")
     ],
     [
-        InlineKeyboardButton(text="Quit \U0000274C", callback_data="stop")
+        InlineKeyboardButton(text="Quit  \U0000274C", callback_data="stop")
     ]
 ])
 ch_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text="Язык \U0001F22F", callback_data="lan"),
+        InlineKeyboardButton(text="Язык  \U0001F22F", callback_data="lan"),
     ],
     [
-        InlineKeyboardButton(text="Система измерений \U0001F4CF", callback_data="uni")
+        InlineKeyboardButton(text="Система измерений  \U0001F4CF", callback_data="uni")
     ],
     [
-        InlineKeyboardButton(text="Формат времени \U0001F552", callback_data="time1")
+        InlineKeyboardButton(text="Формат времени  \U0001F552", callback_data="time1")
     ],
     [
-        InlineKeyboardButton(text="Выйти \U0000274C", callback_data="stop")
+        InlineKeyboardButton(text="Выйти  \U0000274C", callback_data="stop")
     ]
 ])
 format_buttons = InlineKeyboardMarkup(inline_keyboard=[
@@ -178,14 +179,6 @@ time_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
 async def start_command(message: [types.Message, types.CallbackQuery]):
     global i, k, e, e1, e2, e3, e4, e5
     i += 1
-    user_id = message.from_user.id
-    if user_id != admin:
-        await message.reply("Unauthorised access of the bot. Please wait, until the admin will give you an access")
-        i -= i
-        print(user_id)
-    else:
-        print("welcome")
-
     if i == 1:
         await message.reply("Hey, I'm Weather Bot! So, let's get started \U0001F603"
                             "\nChoose the most suitable to you language first:", reply_markup=lang_buttons)
@@ -2114,7 +2107,7 @@ async def get_weather_rus(message: types.Message):
         w_dir = ["Северный", "Северо-Северо-Восточный", "Северо-Западный", "Восточно-Северо-Восточный", "Восточный",
                  "Восточно-Юго-Восточный", "Юго-Восточный", "Юго-Юго-Восточный",
                  "Южный", "Юго-Юго-Западный", "Юго-Западный", "Западный-Юго-Западный", "Западный",
-                 "North West", "Западный Северо-Западный",
+                 "Северо-Западный", "Западный Северо-Западный",
                  "Северо-Северо-Западный"]
         ix = int((wind_degree + 11.25) / 22.5)
         w_dir1 = w_dir[ix % 16]
@@ -2143,10 +2136,16 @@ async def get_weather_rus(message: types.Message):
         else:
             day_emoji = "\U0001F319"
 
-        tz_loc_time = tl.strftime("%H:%M")
-        tzsunr = ts1.strftime("%H:%M")
-        tzsuns = ts2.strftime("%H:%M")
         tz_loc_time_1 = tl.strftime("%d.%m.%Y")
+
+        if y < 1:
+            tz_loc_time = tl.strftime("%H:%M")
+            tzsunr = ts1.strftime("%H:%M")
+            tzsuns = ts2.strftime("%H:%M")
+        elif y >= 1:
+            tz_loc_time = tl.strftime("%I:%M %p")
+            tzsunr = ts1.strftime("%I:%M %p")
+            tzsuns = ts2.strftime("%I:%M %p")
 
         match ap_lvl:
             case 1:
@@ -2178,107 +2177,107 @@ async def get_weather_rus(message: types.Message):
             country_flag = "\U0001F1FA\U0001F1F8"
             us_state1 = data2[0]["state"]
             match us_state1:
-                case "AL":
+                case "Alabama":
                     us_state_rus = "Алабама"
-                case "AK":
+                case "Alaska":
                     us_state_rus = "Аляска"
-                case "AZ":
+                case "Arizona":
                     us_state_rus = "Аризона"
-                case "AR":
+                case "Arkansas":
                     us_state_rus = "Арканзас"
-                case "CA":
+                case "California":
                     us_state_rus = "Калифорния"
-                case "CO":
+                case "Colorado":
                     us_state_rus = "Колорадо"
-                case "CT":
+                case "Connecticut":
                     us_state_rus = "Коннектикут"
-                case "DE":
+                case "Delaware":
                     us_state_rus = "Дэлавер"
-                case "DC":
+                case "District of Columbia":
                     us_state_rus = "округ Колумбия"
-                case "FL":
+                case "Florida":
                     us_state_rus = "Флорида"
-                case "GA":
+                case "Georgia":
                     us_state_rus = "Джорджия"
-                case "HI":
+                case "Hawaii":
                     us_state_rus = "Гавайи"
-                case "ID":
+                case "Idaho":
                     us_state_rus = "Айдахо"
-                case "IL":
+                case "Illinois":
                     us_state_rus = "Иллинойс"
-                case "IN":
+                case "Indiana":
                     us_state_rus = "Индиана"
-                case "IA":
+                case "Iowa":
                     us_state_rus = "Айова"
-                case "KS":
+                case "Kansas":
                     us_state_rus = "Канзас"
-                case "KY":
+                case "Kentucky":
                     us_state_rus = "Кентукки"
-                case "LA":
+                case "Louisiana":
                     us_state_rus = "Луизиана"
-                case "ME":
+                case "Men":
                     us_state_rus = "Мэн"
-                case "MD":
+                case "Maryland":
                     us_state_rus = "Мэрилэнд"
-                case "MA":
+                case "Massachusetts":
                     us_state_rus = "Массачусетс"
-                case "MI":
+                case "Michigan":
                     us_state_rus = "Мичиган"
-                case "MN":
+                case "Minnesota":
                     us_state_rus = "Миннесота"
-                case "MS":
+                case "Mississippi":
                     us_state_rus = "Миссисипи"
-                case "MO":
+                case "Missouri":
                     us_state_rus = "Миссури"
-                case "MT":
+                case "Montana":
                     us_state_rus = "Монтана"
-                case "NE":
+                case "Nebraska":
                     us_state_rus = "Небраска"
-                case "NV":
+                case "Nevada":
                     us_state_rus = "Невада"
-                case "NH":
+                case "New Hampshire":
                     us_state_rus = "Нью-Гэмпшир"
-                case "NJ":
+                case "New Jersey":
                     us_state_rus = "Нью-Джерси"
-                case "NM":
+                case "New Mexico":
                     us_state_rus = "Нью-Мексико"
-                case "NY":
+                case "New York":
                     us_state_rus = "Нью-Йорк"
-                case "NC":
+                case "North Carolina":
                     us_state_rus = "Северная Каролина"
-                case "ND":
+                case "North Dakota":
                     us_state_rus = "Северная Дакота"
-                case "OH":
+                case "Ohio":
                     us_state_rus = "Огайо"
-                case "OK":
+                case "Oklahoma":
                     us_state_rus = "Оклахома"
-                case "OR":
+                case "Oregon":
                     us_state_rus = "Орегон"
-                case "PA":
+                case "Pennsylvania":
                     us_state_rus = "Пенсильвания"
-                case "RI":
+                case "Rhode-Island":
                     us_state_rus = "Род-Айленд"
-                case "SC":
+                case "South Carolina":
                     us_state_rus = "Южная Каролина"
-                case "SD":
+                case "South Dakota":
                     us_state_rus = "Южная Дакота"
-                case "TN":
+                case "Tennessee":
                     us_state_rus = "Теннесси"
-                case "TX":
+                case "Texas":
                     us_state_rus = "Техас"
-                case "UT":
+                case "Utah":
                     us_state_rus = "Юта"
-                case "VT":
+                case "Vermont":
                     us_state_rus = "Вермонт"
-                case "VA":
+                case "Virginia":
                     us_state_rus = "Виргиния"
-                case "WA":
+                case "Washington":
                     us_state_rus = "Вашингтон"
-                case "WV":
+                case "West Virginia":
                     us_state_rus = "Южная Виргиния"
-                case "WI":
+                case "Wisconsin":
                     us_state_rus = "Висконсин"
-                case "WY":
+                case "Wyoming":
                     us_state_rus = "Вайоминг"
                 case "00":
                     us_state_rus = ""
