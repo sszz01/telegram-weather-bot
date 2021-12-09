@@ -1141,16 +1141,16 @@ async def get_weather_eng(message: types.Message):
         else:
             day_emoji = "\U0001F319"
 
-            if ap_lvl == 1:
-                ap_text = "Good"
-            elif ap_lvl == 2:
-                ap_text = "Fair"
-            elif ap_lvl == 3:
-                ap_text = "Moderate"
-            elif ap_lvl == 4:
-                ap_text = "Poor"
-            elif ap_lvl == 5:
-                ap_text = "Very Poor"
+        if ap_lvl == 1:
+            ap_text = "Good"
+        elif ap_lvl == 2:
+            ap_text = "Fair"
+        elif ap_lvl == 3:
+            ap_text = "Moderate"
+        elif ap_lvl == 4:
+            ap_text = "Poor"
+        elif ap_lvl == 5:
+            ap_text = "Very Poor"
 
         if y < 1:
             tz_loc_time = tl.strftime("%H:%M")
@@ -2148,16 +2148,16 @@ async def get_weather_rus(message: types.Message):
             tzsunr = ts1.strftime("%I:%M %p")
             tzsuns = ts2.strftime("%I:%M %p")
 
-            if ap_lvl == 1:
-                ap_text1 = "Хороший"
-            elif ap_lvl == 2:
-                ap_text1 = "Удовлетворительный"
-            elif ap_lvl == 3:
-                ap_text1 = "Умеренный"
-            elif ap_lvl == 4:
-                ap_text1 = "Загрязненный"
-            elif ap_lvl == 5:
-                ap_text1 = "Очень загрязненный"
+        if ap_lvl == 1:
+            ap_text1 = "Хороший"
+        elif ap_lvl == 2:
+            ap_text1 = "Удовлетворительный"
+        elif ap_lvl == 3:
+            ap_text1 = "Умеренный"
+        elif ap_lvl == 4:
+            ap_text1 = "Загрязненный"
+        elif ap_lvl == 5:
+            ap_text1 = "Очень загрязненный"
 
         if uvi == 0:
             uvi_text = "Безопасный"
