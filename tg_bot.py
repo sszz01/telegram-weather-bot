@@ -2,12 +2,14 @@ import random
 import requests
 import datetime
 import re
-from config import bot_token, ow_token
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pprint import pprint
+
+bot_token = "2075854135:AAFfdLRg0rV2TRNMDHEUwTX194Wv5_mqJYU"
+ow_token = "f7eda094dcc6dcec0d68c972318e04df"
 
 bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
@@ -1139,16 +1141,15 @@ async def get_weather_eng(message: types.Message):
         else:
             day_emoji = "\U0001F319"
 
-        match ap_lvl:
-            case 1:
+            if ap_lvl == 1:
                 ap_text = "Good"
-            case 2:
+            elif ap_lvl == 2:
                 ap_text = "Fair"
-            case 3:
+            elif ap_lvl == 3:
                 ap_text = "Moderate"
-            case 4:
+            elif ap_lvl == 4:
                 ap_text = "Poor"
-            case 5:
+            elif ap_lvl == 5:
                 ap_text = "Very Poor"
 
         if y < 1:
@@ -2147,16 +2148,15 @@ async def get_weather_rus(message: types.Message):
             tzsunr = ts1.strftime("%I:%M %p")
             tzsuns = ts2.strftime("%I:%M %p")
 
-        match ap_lvl:
-            case 1:
+            if ap_lvl == 1:
                 ap_text1 = "Хороший"
-            case 2:
+            elif ap_lvl == 2:
                 ap_text1 = "Удовлетворительный"
-            case 3:
+            elif ap_lvl == 3:
                 ap_text1 = "Умеренный"
-            case 4:
+            elif ap_lvl == 4:
                 ap_text1 = "Загрязненный"
-            case 5:
+            elif ap_lvl == 5:
                 ap_text1 = "Очень загрязненный"
 
         if uvi == 0:
@@ -2176,111 +2176,110 @@ async def get_weather_rus(message: types.Message):
             full_country_name = "США"
             country_flag = "\U0001F1FA\U0001F1F8"
             us_state1 = data2[0]["state"]
-            match us_state1:
-                case "Alabama":
-                    us_state_rus = "Алабама"
-                case "Alaska":
-                    us_state_rus = "Аляска"
-                case "Arizona":
-                    us_state_rus = "Аризона"
-                case "Arkansas":
-                    us_state_rus = "Арканзас"
-                case "California":
-                    us_state_rus = "Калифорния"
-                case "Colorado":
-                    us_state_rus = "Колорадо"
-                case "Connecticut":
-                    us_state_rus = "Коннектикут"
-                case "Delaware":
-                    us_state_rus = "Дэлавер"
-                case "District of Columbia":
-                    us_state_rus = "округ Колумбия"
-                case "Florida":
-                    us_state_rus = "Флорида"
-                case "Georgia":
-                    us_state_rus = "Джорджия"
-                case "Hawaii":
-                    us_state_rus = "Гавайи"
-                case "Idaho":
-                    us_state_rus = "Айдахо"
-                case "Illinois":
-                    us_state_rus = "Иллинойс"
-                case "Indiana":
-                    us_state_rus = "Индиана"
-                case "Iowa":
-                    us_state_rus = "Айова"
-                case "Kansas":
-                    us_state_rus = "Канзас"
-                case "Kentucky":
-                    us_state_rus = "Кентукки"
-                case "Louisiana":
-                    us_state_rus = "Луизиана"
-                case "Men":
-                    us_state_rus = "Мэн"
-                case "Maryland":
-                    us_state_rus = "Мэрилэнд"
-                case "Massachusetts":
-                    us_state_rus = "Массачусетс"
-                case "Michigan":
-                    us_state_rus = "Мичиган"
-                case "Minnesota":
-                    us_state_rus = "Миннесота"
-                case "Mississippi":
-                    us_state_rus = "Миссисипи"
-                case "Missouri":
-                    us_state_rus = "Миссури"
-                case "Montana":
-                    us_state_rus = "Монтана"
-                case "Nebraska":
-                    us_state_rus = "Небраска"
-                case "Nevada":
-                    us_state_rus = "Невада"
-                case "New Hampshire":
-                    us_state_rus = "Нью-Гэмпшир"
-                case "New Jersey":
-                    us_state_rus = "Нью-Джерси"
-                case "New Mexico":
-                    us_state_rus = "Нью-Мексико"
-                case "New York":
-                    us_state_rus = "Нью-Йорк"
-                case "North Carolina":
-                    us_state_rus = "Северная Каролина"
-                case "North Dakota":
-                    us_state_rus = "Северная Дакота"
-                case "Ohio":
-                    us_state_rus = "Огайо"
-                case "Oklahoma":
-                    us_state_rus = "Оклахома"
-                case "Oregon":
-                    us_state_rus = "Орегон"
-                case "Pennsylvania":
-                    us_state_rus = "Пенсильвания"
-                case "Rhode-Island":
-                    us_state_rus = "Род-Айленд"
-                case "South Carolina":
-                    us_state_rus = "Южная Каролина"
-                case "South Dakota":
-                    us_state_rus = "Южная Дакота"
-                case "Tennessee":
-                    us_state_rus = "Теннесси"
-                case "Texas":
-                    us_state_rus = "Техас"
-                case "Utah":
-                    us_state_rus = "Юта"
-                case "Vermont":
-                    us_state_rus = "Вермонт"
-                case "Virginia":
-                    us_state_rus = "Виргиния"
-                case "Washington":
-                    us_state_rus = "Вашингтон"
-                case "West Virginia":
-                    us_state_rus = "Южная Виргиния"
-                case "Wisconsin":
-                    us_state_rus = "Висконсин"
-                case "Wyoming":
-                    us_state_rus = "Вайоминг"
-                case "00":
-                    us_state_rus = ""
+            if us_state1 == "Alabama":
+                us_state_rus = "Алабама"
+            elif us_state1 == "Alaska":
+                us_state_rus = "Аляска"
+            elif us_state1 == "Arizona":
+                us_state_rus = "Аризона"
+            elif us_state1 == "Arkansas":
+                us_state_rus = "Арканзас"
+            elif us_state1 == "California":
+                us_state_rus = "Калифорния"
+            elif us_state1 == "Colorado":
+                us_state_rus = "Колорадо"
+            elif us_state1 == "Connecticut":
+                us_state_rus = "Коннектикут"
+            elif us_state1 == "Delaware":
+                us_state_rus = "Дэлавер"
+            elif us_state1 == "District of Columbia":
+                us_state_rus = "округ Колумбия"
+            elif us_state1 == "Florida":
+                us_state_rus = "Флорида"
+            elif us_state1 == "Georgia":
+                us_state_rus = "Джорджия"
+            elif us_state1 == "Hawaii":
+                us_state_rus = "Гавайи"
+            elif us_state1 == "Idaho":
+                us_state_rus = "Айдахо"
+            elif us_state1 == "Illinois":
+                us_state_rus = "Иллинойс"
+            elif us_state1 == "Indiana":
+                us_state_rus = "Индиана"
+            elif us_state1 == "Iowa":
+                us_state_rus = "Айова"
+            elif us_state1 == "Kansas":
+                us_state_rus = "Канзас"
+            elif us_state1 == "Kentucky":
+                us_state_rus = "Кентукки"
+            elif us_state1 == "Louisiana":
+                us_state_rus = "Луизиана"
+            elif us_state1 == "Men":
+                us_state_rus = "Мэн"
+            elif us_state1 == "Maryland":
+                us_state_rus = "Мэрилэнд"
+            elif us_state1 == "Massachusetts":
+                us_state_rus = "Массачусетс"
+            elif us_state1 == "Michigan":
+                us_state_rus = "Мичиган"
+            elif us_state1 == "Minnesota":
+                us_state_rus = "Миннесота"
+            elif us_state1 == "Mississippi":
+                us_state_rus = "Миссисипи"
+            elif us_state1 == "Missouri":
+                us_state_rus = "Миссури"
+            elif us_state1 == "Montana":
+                us_state_rus = "Монтана"
+            elif us_state1 == "Nebraska":
+                us_state_rus = "Небраска"
+            elif us_state1 == "Nevada":
+                us_state_rus = "Невада"
+            elif us_state1 == "New Hampshire":
+                us_state_rus = "Нью-Гэмпшир"
+            elif us_state1 == "New Jersey":
+                us_state_rus = "Нью-Джерси"
+            elif us_state1 == "New Mexico":
+                us_state_rus = "Нью-Мексико"
+            elif us_state1 == "New York":
+                us_state_rus = "Нью-Йорк"
+            elif us_state1 == "North Carolina":
+                us_state_rus = "Северная Каролина"
+            elif us_state1 == "North Dakota":
+                us_state_rus = "Северная Дакота"
+            elif us_state1 == "Ohio":
+                us_state_rus = "Огайо"
+            elif us_state1 == "Oklahoma":
+                us_state_rus = "Оклахома"
+            elif us_state1 == "Oregon":
+                us_state_rus = "Орегон"
+            elif us_state1 == "Pennsylvania":
+                us_state_rus = "Пенсильвания"
+            elif us_state1 == "Rhode-Island":
+                us_state_rus = "Род-Айленд"
+            elif us_state1 == "South Carolina":
+                us_state_rus = "Южная Каролина"
+            elif us_state1 == "South Dakota":
+                us_state_rus = "Южная Дакота"
+            elif us_state1 == "Tennessee":
+                us_state_rus = "Теннесси"
+            elif us_state1 == "Texas":
+                us_state_rus = "Техас"
+            elif us_state1 == "Utah":
+                us_state_rus = "Юта"
+            elif us_state1 == "Vermont":
+                us_state_rus = "Вермонт"
+            elif us_state1 == "Virginia":
+                us_state_rus = "Виргиния"
+            elif us_state1 == "Washington":
+                us_state_rus = "Вашингтон"
+            elif us_state1 == "West Virginia":
+                us_state_rus = "Южная Виргиния"
+            elif us_state1 == "Wisconsin":
+                us_state_rus = "Висконсин"
+            elif us_state1 == "Wyoming":
+                us_state_rus = "Вайоминг"
+            elif us_state1 == "00":
+                us_state_rus = ""
             if us_state1 == "00":
                 await message.reply(
                     f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
