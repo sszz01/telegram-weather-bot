@@ -28,18 +28,18 @@ e4 = 0
 e5 = 0
 y = 0
 timecall = ""
-stickers = ["C:/Users/zasha/telegram/cherry.tgs", "C:/Users/zasha/telegram/cherry1.tgs",
-            "C:/Users/zasha/telegram/cherry2.tgs", "C:/Users/zasha/telegram/sus.tgs",
-            "C:/Users/zasha/telegram/sus1.tgs", "C:/Users/zasha/telegram/marshmallow1.tgs",
-            "C:/Users/zasha/telegram/bear.tgs", "C:/Users/zasha/telegram/bear2.tgs",
-            "C:/Users/zasha/telegram/bear3.tgs", "C:/Users/zasha/telegram/bear4.tgs",
-            "C:/Users/zasha/telegram/babyyoda.tgs", "C:/Users/zasha/telegram/babyyoda1.tgs",
-            "C:/Users/zasha/telegram/astronaut.tgs", "C:/Users/zasha/telegram/astronaut1.tgs",
-            "C:/Users/zasha/telegram/frog.tgs", "C:/Users/zasha/telegram/hand.tgs",
-            "C:/Users/zasha/telegram/tendy.tgs", "C:/Users/zasha/telegram/hedgehog.tgs",
-            "C:/Users/zasha/telegram/fish.tgs", "C:/Users/zasha/telegram/fish1.tgs",
-            "C:/Users/zasha/telegram/fish2.tgs", "C:/Users/zasha/telegram/strwberry.tgs",
-            "C:/Users/zasha/telegram/fish3.tgs", "C:/Users/zasha/telegram/fish4.tgs"]
+stickers = ["./tgs/cherry.tgs", "./tgs/cherry1.tgs",
+            "./tgs/cherry2.tgs", "./tgs/sus.tgs",
+            "./tgs/sus1.tgs", "./tgs/marshmallow1.tgs",
+            "./tgs/bear.tgs", "./tgs/bear2.tgs",
+            "./tgs/bear3.tgs", "./tgs/bear4.tgs",
+            "./tgs/babyyoda.tgs", "./tgs/babyyoda1.tgs",
+            "./tgs/astronaut.tgs", "./tgs/astronaut1.tgs",
+            "./tgs/frog.tgs", "./tgs/hand.tgs",
+            "./tgs/tendy.tgs", "./tgs/hedgehog.tgs",
+            "./tgs/fish.tgs", "./tgs/fish1.tgs",
+            "./tgs/fish2.tgs", "./tgs/strwberry.tgs",
+            "./tgs/fish3.tgs", "./tgs/fish4.tgs"]
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -2382,7 +2382,7 @@ async def setlangeng(call: CallbackQuery):
         e1 -= e1
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+        sti = open("tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
                                "Done!\nYour bot is now ready to go! \U0001F603\n"
@@ -2431,7 +2431,7 @@ async def setlangrus(call: CallbackQuery):
         e -= e
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+        sti = open("tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
                                "Готово!\nБот полностью готов к работе! \U0001F603\n"
@@ -2612,7 +2612,7 @@ async def set12(call: CallbackQuery):
 
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+        sti = open("tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 2:
             await bot.send_message(call.from_user.id,
@@ -2674,7 +2674,7 @@ async def set24(call: CallbackQuery):
             print("here19")
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("C:/Users/zasha/telegram/marshmallow.tgs", "rb")
+        sti = open("tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 3:
             await bot.send_message(call.from_user.id,
