@@ -38,7 +38,7 @@ stickers = ["./tgs/cherry.tgs", "./tgs/cherry1.tgs",
             "./tgs/frog.tgs", "./tgs/hand.tgs",
             "./tgs/tendy.tgs", "./tgs/hedgehog.tgs",
             "./tgs/fish.tgs", "./tgs/fish1.tgs",
-            "./tgs/fish2.tgs", "./tgs/strwberry.tgs",
+            "./tgs/fish2.tgs", "./tgs/strawberry.tgs",
             "./tgs/fish3.tgs", "./tgs/fish4.tgs"]
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
@@ -2382,7 +2382,7 @@ async def setlangeng(call: CallbackQuery):
         e1 -= e1
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("tgs/marshmallow.tgs", "rb")
+        sti = open(".tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
                                "Done!\nYour bot is now ready to go! \U0001F603\n"
@@ -2431,7 +2431,7 @@ async def setlangrus(call: CallbackQuery):
         e -= e
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("tgs/marshmallow.tgs", "rb")
+        sti = open(".tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
                                "Готово!\nБот полностью готов к работе! \U0001F603\n"
@@ -2612,7 +2612,7 @@ async def set12(call: CallbackQuery):
 
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("tgs/marshmallow.tgs", "rb")
+        sti = open(".tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 2:
             await bot.send_message(call.from_user.id,
@@ -2674,7 +2674,7 @@ async def set24(call: CallbackQuery):
             print("here19")
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("tgs/marshmallow.tgs", "rb")
+        sti = open(".tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 3:
             await bot.send_message(call.from_user.id,
