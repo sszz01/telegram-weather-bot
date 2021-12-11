@@ -2382,11 +2382,12 @@ async def setlangeng(call: CallbackQuery):
         e1 -= e1
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("./tgs/marshmallow.tgs", "rb")
+        sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
-                               "Done!\nYour bot is now ready to go! \U0001F603\n"
-                               "Now just type any city or place name to receive its weather information! \U0001F5FA")
+                               "Готово!\nПараметры бота изменены. \U0001F603\n"
+                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
+                               "погоде! \U0001F5FA")
         print("here2")
         j += 1
         k -= k
@@ -2431,10 +2432,10 @@ async def setlangrus(call: CallbackQuery):
         e -= e
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("./tgs/marshmallow.tgs", "rb")
+        sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
-                               "Готово!\nБот полностью готов к работе! \U0001F603\n"
+                               "Готово!\nПараметры бота изменены. \U0001F603\n"
                                "Теперь просто введите название любого города или места, чтобы получить информацию о "
                                "погоде! \U0001F5FA")
         print("here5")
