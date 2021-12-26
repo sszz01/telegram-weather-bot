@@ -2,13 +2,14 @@ import random
 import requests
 import datetime
 import re
+import os
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pprint import pprint
 
-bot_token = "2075854135:AAFfdLRg0rV2TRNMDHEUwTX194Wv5_mqJYU"
+bot_token = os.environ["TOKEN"]
 ow_token = "f7eda094dcc6dcec0d68c972318e04df"
 
 bot = Bot(token=bot_token)
