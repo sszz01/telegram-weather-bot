@@ -10,6 +10,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQu
 from pprint import pprint
 
 # os.environ["TOKEN"]
+# comment
 bot_token = "2075854135:AAFPBIY5tGeKAhj2zo7PlpvfpdCrI8_Rvuc"
 ow_token = "f7eda094dcc6dcec0d68c972318e04df"
 
