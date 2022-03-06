@@ -9,7 +9,8 @@ from aiogram.utils import executor
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pprint import pprint
 
-bot_token = os.environ["TOKEN"]
+# os.environ["TOKEN"]
+bot_token = "2075854135:AAFPBIY5tGeKAhj2zo7PlpvfpdCrI8_Rvuc"
 ow_token = "f7eda094dcc6dcec0d68c972318e04df"
 
 bot = Bot(token=bot_token)
@@ -48,6 +49,9 @@ lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA", callback_data="rus")
+    ],
+    [
+        InlineKeyboardButton(text="Polski\U0001F1F5\U0001F1F1", callback_data="pol")
     ]
 ])
 lang_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
@@ -56,6 +60,9 @@ lang_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA", callback_data="rus")
+    ],
+    [
+        InlineKeyboardButton(text="Польский\U0001F1F5\U0001F1F1", callback_data="pol")
     ],
     [
         InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
@@ -69,7 +76,24 @@ lang_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
         InlineKeyboardButton(text="Russian\U0001F1F7\U0001F1FA", callback_data="rus")
     ],
     [
+        InlineKeyboardButton(text="Polish\U0001F1F5\U0001F1F1", callback_data="pol")
+    ],
+    [
         InlineKeyboardButton(text="Back \U00002B05", callback_data="back")
+    ]
+])
+lang_buttons_pol = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Angielski\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8", callback_data="eng"),
+    ],
+    [
+        InlineKeyboardButton(text="Rosyjski\U0001F1F7\U0001F1FA", callback_data="rus")
+    ],
+    [
+        InlineKeyboardButton(text="Polski\U0001F1F5\U0001F1F1", callback_data="pol")
+    ],
+    [
+        InlineKeyboardButton(text="Plecy \U00002B05", callback_data="back")
     ]
 ])
 ch_buttons = InlineKeyboardMarkup(inline_keyboard=[
@@ -100,6 +124,20 @@ ch_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
         InlineKeyboardButton(text="Выйти  \U0000274C", callback_data="stop")
     ]
 ])
+ch_buttons_pol = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Język  \U0001F22F", callback_data="lan"),
+    ],
+    [
+        InlineKeyboardButton(text="System miar  \U0001F4CF", callback_data="uni")
+    ],
+    [
+        InlineKeyboardButton(text="Format czasu  \U0001F552", callback_data="time1")
+    ],
+    [
+        InlineKeyboardButton(text="Wyjście  \U0000274C", callback_data="stop")
+    ]
+])
 format_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text="Metric", callback_data="met"),
@@ -114,6 +152,14 @@ format_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Имперская", callback_data="imp")
+    ]
+])
+format_buttons_pol = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Metryczny", callback_data="met"),
+    ],
+    [
+        InlineKeyboardButton(text="Imperialny", callback_data="imp")
     ]
 ])
 format_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
@@ -138,6 +184,17 @@ format_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
         InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
     ]
 ])
+format_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Metryczny", callback_data="met"),
+    ],
+    [
+        InlineKeyboardButton(text="Imperialny", callback_data="imp")
+    ],
+    [
+        InlineKeyboardButton(text="Wyjście \U00002B05", callback_data="back")
+    ]
+])
 time_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text="12-hour format", callback_data="12"),
@@ -152,6 +209,14 @@ time_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="24-часовой формат", callback_data="24")
+    ]
+])
+time_buttons_pol = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Format 12-godzinny", callback_data="12"),
+    ],
+    [
+        InlineKeyboardButton(text="Format 24-godzinny", callback_data="24")
     ]
 ])
 time_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
@@ -174,6 +239,17 @@ time_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
     ],
     [
         InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
+    ]
+])
+time_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Format 12-godzinny", callback_data="12"),
+    ],
+    [
+        InlineKeyboardButton(text="Format 24-godzinny", callback_data="24")
+    ],
+    [
+        InlineKeyboardButton(text="Wyjście \U00002B05", callback_data="back")
     ]
 ])
 
@@ -2127,7 +2203,7 @@ async def get_weather_rus(message: types.Message):
             tzsuns = suns + tz
             tz_loc_time = loc_time + tz
         else:
-            print("A timezone error occurred")
+            print("A timezone error occurred1")
 
         tl = datetime.datetime.fromtimestamp(tz_loc_time)
         ts1 = datetime.datetime.fromtimestamp(tzsunr)
@@ -2215,7 +2291,7 @@ async def get_weather_rus(message: types.Message):
                 us_state_rus = "Кентукки"
             elif us_state1 == "Louisiana":
                 us_state_rus = "Луизиана"
-            elif us_state1 == "Men":
+            elif us_state1 == "Maine":
                 us_state_rus = "Мэн"
             elif us_state1 == "Maryland":
                 us_state_rus = "Мэрилэнд"
@@ -2347,6 +2423,1108 @@ async def get_weather_rus(message: types.Message):
         print(ex)
 
 
+@dp.message_handler()
+async def get_weather_pol(message: types.Message):
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state2, us_state_pol, ap_text2
+    json_to_smile = {
+        "Clear": "Słoneczny \U00002600",
+        "Rain": "Deszcz \U00002614",
+        "Clouds": "Zachmurzenie \U00002601",
+        "Drizzle": "Mżawka \U0001F326",
+        "Thunderstorm": "Burza \U000026A1",
+        "Snow": "Śnieg \U0001F328",
+        "Fog": "Mgiełka \U0001F32B",
+        "Tornado": "Tornado \U0001F32A",
+        "Mist": "Dymek \U0001F301",
+        "Haze": "Mgła \U0001F636\U0000200D\U0001F32B\U0000FE0F",
+        "Few clouds": "Pochmurny \U0001F324"
+    }
+
+    try:
+        r = requests.get(
+            f"http://api.openweathermap.org/data/2.5/weather?q={message.text}, {message.text}&appid={ow_token}"
+            f"&units={tformat}&lang=pl"
+        )
+        data = r.json()
+        pprint(data)
+        r1 = requests.get(
+            f"http://api.openweathermap.org/geo/1.0/direct?q={message.text},{message.text}"
+            f"&limit=3&appid={ow_token}"
+        )
+        data2 = r1.json()
+        pprint(data2)
+        city = data["name"]
+        current_w = round(data["main"]["temp"])
+        wind_sp = round(data["wind"]["speed"])
+        pressure = data["main"]["pressure"]
+        sunr = data["sys"]["sunrise"]
+        suns = data["sys"]["sunset"]
+        fls_like = round(data["main"]["feels_like"])
+        humidity = data["main"]["humidity"]
+        max_temp = round(data["main"]["temp_max"])
+        min_temp = round(data["main"]["temp_min"])
+        country = data["sys"]["country"]
+        weather_description = data["weather"][0]["main"]
+        wind_degree = data["wind"]["deg"]
+        vis = data["visibility"]
+        tz = data["timezone"]
+        loc_time = data["dt"]
+        lat = data["coord"]["lat"]
+        lon = data["coord"]["lon"]
+
+        r2 = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,"
+                          f"hourly,daily,alerts&units={tformat}&appid={ow_token}")
+        data1 = r2.json()
+        # pprint(data1)
+        dew_p = round(data1["current"]["dew_point"])
+        uvi = round(data1["current"]["uvi"])
+
+        r3 = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={ow_token}")
+        data3 = r3.json()
+        # pprint(data3)
+        ap_lvl = data3["list"][0]["main"]["aqi"]
+
+        vis = round(vis / 1000)
+
+        # A-countries
+        if country == "AC":
+            full_country_name = "Wyspa Wniebowstąpienia"
+            country_flag = "\U0001F1E6\U0001F1E8"
+        elif country == "AD":
+            full_country_name = "Andora"
+            country_flag = "\U0001F1E6\U0001F1E9"
+        elif country == "AE":
+            full_country_name = "ZEA"
+            country_flag = "\U0001F1E6\U0001F1EA"
+        elif country == "AF":
+            full_country_name = "Afganistan"
+            country_flag = "\U0001F1E6\U0001F1EB"
+        elif country == "AG":
+            full_country_name = "Antigua i Barbuda"
+            country_flag = "\U0001F1E6\U0001F1EC"
+        elif country == "AI":
+            full_country_name = "Anguilla"
+            country_flag = "\U0001F1E6\U0001F1EE"
+        elif country == "AL":
+            full_country_name = "Albania"
+            country_flag = "\U0001F1E6\U0001F1F1"
+        elif country == "AM":
+            full_country_name = "Armenia"
+            country_flag = "\U0001F1E6\U0001F1F2"
+        elif country == "AO":
+            full_country_name = "Angola"
+            country_flag = "\U0001F1E6\U0001F1F4"
+        elif country == "AQ":
+            full_country_name = "Antarktyda"
+            country_flag = "\U0001F1E6\U0001F1F6"
+        elif country == "AR":
+            full_country_name = "Argentyna"
+            country_flag = "\U0001F1E6\U0001F1F7"
+        elif country == "AS":
+            full_country_name = "Samoa Amerykańskie"
+            country_flag = "\U0001F1E6\U0001F1F8"
+        elif country == "AT":
+            full_country_name = "Austria"
+            country_flag = "\U0001F1E6\U0001F1F9"
+        elif country == "AU":
+            full_country_name = "Australia"
+            country_flag = "\U0001F1E6\U0001F1FA"
+        elif country == "AW":
+            full_country_name = "Aruba"
+            country_flag = "\U0001F1E6\U0001F1FC"
+        elif country == "AX":
+            full_country_name = "Wyspy Alandzkie"
+            country_flag = "\U0001F1E6\U0001F1FD"
+        elif country == "AZ":
+            full_country_name = "Azerbejdżan"
+            country_flag = "\U0001F1E6\U0001F1FF"
+        # B-countries
+        elif country == "BA":
+            full_country_name = "Босния и Герцеговина"
+            country_flag = "\U0001F1E7\U0001F1E6"
+        elif country == "BB":
+            full_country_name = "Barbados"
+            country_flag = "\U0001F1E7\U0001F1E7"
+        elif country == "BD":
+            full_country_name = "Bangladesz"
+            country_flag = "\U0001F1E7\U0001F1E9"
+        elif country == "BE":
+            full_country_name = "Belgia"
+            country_flag = "\U0001F1E7\U0001F1EA"
+        elif country == "BF":
+            full_country_name = "Burkina Faso"
+            country_flag = "\U0001F1E7\U0001F1EB"
+        elif country == "BG":
+            full_country_name = "Bułgaria"
+            country_flag = "\U0001F1E7\U0001F1EC"
+        elif country == "BH":
+            full_country_name = "Bahrajn"
+            country_flag = "\U0001F1E7\U0001F1ED"
+        elif country == "BI":
+            full_country_name = "Burundi"
+            country_flag = "\U0001F1E7\U0001F1EE"
+        elif country == "BJ":
+            full_country_name = "Benin"
+            country_flag = "\U0001F1E7\U0001F1EF"
+        elif country == "BL":
+            full_country_name = "Saint Barthelemy"
+            country_flag = "\U0001F1E7\U0001F1F1"
+        elif country == "BM":
+            full_country_name = "Bermudy"
+            country_flag = "\U0001F1E7\U0001F1F2"
+        elif country == "BN":
+            full_country_name = "Brunei"
+            country_flag = "\U0001F1E7\U0001F1F3"
+        elif country == "BO":
+            full_country_name = "Boliwia"
+            country_flag = "\U0001F1E7\U0001F1F4"
+        elif country == "BQ":
+            full_country_name = "Karaiby Holandia"
+            country_flag = "\U0001F1E7\U0001F1F6"
+        elif country == "BR":
+            full_country_name = "Brazylia"
+            country_flag = "\U0001F1E7\U0001F1F7"
+        elif country == "BS":
+            full_country_name = "Bahamy"
+            country_flag = "\U0001F1E7\U0001F1F8"
+        elif country == "BT":
+            full_country_name = "Butan"
+            country_flag = "\U0001F1E7\U0001F1F9"
+        elif country == "BV":
+            full_country_name = "Wyspa Bouveta"
+            country_flag = "\U0001F1E7\U0001F1FB"
+        elif country == "BW":
+            full_country_name = "Botswana"
+            country_flag = "\U0001F1E7\U0001F1FC"
+        elif country == "BY":
+            full_country_name = "Białoruś"
+            country_flag = "\U0001F1E7\U0001F1FE"
+        elif country == "BZ":
+            full_country_name = "Belize"
+            country_flag = "\U0001F1E7\U0001F1FF"
+        # C-countries
+        elif country == "CA":
+            full_country_name = "Kanada"
+            country_flag = "\U0001F1E8\U0001F1E6"
+        elif country == "CC":
+            full_country_name = "Wyspy Kokosowe"
+            country_flag = "\U0001F1E8\U0001F1E8"
+        elif country == "CD":
+            full_country_name = "Demokratyczna Republika Konga"
+            country_flag = "\U0001F1E8\U0001F1E9"
+        elif country == "CF":
+            full_country_name = "Republika Środkowoafrykańska"
+            country_flag = "\U0001F1E8\U0001F1EB"
+        elif country == "CG":
+            full_country_name = "Republika Konga"
+            country_flag = "\U0001F1E8\U0001F1EC"
+        elif country == "CH":
+            full_country_name = "Szwajcaria"
+            country_flag = "\U0001F1E8\U0001F1ED"
+        elif country == "CI":
+            full_country_name = "Wybrzeże Kości Słoniowej"
+            country_flag = "\U0001F1E8\U0001F1EE"
+        elif country == "CK":
+            full_country_name = "Wyspy Cooka"
+            country_flag = "\U0001F1E8\U0001F1F0"
+        elif country == "CL":
+            full_country_name = "Chile"
+            country_flag = "\U0001F1E8\U0001F1F1"
+        elif country == "CM":
+            full_country_name = "Kamerun"
+            country_flag = "\U0001F1E8\U0001F1F2"
+        elif country == "CN":
+            full_country_name = "Chiny"
+            country_flag = "\U0001F1E8\U0001F1F3"
+        elif country == "CO":
+            full_country_name = "Kolumbia"
+            country_flag = "\U0001F1E8\U0001F1F4"
+        elif country == "CP":
+            full_country_name = "Wyspa Clippertona"
+            country_flag = "\U0001F1E8\U0001F1F5"
+        elif country == "CR":
+            full_country_name = "Kostaryka"
+            country_flag = "\U0001F1E8\U0001F1F7"
+        elif country == "CU":
+            full_country_name = "Kuba"
+            country_flag = "\U0001F1E8\U0001F1FA"
+        elif country == "CV":
+            full_country_name = "Wyspy Zielonego Przylądka"
+            country_flag = "\U0001F1E8\U0001F1FB"
+        elif country == "CW":
+            full_country_name = "Curaçao"
+            country_flag = "\U0001F1E8\U0001F1FC"
+        elif country == "CX":
+            full_country_name = "Wyspa Bożego Narodzenia"
+            country_flag = "\U0001F1E8\U0001F1FD"
+        elif country == "CY":
+            full_country_name = "Cypr"
+            country_flag = "\U0001F1E8\U0001F1FE"
+        elif country == "CZ":
+            full_country_name = "Czech"
+            country_flag = "\U0001F1E8\U0001F1FF"
+        # D-countries
+        elif country == "DE":
+            full_country_name = "Niemcy"
+            country_flag = "\U0001F1E9\U0001F1EA"
+        elif country == "DG":
+            full_country_name = "Diego Garcia"
+            country_flag = "\U0001F1E9\U0001F1EC"
+        elif country == "DJ":
+            full_country_name = "Dżibuti"
+            country_flag = "\U0001F1E9\U0001F1EF"
+        elif country == "DK":
+            full_country_name = "Dania"
+            country_flag = "\U0001F1E9\U0001F1F0"
+        elif country == "DM":
+            full_country_name = "Dominika"
+            country_flag = "\U0001F1E9\U0001F1F2"
+        elif country == "DO":
+            full_country_name = "Republika Dominikany"
+            country_flag = "\U0001F1E9\U0001F1F4"
+        elif country == "DZ":
+            full_country_name = "Republika Dominikany"
+            country_flag = "\U0001F1E9\U0001F1FF"
+        # E-countries
+        elif country == "EA":
+            full_country_name = "Ceuta i Melilla"
+            country_flag = "\U0001F1EA\U0001F1E6"
+        elif country == "EC":
+            full_country_name = "Ekwador"
+            country_flag = "\U0001F1EA\U0001F1E8"
+        elif country == "EE":
+            full_country_name = "Estonia"
+            country_flag = "\U0001F1EA\U0001F1EA"
+        elif country == "EG":
+            full_country_name = "Egipt"
+            country_flag = "\U0001F1EA\U0001F1EC"
+        elif country == "EH":
+            full_country_name = "Sahara Zachodnia"
+            country_flag = "\U0001F1EA\U0001F1ED"
+        elif country == "ER":
+            full_country_name = "Erytrea"
+            country_flag = "\U0001F1EA\U0001F1F7"
+        elif country == "ES":
+            full_country_name = "Hiszpania"
+            country_flag = "\U0001F1EA\U0001F1F8"
+        elif country == "ET":
+            full_country_name = "Etiopia"
+            country_flag = "\U0001F1EA\U0001F1F9"
+        # elif country == "EU":
+        # full_country_name = "European Union"
+        # country_flag = "\U0001F1EA\U0001F1FA"
+        # F-countries
+        elif country == "FI":
+            full_country_name = "Finlandia"
+            country_flag = "\U0001F1EB\U0001F1EE"
+        elif country == "FJ":
+            full_country_name = "Fidżi"
+            country_flag = "\U0001F1EB\U0001F1EF"
+        elif country == "FK":
+            full_country_name = "Falklandy"
+            country_flag = "\U0001F1EB\U0001F1F0"
+        elif country == "FM":
+            full_country_name = "Mikronezja"
+            country_flag = "\U0001F1EB\U0001F1F2"
+        elif country == "FO":
+            full_country_name = "Wyspy Owcze"
+            country_flag = "\U0001F1EB\U0001F1F4"
+        elif country == "FR":
+            full_country_name = "Francja"
+            country_flag = "\U0001F1EB\U0001F1F7"
+        # G-countries
+        elif country == "GA":
+            full_country_name = "Gabon"
+            country_flag = "\U0001F1EC\U0001F1E6"
+        elif country == "GB":
+            full_country_name = "Wielka Brytania"
+            country_flag = "\U0001F1EC\U0001F1E7"
+        elif country == "GD":
+            full_country_name = "Grenada"
+            country_flag = "\U0001F1EC\U0001F1E9"
+        elif country == "GE":
+            full_country_name = "Gruzja"
+            country_flag = "\U0001F1EC\U0001F1EA"
+        elif country == "GF":
+            full_country_name = "Gujana Francuska"
+            country_flag = "\U0001F1EC\U0001F1EB"
+        elif country == "GG":
+            full_country_name = "Guernsey"
+            country_flag = "\U0001F1EC\U0001F1EC"
+        elif country == "GH":
+            full_country_name = "Ghana"
+            country_flag = "\U0001F1EC\U0001F1ED"
+        elif country == "GI":
+            full_country_name = "Gibraltar"
+            country_flag = "\U0001F1EC\U0001F1EE"
+        elif country == "GL":
+            full_country_name = "Grenlandia"
+            country_flag = "\U0001F1EC\U0001F1F1"
+        elif country == "GM":
+            full_country_name = "Gambia"
+            country_flag = "\U0001F1EC\U0001F1F2"
+        elif country == "GN":
+            full_country_name = "Gwinea"
+            country_flag = "\U0001F1EC\U0001F1F3"
+        elif country == "GP":
+            full_country_name = "Gwadelupa"
+            country_flag = "\U0001F1EC\U0001F1F5"
+        elif country == "GQ":
+            full_country_name = "Gwinea Równikowa"
+            country_flag = "\U0001F1EC\U0001F1F6"
+        elif country == "GR":
+            full_country_name = "Grecja"
+            country_flag = "\U0001F1EC\U0001F1F7"
+        elif country == "GS":
+            full_country_name = "Georgia Południowa i Sandwich Południowy"
+            country_flag = "\U0001F1EC\U0001F1F8"
+        elif country == "GT":
+            full_country_name = "Gwatemala"
+            country_flag = "\U0001F1EC\U0001F1F9"
+        elif country == "GU":
+            full_country_name = "Guam"
+            country_flag = "\U0001F1EC\U0001F1FA"
+        elif country == "GW":
+            full_country_name = "Gwinea Bissau"
+            country_flag = "\U0001F1EC\U0001F1FC"
+        elif country == "GY":
+            full_country_name = "Gujana"
+            country_flag = "\U0001F1EC\U0001F1FE"
+        # H-countries
+        elif country == "HK":
+            full_country_name = "Hongkong"
+            country_flag = "\U0001F1ED\U0001F1F0"
+        elif country == "HM":
+            full_country_name = "Wyspy Heard i McDonalda"
+            country_flag = "\U0001F1ED\U0001F1F2"
+        elif country == "HN":
+            full_country_name = "Honduras"
+            country_flag = "\U0001F1ED\U0001F1F3"
+        elif country == "HR":
+            full_country_name = "Chorwacja"
+            country_flag = "\U0001F1ED\U0001F1F7"
+        elif country == "HT":
+            full_country_name = "Haiti"
+            country_flag = "\U0001F1ED\U0001F1F9"
+        elif country == "HU":
+            full_country_name = "Węgry"
+            country_flag = "\U0001F1ED\U0001F1FA"
+        # I-countries
+        elif country == "IC":
+            full_country_name = "Wyspy Kanaryjskie"
+            country_flag = "\U0001F1EE\U0001F1E8"
+        elif country == "ID":
+            full_country_name = "Indonezja"
+            country_flag = "\U0001F1EE\U0001F1E9"
+        elif country == "IE":
+            full_country_name = "Irlandia"
+            country_flag = "\U0001F1EE\U0001F1EA"
+        elif country == "IL":
+            full_country_name = "Izrael"
+            country_flag = "\U0001F1EE\U0001F1F1"
+        elif country == "IM":
+            full_country_name = "Wyspa Man"
+            country_flag = "\U0001F1EE\U0001F1F2"
+        elif country == "IN":
+            full_country_name = "Indie"
+            country_flag = "\U0001F1EE\U0001F1F3"
+        elif country == "IO":
+            full_country_name = "Brytyjskie Terytorium Oceanu Indyjskiego"
+            country_flag = "\U0001F1EE\U0001F1F4"
+        elif country == "IQ":
+            full_country_name = "Irak"
+            country_flag = "\U0001F1EE\U0001F1F6"
+        elif country == "IR":
+            full_country_name = "Iran"
+            country_flag = "\U0001F1EE\U0001F1F7"
+        elif country == "IS":
+            full_country_name = "Islandia"
+            country_flag = "\U0001F1EE\U0001F1F8"
+        elif country == "IT":
+            full_country_name = "Włochy"
+            country_flag = "\U0001F1EE\U0001F1F9"
+        # J-countries
+        elif country == "JE":
+            full_country_name = "Golf"
+            country_flag = "\U0001F1EF\U0001F1EA"
+        elif country == "JM":
+            full_country_name = "Jamajka"
+            country_flag = "\U0001F1EF\U0001F1F2"
+        elif country == "JO":
+            full_country_name = "Jordania"
+            country_flag = "\U0001F1EF\U0001F1F4"
+        elif country == "JP":
+            full_country_name = "Japonia"
+            country_flag = "\U0001F1EF\U0001F1F5"
+        # K-countries
+        elif country == "KE":
+            full_country_name = "Kenia"
+            country_flag = "\U0001F1F0\U0001F1EA"
+        elif country == "KG":
+            full_country_name = "Kirgistan"
+            country_flag = "\U0001F1F0\U0001F1EC"
+        elif country == "KH":
+            full_country_name = "Kambodża"
+            country_flag = "\U0001F1F0\U0001F1ED"
+        elif country == "KI":
+            full_country_name = "Kiribati"
+            country_flag = "\U0001F1F0\U0001F1EE"
+        elif country == "KM":
+            full_country_name = "Komory"
+            country_flag = "\U0001F1F0\U0001F1F2"
+        elif country == "KN":
+            full_country_name = "Saint Kitts i Nevis"
+            country_flag = "\U0001F1F0\U0001F1F3"
+        elif country == "KP":
+            full_country_name = "Korea Północna"
+            country_flag = "\U0001F1F0\U0001F1F5"
+        elif country == "KR":
+            full_country_name = "Korea Południowa"
+            country_flag = "\U0001F1F0\U0001F1F7"
+        elif country == "KW":
+            full_country_name = "Kuwejt"
+            country_flag = "\U0001F1F0\U0001F1FC"
+        elif country == "KY":
+            full_country_name = "Kajmany"
+            country_flag = "\U0001F1F0\U0001F1FE"
+        elif country == "KZ":
+            full_country_name = "Kazachstan"
+            country_flag = "\U0001F1F0\U0001F1FF"
+        # L-countries
+        elif country == "LA":
+            full_country_name = "Laos"
+            country_flag = "\U0001F1F1\U0001F1E6"
+        elif country == "LB":
+            full_country_name = "Liban"
+            country_flag = "\U0001F1F1\U0001F1E7"
+        elif country == "LC":
+            full_country_name = "Święta Lucia"
+            country_flag = "\U0001F1F1\U0001F1E8"
+        elif country == "LI":
+            full_country_name = "Liechtenstein"
+            country_flag = "\U0001F1F1\U0001F1EE"
+        elif country == "LK":
+            full_country_name = "Sri-Lanka"
+            country_flag = "\U0001F1F1\U0001F1F0"
+        elif country == "LR":
+            full_country_name = "Liberia"
+            country_flag = "\U0001F1F1\U0001F1F7"
+        elif country == "LS":
+            full_country_name = "Lesoto"
+            country_flag = "\U0001F1F1\U0001F1F8"
+        elif country == "LT":
+            full_country_name = "Litwa"
+            country_flag = "\U0001F1F1\U0001F1F9"
+        elif country == "LU":
+            full_country_name = "Luksemburg"
+            country_flag = "\U0001F1F1\U0001F1FA"
+        elif country == "LV":
+            full_country_name = "Łotwa"
+            country_flag = "\U0001F1F1\U0001F1FB"
+        elif country == "LY":
+            full_country_name = "Libia"
+            country_flag = "\U0001F1F1\U0001F1FE"
+        # M-countries
+        elif country == "MA":
+            full_country_name = "Maroko"
+            country_flag = "\U0001F1F2\U0001F1E6"
+        elif country == "MC":
+            full_country_name = "Monako"
+            country_flag = "\U0001F1F2\U0001F1E8"
+        elif country == "MD":
+            full_country_name = "Moldova"
+            country_flag = "\U0001F1F2\U0001F1E9"
+        elif country == "ME":
+            full_country_name = "Czarnogóra"
+            country_flag = "\U0001F1F2\U0001F1EA"
+        elif country == "MF":
+            full_country_name = "Święty Marcin"
+            country_flag = "\U0001F1F2\U0001F1EB"
+        elif country == "MG":
+            full_country_name = "Madagaskar"
+            country_flag = "\U0001F1F2\U0001F1EC"
+        elif country == "MH":
+            full_country_name = "Wyspy Marshalla"
+            country_flag = "\U0001F1F2\U0001F1ED"
+        elif country == "MK":
+            full_country_name = "Macedonia Północna"
+            country_flag = "\U0001F1F2\U0001F1F0"
+        elif country == "ML":
+            full_country_name = "Mali"
+            country_flag = "\U0001F1F2\U0001F1F1"
+        elif country == "MM":
+            full_country_name = "Myanmar"
+            country_flag = "\U0001F1F2\U0001F1F2"
+        elif country == "MN":
+            full_country_name = "Mongolia"
+            country_flag = "\U0001F1F2\U0001F1F3"
+        elif country == "MO":
+            full_country_name = "Makau"
+            country_flag = "\U0001F1F2\U0001F1F4"
+        elif country == "MP":
+            full_country_name = "Mariany Północne"
+            country_flag = "\U0001F1F2\U0001F1F5"
+        elif country == "MQ":
+            full_country_name = "Martynika"
+            country_flag = "\U0001F1F2\U0001F1F6"
+        elif country == "MR":
+            full_country_name = "Mauretania"
+            country_flag = "\U0001F1F2\U0001F1F7"
+        elif country == "MS":
+            full_country_name = "Montserrat"
+            country_flag = "\U0001F1F2\U0001F1F8"
+        elif country == "MT":
+            full_country_name = "Malta"
+            country_flag = "\U0001F1F2\U0001F1F9"
+        elif country == "MU":
+            full_country_name = "Mauritius"
+            country_flag = "\U0001F1F2\U0001F1FA"
+        elif country == "MV":
+            full_country_name = "Malediwy"
+            country_flag = "\U0001F1F2\U0001F1FB"
+        elif country == "MW":
+            full_country_name = "Malawi"
+            country_flag = "\U0001F1F2\U0001F1FC"
+        elif country == "MX":
+            full_country_name = "Meksyk"
+            country_flag = "\U0001F1F2\U0001F1FD"
+        elif country == "MY":
+            full_country_name = "Malezja"
+            country_flag = "\U0001F1F2\U0001F1FE"
+        elif country == "MZ":
+            full_country_name = "Mozambik"
+            country_flag = "\U0001F1F2\U0001F1FF"
+        # N-countries
+        elif country == "NA":
+            full_country_name = "Namibia"
+            country_flag = "\U0001F1F3\U0001F1E6"
+        elif country == "NC":
+            full_country_name = "Nowa Kaledonia"
+            country_flag = "\U0001F1F3\U0001F1E8"
+        elif country == "NE":
+            full_country_name = "Niger"
+            country_flag = "\U0001F1F3\U0001F1EA"
+        elif country == "NF":
+            full_country_name = "Wyspa Norfolk"
+            country_flag = "\U0001F1F3\U0001F1EB"
+        elif country == "NG":
+            full_country_name = "Nigeria"
+            country_flag = "\U0001F1F3\U0001F1EC"
+        elif country == "NI":
+            full_country_name = "Nikaragua"
+            country_flag = "\U0001F1F3\U0001F1EE"
+        elif country == "NL":
+            full_country_name = "Holandia"
+            country_flag = "\U0001F1F3\U0001F1F1"
+        elif country == "NO":
+            full_country_name = "Norwegia"
+            country_flag = "\U0001F1F3\U0001F1F4"
+        elif country == "NP":
+            full_country_name = "Nepal"
+            country_flag = "\U0001F1F3\U0001F1F5"
+        elif country == "NR":
+            full_country_name = "Nauru"
+            country_flag = "\U0001F1F3\U0001F1F7"
+        elif country == "NU":
+            full_country_name = "Niue"
+            country_flag = "\U0001F1F3\U0001F1FA"
+        elif country == "NZ":
+            full_country_name = "Nowa Zelandia"
+            country_flag = "\U0001F1F3\U0001F1FF"
+        # O-countries
+        elif country == "OM":
+            full_country_name = "Oman"
+            country_flag = "\U0001F1F4\U0001F1F2"
+        # P-countries
+        elif country == "PA":
+            full_country_name = "Panama"
+            country_flag = "\U0001F1F5\U0001F1E6"
+        elif country == "PE":
+            full_country_name = "Peru"
+            country_flag = "\U0001F1F5\U0001F1EA"
+        elif country == "PG":
+            full_country_name = "Papua Nowa Gwinea"
+            country_flag = "\U0001F1F5\U0001F1EC"
+        elif country == "PH":
+            full_country_name = "Filipiny"
+            country_flag = "\U0001F1F5\U0001F1ED"
+        elif country == "PK":
+            full_country_name = "Pakistan"
+            country_flag = "\U0001F1F5\U0001F1F0"
+        elif country == "PL":
+            full_country_name = "Polska"
+            country_flag = "\U0001F1F5\U0001F1F1"
+        elif country == "PM":
+            full_country_name = "Saint-Pierre i Miquelon"
+            country_flag = "\U0001F1F5\U0001F1F2"
+        elif country == "PN":
+            full_country_name = "Wyspy Pitcairn"
+            country_flag = "\U0001F1F5\U0001F1F3"
+        elif country == "PR":
+            full_country_name = "Portoryko"
+            country_flag = "\U0001F1F5\U0001F1F7"
+        elif country == "PS":
+            full_country_name = "Palestyna"
+            country_flag = "\U0001F1F5\U0001F1F8"
+        elif country == "PT":
+            full_country_name = "Portugalia"
+            country_flag = "\U0001F1F5\U0001F1F9"
+        elif country == "PW":
+            full_country_name = "Palau"
+            country_flag = "\U0001F1F5\U0001F1FC"
+        elif country == "PY":
+            full_country_name = "Paragwaj"
+            country_flag = "\U0001F1F5\U0001F1FE"
+        # Q-countries
+        elif country == "QA":
+            full_country_name = "Katar"
+            country_flag = "\U0001F1F6\U0001F1E6"
+        # R-countries
+        elif country == "RE":
+            full_country_name = "Reunion"
+            country_flag = "\U0001F1F7\U0001F1EA"
+        elif country == "RO":
+            full_country_name = "Rumunia"
+            country_flag = "\U0001F1F7\U0001F1F4"
+        elif country == "RS":
+            full_country_name = "Serbia"
+            country_flag = "\U0001F1F7\U0001F1F8"
+        elif country == "RU":
+            full_country_name = "Rosja"
+            country_flag = "\U0001F1F7\U0001F1FA"
+        elif country == "RW":
+            full_country_name = "Rwanda"
+            country_flag = "\U0001F1F7\U0001F1FC"
+        # S-countries
+        elif country == "SA":
+            full_country_name = "Arabia Saudyjska"
+            country_flag = "\U0001F1F8\U0001F1E6"
+        elif country == "SB":
+            full_country_name = "Wyspy Salomona"
+            country_flag = "\U0001F1F8\U0001F1E7"
+        elif country == "SC":
+            full_country_name = "Wyspy Seszele"
+            country_flag = "\U0001F1F8\U0001F1E8"
+        elif country == "SD":
+            full_country_name = "Sudan"
+            country_flag = "\U0001F1F8\U0001F1E9"
+        elif country == "SE":
+            full_country_name = "Szwecja"
+            country_flag = "\U0001F1F8\U0001F1EA"
+        elif country == "SG":
+            full_country_name = "Singapur"
+            country_flag = "\U0001F1F8\U0001F1EC"
+        elif country == "SH":
+            full_country_name = "Św. Helena"
+            country_flag = "\U0001F1F8\U0001F1EE"
+        elif country == "SJ":
+            full_country_name = "Svalbard i Jan Mayen"
+            country_flag = "\U0001F1F8\U0001F1EF"
+        elif country == "SK":
+            full_country_name = "Słowacja"
+            country_flag = "\U0001F1F8\U0001F1F0"
+        elif country == "SL":
+            full_country_name = "Sierra Leone"
+            country_flag = "\U0001F1F8\U0001F1F1"
+        elif country == "SM":
+            full_country_name = "San Marino"
+            country_flag = "\U0001F1F8\U0001F1F2"
+        elif country == "SN":
+            full_country_name = "Senegal"
+            country_flag = "\U0001F1F8\U0001F1F3"
+        elif country == "SO":
+            full_country_name = "Somali"
+            country_flag = "\U0001F1F8\U0001F1F4"
+        elif country == "SR":
+            full_country_name = "Surinam"
+            country_flag = "\U0001F1F8\U0001F1F7"
+        elif country == "SS":
+            full_country_name = "Południowy Sudan"
+            country_flag = "\U0001F1F8\U0001F1F8"
+        elif country == "ST":
+            full_country_name = "Wyspy Świętego Tomasza i Książęca"
+            country_flag = "\U0001F1F8\U0001F1F9"
+        elif country == "SV":
+            full_country_name = "Salvador"
+            country_flag = "\U0001F1F8\U0001F1FB"
+        elif country == "SX":
+            full_country_name = "Sint Maarten"
+            country_flag = "\U0001F1F8\U0001F1FD"
+        elif country == "SY":
+            full_country_name = "Syria"
+            country_flag = "\U0001F1F8\U0001F1FE"
+        elif country == "SZ":
+            full_country_name = "Eswatini"
+            country_flag = "\U0001F1F8\U0001F1FF"
+        # T-countries
+        elif country == "TA":
+            full_country_name = "Tristan da Cunha"
+            country_flag = "\U0001F1F9\U0001F1E6"
+        elif country == "TC":
+            full_country_name = "Wyspy Turks i Caicos"
+            country_flag = "\U0001F1F9\U0001F1E8"
+        elif country == "TD":
+            full_country_name = "Czad"
+            country_flag = "\U0001F1F9\U0001F1E9"
+        elif country == "TF":
+            full_country_name = "Terytoria Południowo-Francuskie"
+            country_flag = "\U0001F1F9\U0001F1EB"
+        elif country == "TG":
+            full_country_name = "Togo"
+            country_flag = "\U0001F1F9\U0001F1EC"
+        elif country == "TH":
+            full_country_name = "Tajlandia"
+            country_flag = "\U0001F1F9\U0001F1ED"
+        elif country == "TJ":
+            full_country_name = "Tadżykistan"
+            country_flag = "\U0001F1F9\U0001F1EF"
+        elif country == "TK":
+            full_country_name = "Tokelau"
+            country_flag = "\U0001F1F9\U0001F1F0"
+        elif country == "TL":
+            full_country_name = "Timor Wschodni"
+            country_flag = "\U0001F1F9\U0001F1F1"
+        elif country == "TM":
+            full_country_name = "Turkmenia"
+            country_flag = "\U0001F1F9\U0001F1F2"
+        elif country == "TN":
+            full_country_name = "Tunezja"
+            country_flag = "\U0001F1F9\U0001F1F3"
+        elif country == "TO":
+            full_country_name = "Tonga"
+            country_flag = "\U0001F1F9\U0001F1F4"
+        elif country == "TR":
+            full_country_name = "Turcja"
+            country_flag = "\U0001F1F9\U0001F1F7"
+        elif country == "TT":
+            full_country_name = "Trynidad i Tobago"
+            country_flag = "\U0001F1F9\U0001F1F9"
+        elif country == "TV":
+            full_country_name = "Tuvalu"
+            country_flag = "\U0001F1F9\U0001F1FB"
+        elif country == "TW":
+            full_country_name = "Tajwan"
+            country_flag = "\U0001F1F9\U0001F1FC"
+        elif country == "TZ":
+            full_country_name = "Tanzania"
+            country_flag = "\U0001F1F9\U0001F1FF"
+        # U-countries
+        elif country == "UA":
+            full_country_name = "Ukraina"
+            country_flag = "\U0001F1FA\U0001F1E6"
+        elif country == "UG":
+            full_country_name = "Uganda"
+            country_flag = "\U0001F1FA\U0001F1EC"
+        elif country == "UY":
+            full_country_name = "Urugwaj"
+            country_flag = "\U0001F1FA\U0001F1FE"
+        elif country == "UZ":
+            full_country_name = "Uzbekistan"
+            country_flag = "\U0001F1FA\U0001F1FF"
+        # V-countries
+        elif country == "VA":
+            full_country_name = "Watykan"
+            country_flag = "\U0001F1FB\U0001F1E6"
+        elif country == "VC":
+            full_country_name = "Saint Vincent i Grenadyny"
+            country_flag = "\U0001F1FB\U0001F1E8"
+        elif country == "VE":
+            full_country_name = "Wenezuela"
+            country_flag = "\U0001F1FB\U0001F1EA"
+        elif country == "VG":
+            full_country_name = "Brytyjskie Wyspy Dziewicze"
+            country_flag = "\U0001F1FB\U0001F1EC"
+        elif country == "VI":
+            full_country_name = "Wyspy Dziewicze Stanów Zjednoczonych"
+            country_flag = "\U0001F1FB\U0001F1EE"
+        elif country == "VN":
+            full_country_name = "Wietnam"
+            country_flag = "\U0001F1FB\U0001F1F3"
+        elif country == "VU":
+            full_country_name = "Vanuatu"
+            country_flag = "\U0001F1FB\U0001F1FA"
+        # W-countries
+        elif country == "WF":
+            full_country_name = "Wallis i Futuna"
+            country_flag = "\U0001F1FC\U0001F1EB"
+        elif country == "WS":
+            full_country_name = "Samoa"
+            country_flag = "\U0001F1FC\U0001F1F8"
+        # X-countries
+        elif country == "XK":
+            full_country_name = "Kosowo"
+            country_flag = "\U0001F1FD\U0001F1F0"
+        # Y - countries
+        elif country == "YE":
+            full_country_name = "Jemen"
+            country_flag = "\U0001F1FE\U0001F1EA"
+        elif country == "YT":
+            full_country_name = "Majotta"
+            country_flag = "\U0001F1FE\U0001F1F9"
+        # Z-countries
+        elif country == "ZA":
+            full_country_name = "Republika Południowej Afryki"
+            country_flag = "\U0001F1FF\U0001F1E6"
+        elif country == "ZM":
+            full_country_name = "Zambia"
+            country_flag = "\U0001F1FF\U0001F1F2"
+        elif country == "ZW":
+            full_country_name = "Zimbabwe"
+            country_flag = "\U0001F1FF\U0001F1FC"
+
+        else:
+            full_country_name = country
+            country_flag = ""
+
+        if weather_description in json_to_smile:
+            wd = json_to_smile[weather_description]
+        else:
+            wd = "Nie udało mi się poznać warunków pogodowych w tym miejscu. Może potrafisz? \U0001F914"
+
+        w_dir = ["Północny", "Północny-Północny-Wschódni", "Północno-Zachódni", "Wschódni-Północny-Wschódni",
+                 "Wschódni",
+                 "Wschódni-Południowy-Wschódni", "Południowo-Wschódni", "Południowy-Południowy-Wschódni",
+                 "Południowy", "Południe-Południe-Zachódni", "Południowo-Zachódni", "Zachodnio-Południowo-Zachódni",
+                 "Zachódni",
+                 "Północno-Zachodni", "Zachódnio-Północno-Zachódni",
+                 "Północno-Północno-Zachódni"]
+        ix = int((wind_degree + 11.25) / 22.5)
+        w_dir1 = w_dir[ix % 16]
+
+        if tz == 0:
+            tzsunr = sunr
+            tzsuns = suns
+            tz_loc_time = loc_time
+        elif tz > 0:
+            tzsunr = sunr + tz
+            tzsuns = suns + tz
+            tz_loc_time = loc_time + tz
+        elif tz < 0:
+            tzsunr = sunr + tz
+            tzsuns = suns + tz
+            tz_loc_time = loc_time + tz
+        else:
+            print("A timezone error occurred2")
+
+        tl = datetime.datetime.fromtimestamp(tz_loc_time)
+        ts1 = datetime.datetime.fromtimestamp(tzsunr)
+        ts2 = datetime.datetime.fromtimestamp(tzsuns)
+
+        if ts1.hour <= tl.hour < ts2.hour:
+            day_emoji = "\U00002600"
+        else:
+            day_emoji = "\U0001F319"
+
+        tz_loc_time_1 = tl.strftime("%d.%m.%Y")
+
+        if y < 1:
+            tz_loc_time = tl.strftime("%H:%M")
+            tzsunr = ts1.strftime("%H:%M")
+            tzsuns = ts2.strftime("%H:%M")
+        elif y >= 1:
+            tz_loc_time = tl.strftime("%I:%M %p")
+            tzsunr = ts1.strftime("%I:%M %p")
+            tzsuns = ts2.strftime("%I:%M %p")
+
+        if ap_lvl == 1:
+            ap_text2 = "Dobre"
+        elif ap_lvl == 2:
+            ap_text2 = "Zadowalający"
+        elif ap_lvl == 3:
+            ap_text2 = "Umiarkowany"
+        elif ap_lvl == 4:
+            ap_text2 = "Zanieczyszczone"
+        elif ap_lvl == 5:
+            ap_text2 = "Bardzo zanieczyszczone"
+
+        if uvi == 0:
+            uvi_text = "Bezpieczny"
+        elif uvi == 1 or 2:
+            uvi_text = "Nizki"
+        elif uvi == 3 or 4 or 5:
+            uvi_text = "Umiarkowany"
+        elif uvi == 6 or 7:
+            uvi_text = "Wysoki"
+        elif uvi == 8 or 9 or 10:
+            uvi_text = "Bardzo wysoki"
+        else:
+            uvi_text = "Nadmierny"
+
+        if country == "US":
+            full_country_name = "USA"
+            country_flag = "\U0001F1FA\U0001F1F8"
+            us_state2 = data2[0]["state"]
+            if us_state2 == "Alabama":
+                us_state_pol = us_state2
+            elif us_state2 == "Alaska":
+                us_state_pol = us_state2
+            elif us_state2 == "Arizona":
+                us_state_pol = us_state2
+            elif us_state2 == "Arkansas":
+                us_state_pol = us_state2
+            elif us_state2 == "California":
+                us_state_pol = "Kalifornia"
+            elif us_state2 == "Colorado":
+                us_state_pol = "Kolorado"
+            elif us_state2 == "Connecticut":
+                us_state_pol = us_state2
+            elif us_state2 == "Delaware":
+                us_state_pol = us_state2
+            elif us_state2 == "District of Columbia":
+                us_state_pol = "dystrykt Kolumbii"
+            elif us_state2 == "Florida":
+                us_state_pol = "Floryda"
+            elif us_state2 == "Georgia":
+                us_state_pol = us_state2
+            elif us_state2 == "Hawaii":
+                us_state_pol = "Hawaje"
+            elif us_state2 == "Idaho":
+                us_state_pol = us_state2
+            elif us_state2 == "Illinois":
+                us_state_pol = us_state2
+            elif us_state2 == "Indiana":
+                us_state_pol = us_state2
+            elif us_state2 == "Iowa":
+                us_state_pol = us_state2
+            elif us_state2 == "Kansas":
+                us_state_pol = us_state2
+            elif us_state2 == "Kentucky":
+                us_state_pol = us_state2
+            elif us_state2 == "Louisiana":
+                us_state_pol = "Luizjana"
+            elif us_state2 == "Maine":
+                us_state_pol = us_state2
+            elif us_state2 == "Maryland":
+                us_state_pol = us_state2
+            elif us_state2 == "Massachusetts":
+                us_state_pol = us_state2
+            elif us_state2 == "Michigan":
+                us_state_pol = us_state2
+            elif us_state2 == "Minnesota":
+                us_state_pol = us_state2
+            elif us_state2 == "Mississippi":
+                us_state_pol = "Missisipi"
+            elif us_state2 == "Missouri":
+                us_state_pol = us_state2
+            elif us_state2 == "Montana":
+                us_state_pol = us_state2
+            elif us_state2 == "Nebraska":
+                us_state_pol = us_state2
+            elif us_state2 == "Nevada":
+                us_state_pol = us_state2
+            elif us_state2 == "New Hampshire":
+                us_state_pol = us_state2
+            elif us_state2 == "New Jersey":
+                us_state_pol = us_state2
+            elif us_state2 == "New Mexico":
+                us_state_pol = "Nowy Meksyk"
+            elif us_state2 == "New York":
+                us_state_pol = "Нью-Йорк"
+            elif us_state2 == "North Carolina":
+                us_state_pol = "Karolina Północna"
+            elif us_state2 == "North Dakota":
+                us_state_pol = "Północna Dakota"
+            elif us_state2 == "Ohio":
+                us_state_pol = us_state2
+            elif us_state2 == "Oklahoma":
+                us_state_pol = us_state2
+            elif us_state2 == "Oregon":
+                us_state_pol = us_state2
+            elif us_state2 == "Pennsylvania":
+                us_state_pol = "Pensylwania"
+            elif us_state2 == "Rhode-Island":
+                us_state_pol = us_state2
+            elif us_state2 == "South Carolina":
+                us_state_pol = "Karolina Południowa"
+            elif us_state2 == "South Dakota":
+                us_state_pol = "Południowa Dakota"
+            elif us_state2 == "Tennessee":
+                us_state_pol = us_state2
+            elif us_state2 == "Texas":
+                us_state_pol = "Teksas"
+            elif us_state2 == "Utah":
+                us_state_pol = us_state2
+            elif us_state2 == "Vermont":
+                us_state_pol = us_state2
+            elif us_state2 == "Virginia":
+                us_state_pol = "Wirginia"
+            elif us_state2 == "Washington":
+                us_state_pol = "Waszyngton"
+            elif us_state2 == "West Virginia":
+                us_state_pol = "Południowa Wirginia"
+            elif us_state2 == "Wisconsin":
+                us_state_pol = us_state2
+            elif us_state2 == "Wyoming":
+                us_state_pol = us_state2
+            elif us_state2 == "00":
+                us_state_pol = ""
+            if us_state2 == "00":
+                await message.reply(
+                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
+                    f"\U0001F4CD Współrzędne: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                    f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
+                    f":\n\n\U0001F321"
+                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
+                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
+                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
+                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
+                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
+                    f"\U0001F4A6Wilgotność: {humidity}%\n"
+                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
+                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} км\n"
+                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
+                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
+                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
+                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                )
+            else:
+                await message.reply(
+                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
+                    f"\U0001F4CD Współrzędne: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                    f"\nW tej chwili pogoda w {city}, {us_state_pol}, {full_country_name}{country_flag}"
+                    f":\n\n\U0001F321"
+                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
+                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
+                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
+                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
+                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
+                    f"\U0001F4A6Wilgotność: {humidity}%\n"
+                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
+                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} км\n"
+                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
+                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
+                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
+                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                )
+        else:
+            await message.reply(
+                f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
+                f"\U0001F4CD Współrzędne: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                f"\nW tej chwili pogoda w {city}, {us_state_pol}, {full_country_name}{country_flag}"
+                f":\n\n\U0001F321"
+                f"Temperatura: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
+                f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
+                f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
+                f"\U0001F4A6Wilgotność: {humidity}%\n"
+                f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
+                f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} км\n"
+                f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
+                f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
+                f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
+                f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+            )
+
+    except Exception as ex:
+        await message.reply(
+            "Nie znaleziono podanego miasta lub miejsca. Czy możesz ponownie sprawdzić swoje dane wejściowe? \U0001F643")
+        print(ex)
+
+
 @dp.callback_query_handler(text="eng")
 async def setlangeng(call: CallbackQuery):
     global lang, j, i, k, e, e1, stickers, ws_sign, tformat
@@ -2446,6 +3624,56 @@ async def setlangrus(call: CallbackQuery):
         e -= e
 
 
+@dp.callback_query_handler(text="pol")
+async def setlangrus(call: CallbackQuery):
+    global lang, j, i, k, e1, e, ws_sign, tformat
+    lang = "pol"
+    if i <= 1:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        await bot.send_message(call.from_user.id,
+                               "1/3\n"
+                               "Pomyślnie zainstalowano język polski! \U0001F1F5\U0001F1F1"
+                               "\nZostało jeszcze kilka kroków!\n"
+                               "Wybierz w jakim systemie pomiarowym chcesz otrzymywać dane pogodowe?",
+                               reply_markup=format_buttons_pol)
+        print("here6")
+        j += 1
+    elif e1 >= 1:
+        await call.answer("Używasz już rosyjskiego jako podstawowego języka."
+                          "Wybierz nowy język dla bota \U0001F609",
+                          show_alert=True)
+    elif j > 3:
+        if lang == "pol" and tformat == "metric":
+            ws_sign = "m\s"
+        elif lang == "rus" and tformat == "imperial":
+            ws_sign = "mile/g"
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open(random.choice(stickers), "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        await bot.send_message(call.from_user.id,
+                               "Gotowo!\nZmieniono parametry bota. \U0001F603\n"
+                               "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                               "pogodzie! \U0001F5FA")
+        print("here7")
+        j += 1
+        k -= k
+        e1 -= e1
+        e -= e
+    else:
+        await bot.delete_message(call.from_user.id, call.message.message_id)
+        sti = open(random.choice(stickers), "rb")
+        await bot.send_sticker(call.from_user.id, sti)
+        await bot.send_message(call.from_user.id,
+                               "Gotowo!\nZmieniono parametry bota. \U0001F603\n"
+                               "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                               "pogodzie! \U0001F5FA")
+        print("here8")
+        j += 1
+        k -= k
+        e1 -= e1
+        e -= e
+
+
 @dp.callback_query_handler(text="met")
 async def setmetric(call: CallbackQuery):
     global tformat, format_sign, ws_sign, j, k, e2, e3
@@ -2460,6 +3688,10 @@ async def setmetric(call: CallbackQuery):
         await call.answer("Вы уже используете метрическую систему по умолчанию. "
                           "Пожалуйста, выберите новую систему измерения \U0001F609",
                           show_alert=True)
+    elif e2 >= 1 and lang == "pol":
+        await call.answer("Używasz już domyślnie systemu metrycznego. "
+                          "Proszę wybrać nowy system pomiarowy \U0001F609",
+                          show_alert=True)
     elif j > 3:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -2473,7 +3705,7 @@ async def setmetric(call: CallbackQuery):
             k -= k
             e2 -= e2
             e3 -= e3
-            print("here6")
+            print("here9")
         elif lang == "rus":
             ws_sign = "м\с"
             await bot.send_message(call.from_user.id,
@@ -2483,7 +3715,18 @@ async def setmetric(call: CallbackQuery):
             k -= k
             e2 -= e2
             e3 -= e3
-            print("here7")
+            print("here10")
+        elif lang == "pol":
+            ws_sign = "mile\g"
+            await bot.send_message(call.from_user.id,
+                                   "Gotowo!\nZmieniono parametry bota. \U0001F603\n"
+                                   "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                                   "pogodzie! \U0001F5FA"
+                                   )
+            k -= k
+            e2 -= e2
+            e3 -= e3
+            print("here11")
 
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
@@ -2497,7 +3740,7 @@ async def setmetric(call: CallbackQuery):
             k -= k
             e2 -= e2
             e3 -= e3
-            print("here8")
+            print("here12")
         elif lang == "rus" and j >= 2:
             ws_sign = "м\с"
             await bot.send_message(call.from_user.id,
@@ -2508,7 +3751,18 @@ async def setmetric(call: CallbackQuery):
             k -= k
             e2 -= e2
             e3 -= e3
-            print("here9")
+            print("here13")
+        elif lang == "pol" and j >= 2:
+            ws_sign = "mile\g"
+            await bot.send_message(call.from_user.id,
+                                   "2/3\n"
+                                   "System metryczny jest ustawiony! \U0001F4CF\nPrawie skończyłeś konfigurować bota! \U0001F603\n"
+                                   "I wreszcie, w jakim formacie czasowym chciałbyś otrzymywać informacje?",
+                                   reply_markup=time_buttons_pol)
+            k -= k
+            e2 -= e2
+            e3 -= e3
+            print("here14")
 
 
 @dp.callback_query_handler(text="imp")
@@ -2525,6 +3779,10 @@ async def setimperial(call: CallbackQuery):
         await call.answer("Вы уже используете имперскую систему по умолчанию. "
                           "Пожалуйста, выберите новую систему измерения \U0001F609",
                           show_alert=True)
+    elif e3 >= 1 and lang == "pol":
+        await call.answer("Używasz już domyślnego systemu imperialnego. "
+                          "Proszę wybrać nowy system pomiarowy \U0001F609",
+                          show_alert=True)
     elif j > 3:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -2538,7 +3796,7 @@ async def setimperial(call: CallbackQuery):
             k -= k
             e3 -= e3
             e2 -= e2
-            print("here10")
+            print("here15")
         elif lang == "rus":
             ws_sign = "миль\ч"
             await bot.send_message(call.from_user.id,
@@ -2548,7 +3806,17 @@ async def setimperial(call: CallbackQuery):
             k -= k
             e3 -= e3
             e2 -= e2
-            print("here11")
+            print("here16")
+        elif lang == "pol":
+            ws_sign = "mile\g"
+            await bot.send_message(call.from_user.id,
+                                   "Gotowo!\nZmieniono parametry bota. \U0001F603\n"
+                                   "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                                   "pogodzie! \U0001F5FA")
+            k -= k
+            e3 -= e3
+            e2 -= e2
+            print("here17")
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         if lang == "eng" and j >= 2:
@@ -2561,7 +3829,7 @@ async def setimperial(call: CallbackQuery):
             k -= k
             e3 -= e3
             e2 -= e2
-            print("here12")
+            print("here18")
         elif lang == "rus" and j >= 2:
             ws_sign = "миль\ч"
             await bot.send_message(call.from_user.id,
@@ -2572,7 +3840,18 @@ async def setimperial(call: CallbackQuery):
             k -= k
             e3 -= e3
             e2 -= e2
-            print("here13")
+            print("here19")
+        elif lang == "pol" and j >= 2:
+            ws_sign = "mile\g"
+            await bot.send_message(call.from_user.id,
+                                   "2/3\n"
+                                   "Zainstalowany system imperialny! \U0001F4CF\nPrawie skończyłeś konfigurować bota! \U0001F603\n"
+                                   "I wreszcie, w jakim formacie czasowym chciałbyś otrzymywać informacje?",
+                                   reply_markup=time_buttons_pol)
+            k -= k
+            e3 -= e3
+            e2 -= e2
+            print("here20")
 
 
 @dp.callback_query_handler(text="12")
@@ -2589,6 +3868,10 @@ async def set12(call: CallbackQuery):
         await call.answer("Вы уже используете 12-часовой формат по умолчанию. "
                           "Пожалуйста, выберите новый временной формат \U0001F609",
                           show_alert=True)
+    elif e4 >= 1 and lang == "pol":
+        await call.answer("Używasz już domyślnego formatu 12-godzinnego. "
+                          "Proszę, wybierz nowy format czasu \U0001F609",
+                          show_alert=True)
     elif j > 3:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -2601,7 +3884,7 @@ async def set12(call: CallbackQuery):
             k -= k
             e4 -= e4
             e5 -= e5
-            print("here14")
+            print("here21")
         elif lang == "rus":
             await bot.send_message(call.from_user.id,
                                    "Готово!\nПараметры бота изменены. \U0001F603\n"
@@ -2610,7 +3893,16 @@ async def set12(call: CallbackQuery):
             k -= k
             e4 -= e4
             e5 -= e5
-            print("here15")
+            print("here22")
+        elif lang == "pol":
+            await bot.send_message(call.from_user.id,
+                                   "Gotowo!\nZmieniono parametry bota. \U0001F603\n"
+                                   "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                                   "pogodzie! \U0001F5FA")
+            k -= k
+            e4 -= e4
+            e5 -= e5
+            print("here23")
 
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
@@ -2625,7 +3917,7 @@ async def set12(call: CallbackQuery):
             k -= k
             e4 -= e4
             e5 -= e5
-            print("here16")
+            print("here24")
         elif lang == "rus" and j >= 2:
             await bot.send_message(call.from_user.id,
                                    "3/3\n"
@@ -2635,7 +3927,17 @@ async def set12(call: CallbackQuery):
             k -= k
             e4 -= e4
             e5 -= e5
-            print("here17")
+            print("here25")
+        elif lang == "rus" and j >= 2:
+            await bot.send_message(call.from_user.id,
+                                   "3/3\n"
+                                   "Gotowo!\nBot jest gotowy do pracy! \U0001F603\n"
+                                   "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                                   "pogodzie! \U0001F5FA")
+            k -= k
+            e4 -= e4
+            e5 -= e5
+            print("here26")
 
 
 @dp.callback_query_handler(text="24")
@@ -2701,7 +4003,7 @@ async def set24(call: CallbackQuery):
 
 @dp.callback_query_handler(text="lan")
 async def choice(call: CallbackQuery):
-    global e, e1, lang_buttons_rus, lang_buttons1
+    global e, e1, lang_buttons_rus, lang_buttons1, lang_buttons_pol
     if lang == "eng":
         if e >= 1:
             lang_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
@@ -2711,6 +4013,9 @@ async def choice(call: CallbackQuery):
                 ],
                 [
                     InlineKeyboardButton(text="Russian\U0001F1F7\U0001F1FA", callback_data="rus")
+                ],
+                [
+                    InlineKeyboardButton(text="Polish\U0001F1F5\U0001F1F1", callback_data="pol")
                 ],
                 [
                     InlineKeyboardButton(text="Back \U00002B05", callback_data="back")
@@ -2729,15 +4034,37 @@ async def choice(call: CallbackQuery):
                     InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA \U00002705", callback_data="rus")
                 ],
                 [
+                    InlineKeyboardButton(text="Польский\U0001F1F5\U0001F1F1 \U00002705", callback_data="pol")
+                ],
+                [
                     InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
                 ]
             ])
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=lang_buttons_rus)
 
+    elif lang == "pol":
+        if e1 >= 1:
+            lang_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
+                [
+                    InlineKeyboardButton(text="Angielski\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8",
+                                         callback_data="eng"),
+                ],
+                [
+                    InlineKeyboardButton(text="Rosyjski\U0001F1F7\U0001F1FA \U00002705", callback_data="rus")
+                ],
+                [
+                    InlineKeyboardButton(text="Polski\U0001F1F5\U0001F1F1 \U00002705", callback_data="pol")
+                ],
+                [
+                    InlineKeyboardButton(text="Plecy \U00002B05", callback_data="back")
+                ]
+            ])
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=lang_buttons_pol)
+
 
 @dp.callback_query_handler(text="uni")
 async def choice1(call: CallbackQuery):
-    global e2, e3, format_buttons1, format_buttons_rus1
+    global e2, e3, format_buttons1, format_buttons_rus1, format_buttons_pol1
     if lang == "eng":
         if e2 >= 1:
             format_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
@@ -2792,11 +4119,38 @@ async def choice1(call: CallbackQuery):
             ])
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id,
                                             reply_markup=format_buttons_rus1)
+    elif lang == "pol":
+        if e2 >= 1:
+            format_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
+                [
+                    InlineKeyboardButton(text="Metryczny \U00002705", callback_data="met"),
+                ],
+                [
+                    InlineKeyboardButton(text="Imperialny", callback_data="imp")
+                ],
+                [
+                    InlineKeyboardButton(text="Plecy \U00002B05", callback_data="back")
+                ]
+            ])
+        elif e3 >= 1:
+            format_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
+                [
+                    InlineKeyboardButton(text="Metryczny", callback_data="met"),
+                ],
+                [
+                    InlineKeyboardButton(text="Imperialny \U00002705", callback_data="imp")
+                ],
+                [
+                    InlineKeyboardButton(text="Plecy \U00002B05", callback_data="back")
+                ]
+            ])
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id,
+                                            reply_markup=format_buttons_pol1)
 
 
 @dp.callback_query_handler(text="time1")
 async def choice1(call: CallbackQuery):
-    global time_buttons1, time_buttons_rus1, e4, e5
+    global time_buttons1, time_buttons_rus1, e4, e5, time_buttons_pol1
     if lang == "eng":
         if e4 >= 1:
             time_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
@@ -2851,6 +4205,33 @@ async def choice1(call: CallbackQuery):
             ])
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id,
                                             reply_markup=time_buttons_rus1)
+    elif lang == "pol":
+        if e4 >= 1:
+            time_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
+                [
+                    InlineKeyboardButton(text="Format 12-godzinny \U00002705", callback_data="12"),
+                ],
+                [
+                    InlineKeyboardButton(text="Format 24-godzinny", callback_data="24")
+                ],
+                [
+                    InlineKeyboardButton(text="Placy \U00002B05", callback_data="back")
+                ]
+            ])
+        elif e5 >= 1:
+            time_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
+                [
+                    InlineKeyboardButton(text="Format 12-godzinny", callback_data="12"),
+                ],
+                [
+                    InlineKeyboardButton(text="Format 24-godzinny \U00002705", callback_data="24")
+                ],
+                [
+                    InlineKeyboardButton(text="Placy \U00002B05", callback_data="back")
+                ]
+            ])
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id,
+                                            reply_markup=time_buttons_pol1)
 
 
 @dp.callback_query_handler(text="stop")
@@ -2866,6 +4247,8 @@ async def backbtn(call: CallbackQuery):
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=ch_buttons)
     elif lang == "rus":
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=ch_buttons_rus)
+    elif lang == "pol":
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=ch_buttons_pol)
 
 
 if __name__ == "__main__":
