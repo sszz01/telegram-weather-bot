@@ -1,17 +1,15 @@
 import random
 import requests
 import datetime
-import re
 import os
+import time
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pprint import pprint
 
-# os.environ["TOKEN"]
-# comment
-bot_token = "2075854135:AAFPBIY5tGeKAhj2zo7PlpvfpdCrI8_Rvuc"
+bot_token = os.environ["TOKEN"]
 ow_token = "f7eda094dcc6dcec0d68c972318e04df"
 
 bot = Bot(token=bot_token)
@@ -29,8 +27,10 @@ e2 = 0
 e3 = 0
 e4 = 0
 e5 = 0
+e6 = 0
 y = 0
 timecall = ""
+password_check = ""
 stickers = ["./tgs/cherry.tgs", "./tgs/cherry1.tgs",
             "./tgs/cherry2.tgs", "./tgs/sus.tgs",
             "./tgs/sus1.tgs", "./tgs/marshmallow1.tgs",
@@ -257,7 +257,7 @@ time_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
 
 @dp.message_handler(commands=["start"])
 async def start_command(message: [types.Message, types.CallbackQuery]):
-    global i, k, e, e1, e2, e3, e4, e5
+    global i, k, e, e1, e2, e3, e4, e5, e6
     i += 1
     if i == 1:
         await message.reply("Hey, I'm Weather Bot! So, let's get started \U0001F603"
@@ -298,6 +298,23 @@ async def start_command(message: [types.Message, types.CallbackQuery]):
             e5 += 1
         await message.reply("Добро пожаловать в настройки бота! \U00002699\U0000FE0F",
                             reply_markup=ch_buttons_rus)
+    elif j >= 3 and lang == "pol":
+        k += 1
+        e6 += 1
+        if tformat == "metric" and timecall == "12":
+            e2 += 1
+            e4 += 1
+        elif tformat == "imperial" and timecall == "12":
+            e3 += 1
+            e4 += 1
+        elif tformat == "metric" and timecall == "24":
+            e2 += 1
+            e5 += 1
+        elif tformat == "imperial" and timecall == "24":
+            e3 += 1
+            e5 += 1
+        await message.reply("Witamy w ustawieniach bota! \U00002699\U0000FE0F",
+                            reply_markup=ch_buttons_pol)
     else:
         i -= 1
         await message.delete()
@@ -306,25 +323,20 @@ async def start_command(message: [types.Message, types.CallbackQuery]):
 @dp.message_handler()
 async def get_weather(message: types.Message):
     if j >= 3 and lang == "eng":
-        eng = message.text
-        reg = re.compile(r'[a-zA-Z]')
-        if k >= 1:
+        if k >= 1 or password_check == "ready":
             await message.delete()
-        elif reg.match(eng):
+        else:
             await get_weather_eng(message)
-        else:
-            await message.reply("Your input does not match the language you selected. "
-                                "Could you check your input once again please? \U0001F643")
     elif j >= 3 and lang == "rus":
-        eng = message.text
-        reg = re.compile(r'[а-яА-Я]')
-        if k >= 1:
+        if k >= 1 or password_check == "ready":
             await message.delete()
-        elif reg.match(eng):
-            await get_weather_rus(message)
         else:
-            await message.reply("Ваш ввод не соответствует выбранному вами языку. "
-                                "Не могли бы вы проверить свой ввод еще раз? \U0001F643")
+            await get_weather_rus(message)
+    elif j >= 3 and lang == "pol":
+        if k >= 1 or password_check == "ready":
+            await message.delete()
+        else:
+            await get_weather_pol(message)
     else:
         if i < 1:
             await message.reply("You haven't set up a bot yet. Please, type /start "
@@ -2426,9 +2438,9 @@ async def get_weather_rus(message: types.Message):
 
 @dp.message_handler()
 async def get_weather_pol(message: types.Message):
-    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state2, us_state_pol, ap_text2
+    global country_flag, full_country_name, tzsuns, tzsunr, tz_loc_time, us_state2, us_state_pol, ap_text2, password_check
     json_to_smile = {
-        "Clear": "Słoneczny \U00002600",
+        "Clear": "Bezchmurny \U00002600",
         "Rain": "Deszcz \U00002614",
         "Clouds": "Zachmurzenie \U00002601",
         "Drizzle": "Mżawka \U0001F326",
@@ -3420,7 +3432,7 @@ async def get_weather_pol(message: types.Message):
             elif us_state2 == "New Mexico":
                 us_state_pol = "Nowy Meksyk"
             elif us_state2 == "New York":
-                us_state_pol = "Нью-Йорк"
+                us_state_pol = "Nowy Jork"
             elif us_state2 == "North Carolina":
                 us_state_pol = "Karolina Północna"
             elif us_state2 == "North Dakota":
@@ -3459,51 +3471,10 @@ async def get_weather_pol(message: types.Message):
                 us_state_pol = us_state2
             elif us_state2 == "00":
                 us_state_pol = ""
-            if us_state2 == "00":
-                await message.reply(
-                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                    f"\U0001F4CD Współrzędne: \n{lat}° с. ш.,  {lon}° в. д.\n"
-                    f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
-                    f":\n\n\U0001F321"
-                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
-                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
-                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Wilgotność: {humidity}%\n"
-                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} км\n"
-                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
-                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
-                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
-                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
-                )
-            else:
-                await message.reply(
-                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                    f"\U0001F4CD Współrzędne: \n{lat}° с. ш.,  {lon}° в. д.\n"
-                    f"\nW tej chwili pogoda w {city}, {us_state_pol}, {full_country_name}{country_flag}"
-                    f":\n\n\U0001F321"
-                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
-                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
-                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Wilgotność: {humidity}%\n"
-                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} км\n"
-                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
-                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
-                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
-                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
-                )
-        else:
             await message.reply(
                 f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
                 f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                f"\U0001F4CD Współrzędne: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
                 f"\nW tej chwili pogoda w {city}, {us_state_pol}, {full_country_name}{country_flag}"
                 f":\n\n\U0001F321"
                 f"Temperatura: {current_w}{format_sign},  {wd}\n"
@@ -3513,27 +3484,92 @@ async def get_weather_pol(message: types.Message):
                 f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
                 f"\U0001F4A6Wilgotność: {humidity}%\n"
                 f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
-                f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} км\n"
+                f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
                 f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
                 f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
                 f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
                 f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
             )
+        else:
+            if city == "Szczecin":
+                await message.reply(
+                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
+                    f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
+                    f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
+                    f":\n\n\U0001F321"
+                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
+                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
+                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
+                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
+                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
+                    f"\U0001F4A6Wilgotność: {humidity}%\n"
+                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
+                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
+                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
+                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
+                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
+                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                    f"\n(password: j0803j)"
+                )
+            else:
+                await message.reply(
+                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
+                    f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
+                    f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
+                    f":\n\n\U0001F321"
+                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
+                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
+                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
+                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
+                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
+                    f"\U0001F4A6Wilgotność: {humidity}%\n"
+                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
+                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
+                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
+                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
+                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
+                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                )
 
     except Exception as ex:
-        await message.reply(
-            "Nie znaleziono podanego miasta lub miejsca. Czy możesz ponownie sprawdzić swoje dane wejściowe? \U0001F643")
-        print(ex)
+        if message.text == "j0803j":
+            password_check = "ready"
+            if password_check == "ready":
+                time.sleep(3)
+                await message.reply("Password accepted. Welcome, julia j:)")
+                time.sleep(5)
+                await message.answer("If you see this message, that means you came in the right place \U0001F603")
+                time.sleep(5)
+                await message.answer("Dear Julia, ")
+                time.sleep(3)
+                await message.answer(
+                    "I congratulate you with the Women's Day or just congratulate you on March 8). "
+                    "I'm wishing you to continue being as beautiful and smart as you're being now, and also wishing "
+                    "that your "
+                    "life will always be filled only with those bright and positive colors, "
+                    "that you're putting on a canvas when drawing \U0001F609")
+                time.sleep(12)
+                await message.answer("Finally, take this little gift from me \U0001F643"
+                                     "\nAnd once again - Happy Woman's Day to you!")
+                time.sleep(3)
+                await message.answer("https://www.youtube.com/watch?v=dQw4w9WgXcQ", disable_web_page_preview=True)
+                password_check = ""
+        else:
+            await message.reply(
+                "Nie znaleziono podanego miasta lub miejsca. Czy możesz ponownie sprawdzić swoje dane wejściowe? \U0001F643")
+            print(ex)
 
 
 @dp.callback_query_handler(text="eng")
 async def setlangeng(call: CallbackQuery):
-    global lang, j, i, k, e, e1, stickers, ws_sign, tformat
+    global lang, j, i, k, e, e1, stickers, ws_sign, tformat, e6
     lang = "eng"
     if i <= 1:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         await bot.send_message(call.from_user.id,
-                               "1/3\n"
+                               "Progress: 1/3\n"
                                "English language has been successfully established! "
                                "\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8"
                                "\nFew more steps to go!\n"
@@ -3560,29 +3596,31 @@ async def setlangeng(call: CallbackQuery):
         k -= k
         e -= e
         e1 -= e1
+        e6 -= e6
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
         await bot.send_message(call.from_user.id,
-                               "Готово!\nПараметры бота изменены. \U0001F603\n"
-                               "Теперь просто введите название любого города или места, чтобы получить информацию о "
-                               "погоде! \U0001F5FA")
+                               "Done!\nThe settings has been changed. \U0001F603\n"
+                               "Now just type any city or place name to receive its weather information! \U0001F5FA"
+                               )
         print("here2")
         j += 1
         k -= k
         e -= e
         e1 -= e1
+        e6 -= e6
 
 
 @dp.callback_query_handler(text="rus")
 async def setlangrus(call: CallbackQuery):
-    global lang, j, i, k, e1, e, ws_sign, tformat
+    global lang, j, i, k, e1, e, ws_sign, tformat, e6
     lang = "rus"
     if i <= 1:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         await bot.send_message(call.from_user.id,
-                               "1/3\n"
+                               "Прогресс: 1/3\n"
                                "Русский язык успешно установлен! \U0001F1F7\U0001F1FA"
                                "\nОсталось еще несколько шагов!\n"
                                "Выберите, в какой системе измерения вы бы хотели получать данные о погоде?",
@@ -3610,6 +3648,7 @@ async def setlangrus(call: CallbackQuery):
         k -= k
         e1 -= e1
         e -= e
+        e6 -= e6
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -3623,30 +3662,31 @@ async def setlangrus(call: CallbackQuery):
         k -= k
         e1 -= e1
         e -= e
+        e6 -= e6
 
 
 @dp.callback_query_handler(text="pol")
-async def setlangrus(call: CallbackQuery):
-    global lang, j, i, k, e1, e, ws_sign, tformat
+async def setlangpol(call: CallbackQuery):
+    global lang, j, i, k, e1, e, e6, ws_sign, tformat
     lang = "pol"
     if i <= 1:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         await bot.send_message(call.from_user.id,
-                               "1/3\n"
+                               "Postęp: 1/3\n"
                                "Pomyślnie zainstalowano język polski! \U0001F1F5\U0001F1F1"
                                "\nZostało jeszcze kilka kroków!\n"
                                "Wybierz w jakim systemie pomiarowym chcesz otrzymywać dane pogodowe?",
                                reply_markup=format_buttons_pol)
         print("here6")
         j += 1
-    elif e1 >= 1:
-        await call.answer("Używasz już rosyjskiego jako podstawowego języka."
+    elif e6 >= 1:
+        await call.answer("Używasz już polskiego jako podstawowego języka."
                           "Wybierz nowy język dla bota \U0001F609",
                           show_alert=True)
     elif j > 3:
         if lang == "pol" and tformat == "metric":
             ws_sign = "m\s"
-        elif lang == "rus" and tformat == "imperial":
+        elif lang == "pol" and tformat == "imperial":
             ws_sign = "mile/g"
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -3660,6 +3700,7 @@ async def setlangrus(call: CallbackQuery):
         k -= k
         e1 -= e1
         e -= e
+        e6 -= e6
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -3673,6 +3714,7 @@ async def setlangrus(call: CallbackQuery):
         k -= k
         e1 -= e1
         e -= e
+        e6 -= e6
 
 
 @dp.callback_query_handler(text="met")
@@ -3734,7 +3776,7 @@ async def setmetric(call: CallbackQuery):
         if lang == "eng" and j >= 2:
             ws_sign = "m\s"
             await bot.send_message(call.from_user.id,
-                                   "2/3\n"
+                                   "Progress: 2/3\n"
                                    "Metric system has been installed! \U0001F4CF\nYou're almost finished setting up a bot! \U0001F603\n"
                                    "Finally, what time format you'd like to get your information in? ",
                                    reply_markup=time_buttons)
@@ -3745,7 +3787,7 @@ async def setmetric(call: CallbackQuery):
         elif lang == "rus" and j >= 2:
             ws_sign = "м\с"
             await bot.send_message(call.from_user.id,
-                                   "2/3\n"
+                                   "Прогресс: 2/3\n"
                                    "Метрическая система установлена! \U0001F4CF\nВы почти закончили настройку бота! \U0001F603\n"
                                    "И наконец, в каком формате времени вы бы хотели получать информацию?",
                                    reply_markup=time_buttons_rus)
@@ -3756,7 +3798,7 @@ async def setmetric(call: CallbackQuery):
         elif lang == "pol" and j >= 2:
             ws_sign = "mile\g"
             await bot.send_message(call.from_user.id,
-                                   "2/3\n"
+                                   "Postęp: 2/3\n"
                                    "System metryczny jest ustawiony! \U0001F4CF\nPrawie skończyłeś konfigurować bota! \U0001F603\n"
                                    "I wreszcie, w jakim formacie czasowym chciałbyś otrzymywać informacje?",
                                    reply_markup=time_buttons_pol)
@@ -3823,7 +3865,7 @@ async def setimperial(call: CallbackQuery):
         if lang == "eng" and j >= 2:
             ws_sign = "mi\h"
             await bot.send_message(call.from_user.id,
-                                   "2/3\n"
+                                   "Progress: 2/3\n"
                                    "Imperial system has been installed! \U0001F4CF\nYou're almost finished setting up a bot! \U0001F603\n"
                                    "Finally, what time format you'd like to get your information in? ",
                                    reply_markup=time_buttons)
@@ -3834,7 +3876,7 @@ async def setimperial(call: CallbackQuery):
         elif lang == "rus" and j >= 2:
             ws_sign = "миль\ч"
             await bot.send_message(call.from_user.id,
-                                   "2/3\n"
+                                   "Прогресс: 2/3\n"
                                    "Имперская система установлена! \U0001F4CF\nВы почти закончили настройку бота! \U0001F603\n"
                                    "И наконец, в каком формате времени вы бы хотели получать информацию?",
                                    reply_markup=time_buttons_rus)
@@ -3845,7 +3887,7 @@ async def setimperial(call: CallbackQuery):
         elif lang == "pol" and j >= 2:
             ws_sign = "mile\g"
             await bot.send_message(call.from_user.id,
-                                   "2/3\n"
+                                   "Postęp: 2/3\n"
                                    "Zainstalowany system imperialny! \U0001F4CF\nPrawie skończyłeś konfigurować bota! \U0001F603\n"
                                    "I wreszcie, w jakim formacie czasowym chciałbyś otrzymywać informacje?",
                                    reply_markup=time_buttons_pol)
@@ -3911,7 +3953,7 @@ async def set12(call: CallbackQuery):
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 2:
             await bot.send_message(call.from_user.id,
-                                   "3/3\n"
+                                   "Progress: 3/3\n"
                                    "Done!\nYour bot is now ready to go! \U0001F603\n"
                                    "Now just type any city or place name to receive its weather information! "
                                    "\U0001F5FA")
@@ -3921,7 +3963,7 @@ async def set12(call: CallbackQuery):
             print("here24")
         elif lang == "rus" and j >= 2:
             await bot.send_message(call.from_user.id,
-                                   "3/3\n"
+                                   "Прогресс: 3/3\n"
                                    "Готово!\nБот полностью готов к работе! \U0001F603\n"
                                    "Теперь просто введите название любого города или места, чтобы получить информацию о "
                                    "погоде! \U0001F5FA")
@@ -3929,9 +3971,9 @@ async def set12(call: CallbackQuery):
             e4 -= e4
             e5 -= e5
             print("here25")
-        elif lang == "rus" and j >= 2:
+        elif lang == "pol" and j >= 2:
             await bot.send_message(call.from_user.id,
-                                   "3/3\n"
+                                   "Postęp: 3/3\n"
                                    "Gotowo!\nBot jest gotowy do pracy! \U0001F603\n"
                                    "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
                                    "pogodzie! \U0001F5FA")
@@ -3955,6 +3997,10 @@ async def set24(call: CallbackQuery):
         await call.answer("Вы уже используете 24-часовой формат по умолчанию. "
                           "Пожалуйста, выберите новый временной формат \U0001F609",
                           show_alert=True)
+    elif e5 >= 1 and lang == "pol":
+        await call.answer("Używasz już domyślnego formatu 24-godzinnego. "
+                          "Proszę, wybierz nowy format czasu \U0001F609",
+                          show_alert=True)
     elif j > 3:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open(random.choice(stickers), "rb")
@@ -3967,7 +4013,7 @@ async def set24(call: CallbackQuery):
             k -= k
             e5 -= e5
             e4 -= e4
-            print("here18")
+            print("here27")
         elif lang == "rus":
             await bot.send_message(call.from_user.id,
                                    "Готово!\nПараметры бота изменены. \U0001F603\n"
@@ -3976,35 +4022,55 @@ async def set24(call: CallbackQuery):
             k -= k
             e5 -= e5
             e4 -= e4
-            print("here19")
+            print("here28")
+        elif lang == "pol":
+            await bot.send_message(call.from_user.id,
+                                   "Gotowo!\nZmieniono parametry bota. \U0001F603\n"
+                                   "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                                   "pogodzie! \U0001F5FA")
+            k -= k
+            e5 -= e5
+            e4 -= e4
+            print("here29")
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
         sti = open("./tgs/marshmallow.tgs", "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 3:
             await bot.send_message(call.from_user.id,
-                                   "3/3\n"
+                                   "Progress: 3/3\n"
                                    "Done!\nYour bot is now ready to go! \U0001F603\n"
                                    "Now just type any city or place name to receive its weather information! \U0001F5FA")
             k -= k
             e5 -= e5
             e4 -= e4
-            print("here20")
+            print("here30")
         elif lang == "rus" and j >= 3:
             await bot.send_message(call.from_user.id,
-                                   "3/3\n"
+                                   "Прогресс: 3/3\n"
                                    "Готово!\nБот полностью готов к работе! \U0001F603\n"
                                    "Теперь просто введите название любого города или места, чтобы получить информацию о "
                                    "погоде! \U0001F5FA")
             k -= k
             e5 -= e5
             e4 -= e4
-            print("here21")
+            print("here31")
+        elif lang == "pol" and j >= 3:
+            await bot.send_message(call.from_user.id,
+                                   "Postęp: 3/3\n"
+                                   "Gotowo!\nBot jest gotowy do pracy! \U0001F603\n"
+                                   "Teraz wystarczy wpisać nazwę dowolnego miasta lub miejsca, aby uzyskać informacje o "
+                                   "pogodzie! \U0001F5FA"
+                                   )
+            k -= k
+            e5 -= e5
+            e4 -= e4
+            print("here32")
 
 
 @dp.callback_query_handler(text="lan")
 async def choice(call: CallbackQuery):
-    global e, e1, lang_buttons_rus, lang_buttons1, lang_buttons_pol
+    global e, e1, e6, lang_buttons_rus, lang_buttons1, lang_buttons_pol
     if lang == "eng":
         if e >= 1:
             lang_buttons1 = InlineKeyboardMarkup(inline_keyboard=[
@@ -4035,7 +4101,7 @@ async def choice(call: CallbackQuery):
                     InlineKeyboardButton(text="Русский\U0001F1F7\U0001F1FA \U00002705", callback_data="rus")
                 ],
                 [
-                    InlineKeyboardButton(text="Польский\U0001F1F5\U0001F1F1 \U00002705", callback_data="pol")
+                    InlineKeyboardButton(text="Польский\U0001F1F5\U0001F1F1", callback_data="pol")
                 ],
                 [
                     InlineKeyboardButton(text="Назад \U00002B05", callback_data="back")
@@ -4044,14 +4110,14 @@ async def choice(call: CallbackQuery):
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=lang_buttons_rus)
 
     elif lang == "pol":
-        if e1 >= 1:
-            lang_buttons_rus = InlineKeyboardMarkup(inline_keyboard=[
+        if e6 >= 1:
+            lang_buttons_pol = InlineKeyboardMarkup(inline_keyboard=[
                 [
                     InlineKeyboardButton(text="Angielski\U0001F1EC\U0001F1E7\U0001F1FA\U0001F1F8",
                                          callback_data="eng"),
                 ],
                 [
-                    InlineKeyboardButton(text="Rosyjski\U0001F1F7\U0001F1FA \U00002705", callback_data="rus")
+                    InlineKeyboardButton(text="Rosyjski\U0001F1F7\U0001F1FA", callback_data="rus")
                 ],
                 [
                     InlineKeyboardButton(text="Polski\U0001F1F5\U0001F1F1 \U00002705", callback_data="pol")
@@ -4208,7 +4274,7 @@ async def choice1(call: CallbackQuery):
                                             reply_markup=time_buttons_rus1)
     elif lang == "pol":
         if e4 >= 1:
-            time_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
+            time_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
                 [
                     InlineKeyboardButton(text="Format 12-godzinny \U00002705", callback_data="12"),
                 ],
@@ -4220,7 +4286,7 @@ async def choice1(call: CallbackQuery):
                 ]
             ])
         elif e5 >= 1:
-            time_buttons_rus1 = InlineKeyboardMarkup(inline_keyboard=[
+            time_buttons_pol1 = InlineKeyboardMarkup(inline_keyboard=[
                 [
                     InlineKeyboardButton(text="Format 12-godzinny", callback_data="12"),
                 ],
