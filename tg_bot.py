@@ -2,7 +2,6 @@ import random
 import requests
 import datetime
 import os
-import time
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -30,7 +29,6 @@ e5 = 0
 e6 = 0
 y = 0
 timecall = ""
-password_check = ""
 stickers = ["./tgs/cherry.tgs", "./tgs/cherry1.tgs",
             "./tgs/cherry2.tgs", "./tgs/sus.tgs",
             "./tgs/sus1.tgs", "./tgs/marshmallow1.tgs",
@@ -42,7 +40,8 @@ stickers = ["./tgs/cherry.tgs", "./tgs/cherry1.tgs",
             "./tgs/tendy.tgs", "./tgs/hedgehog.tgs",
             "./tgs/fish.tgs", "./tgs/fish1.tgs",
             "./tgs/fish2.tgs", "./tgs/strawberry.tgs",
-            "./tgs/fish3.tgs", "./tgs/fish4.tgs"]
+            "./tgs/fish3.tgs", "./tgs/fish4.tgs",
+            "./tgs/hackdog.tgs", "./tgs/dragon.tgs"]
 
 lang_buttons = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -323,20 +322,11 @@ async def start_command(message: [types.Message, types.CallbackQuery]):
 @dp.message_handler()
 async def get_weather(message: types.Message):
     if j >= 3 and lang == "eng":
-        if k >= 1 or password_check == "ready":
-            await message.delete()
-        else:
-            await get_weather_eng(message)
+        await get_weather_eng(message)
     elif j >= 3 and lang == "rus":
-        if k >= 1 or password_check == "ready":
-            await message.delete()
-        else:
-            await get_weather_rus(message)
+        await get_weather_rus(message)
     elif j >= 3 and lang == "pol":
-        if k >= 1 or password_check == "ready":
-            await message.delete()
-        else:
-            await get_weather_pol(message)
+        await get_weather_pol(message)
     else:
         if i < 1:
             await message.reply("You haven't set up a bot yet. Please, type /start "
@@ -3491,75 +3481,31 @@ async def get_weather_pol(message: types.Message):
                 f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
             )
         else:
-            if city == "Szczecin":
-                await message.reply(
-                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                    f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
-                    f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
-                    f":\n\n\U0001F321"
-                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
-                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
-                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Wilgotność: {humidity}%\n"
-                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
-                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
-                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
-                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
-                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
-                    f"\n(password: j0803j)"
-                )
-            else:
-                await message.reply(
-                    f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                    f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
-                    f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
-                    f":\n\n\U0001F321"
-                    f"Temperatura: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
-                    f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
-                    f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Wilgotność: {humidity}%\n"
-                    f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
-                    f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
-                    f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
-                    f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
-                    f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
-                )
+            await message.reply(
+                f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
+                f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
+                f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
+                f":\n\n\U0001F321"
+                f"Temperatura: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Max. temperatura na dzisiaj: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Min. temperatura na dzisiaj: {min_temp}{format_sign}\n"
+                f"\U0001F321Czuje jak: {fls_like}{format_sign}\n"
+                f"\U0001F33FPunkt rosy: {dew_p}{format_sign}\n"
+                f"\U0001F4A6Wilgotność: {humidity}%\n"
+                f"\U0001F4A8Prędkość wiatru: {wind_sp} {ws_sign}\n"
+                f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
+                f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
+                f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
+                f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
+                f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                f"\n(password: j0803j)"
+            )
 
     except Exception as ex:
-        if message.text == "j0803j":
-            password_check = "ready"
-            if password_check == "ready":
-                time.sleep(3)
-                await message.reply("Password accepted. Welcome, julia j:)")
-                time.sleep(5)
-                await message.answer("If you see this message, that means you came in the right place \U0001F603")
-                time.sleep(5)
-                await message.answer("Dear Julia, ")
-                time.sleep(3)
-                await message.answer(
-                    "I congratulate you with the Women's Day or just congratulate you on March 8). "
-                    "I'm wishing you to continue being as beautiful and smart as you're being now, and also wishing "
-                    "that your "
-                    "life will always be filled only with those bright and positive colors, "
-                    "that you're putting on a canvas when drawing \U0001F609")
-                time.sleep(12)
-                await message.answer("Finally, take this little gift from me \U0001F643"
-                                     "\nAnd once again - Happy Woman's Day to you!")
-                time.sleep(3)
-                await message.answer("https://www.youtube.com/watch?v=dQw4w9WgXcQ", disable_web_page_preview=True)
-                password_check = ""
-        else:
-            await message.reply(
-                "Nie znaleziono podanego miasta lub miejsca. Czy możesz ponownie sprawdzić swoje dane wejściowe? \U0001F643")
-            print(ex)
+        await message.reply(
+            "Nie znaleziono podanego miasta lub miejsca. Czy możesz ponownie sprawdzić swoje dane wejściowe? \U0001F643")
+        print(ex)
 
 
 @dp.callback_query_handler(text="eng")
@@ -3949,7 +3895,7 @@ async def set12(call: CallbackQuery):
 
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("./tgs/marshmallow.tgs", "rb")
+        sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 2:
             await bot.send_message(call.from_user.id,
@@ -4034,7 +3980,7 @@ async def set24(call: CallbackQuery):
             print("here29")
     else:
         await bot.delete_message(call.from_user.id, call.message.message_id)
-        sti = open("./tgs/marshmallow.tgs", "rb")
+        sti = open(random.choice(stickers), "rb")
         await bot.send_sticker(call.from_user.id, sti)
         if lang == "eng" and j >= 3:
             await bot.send_message(call.from_user.id,
