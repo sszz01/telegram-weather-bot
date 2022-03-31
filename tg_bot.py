@@ -1260,47 +1260,26 @@ async def get_weather_eng(message: types.Message):
             full_country_name = "USA"
             country_flag = "\U0001F1FA\U0001F1F8"
             us_state = data1[0]["state"]
-            if us_state == "00":
-                await message.reply(
-                    f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
-                    f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
-                    f"\nAt the moment, the weather in {city}, {full_country_name}{country_flag} is:\n\n\U0001F321"
-                    f"Temperature: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Min Temperature for Today: {min_temp}"
-                    f"{format_sign}\n"
-                    f"\U0001F321Feels like: {fls_like}{format_sign}\n"
-                    f"\U0001F33FDew point: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Humidity: {humidity}%\n"
-                    f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
-                    f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
-                    f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
-                    f"\U00003030UV Index: {uvi} ({uvi_text})\n"
-                    f"\nThanks for using Weather Bot!\U0001F601"
-                )
-            else:
-                await message.reply(
-                    f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
-                    f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
-                    f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
-                    f"\n\n\U0001F321"
-                    f"Temperature: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Min Temperature for Today: {min_temp}"
-                    f"{format_sign}\n"
-                    f"\U0001F321Feels like: {fls_like}{format_sign}\n"
-                    f"\U0001F33FDew point: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Humidity: {humidity}%\n"
-                    f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
-                    f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
-                    f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
-                    f"\U00003030UV Index: {uvi} ({uvi_text})\n"
-                    f"\nThanks for using Weather Bot!\U0001F601"
-                )
+            await message.reply(
+                f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Sunrise at: {tzsunr}\n\U0001F307 Sunset at: {tzsuns}\n"
+                f"\U0001F4CD Coordinates: \n{lat}° N,  {lon}° W\n"
+                f"\nAt the moment, the weather in {city}, {us_state}, {full_country_name}{country_flag} is:"
+                f"\n\n\U0001F321"
+                f"Temperature: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Max Temperature for Today: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Min Temperature for Today: {min_temp}"
+                f"{format_sign}\n"
+                f"\U0001F321Feels like: {fls_like}{format_sign}\n"
+                f"\U0001F33FDew point: {dew_p}{format_sign}\n"
+                f"\U0001F4A6Humidity: {humidity}%\n"
+                f"\U0001F4A8Wind speed: {wind_sp} {ws_sign}\n"
+                f"\U0001F9EDWind Direction: {w_dir1}\n\U0001F32BVisibility: {vis} km\n"
+                f"\U0001F30EAtmospheric pressure: {pressure} hPa\n"
+                f"\U0001F3EDAir pollution level: {ap_lvl} ({ap_text})\n"
+                f"\U00003030UV Index: {uvi} ({uvi_text})\n"
+                f"\nThanks for using Weather Bot!\U0001F601"
+            )
         else:
             await message.reply(
                 f"\U0001F310 Local time: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
@@ -2358,48 +2337,25 @@ async def get_weather_rus(message: types.Message):
                 us_state_rus = "Висконсин"
             elif us_state1 == "Wyoming":
                 us_state_rus = "Вайоминг"
-            elif us_state1 == "00":
-                us_state_rus = ""
-            if us_state1 == "00":
-                await message.reply(
-                    f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
-                    f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
-                    f"\nНа данный момент, погода в {city}, {full_country_name}{country_flag}"
-                    f":\n\n\U0001F321"
-                    f"Температура: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
-                    f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
-                    f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Влажность: {humidity}%\n"
-                    f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
-                    f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
-                    f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
-                    f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
-                    f"\nСпасибо, что используете Weather Bot!\U0001F601"
-                )
-            else:
-                await message.reply(
-                    f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
-                    f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
-                    f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
-                    f"\nНа данный момент, погода в {city}, {us_state_rus}, {full_country_name}{country_flag}"
-                    f":\n\n\U0001F321"
-                    f"Температура: {current_w}{format_sign},  {wd}\n"
-                    f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
-                    f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
-                    f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
-                    f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
-                    f"\U0001F4A6Влажность: {humidity}%\n"
-                    f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
-                    f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
-                    f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
-                    f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
-                    f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
-                    f"\nСпасибо, что используете Weather Bot!\U0001F601"
-                )
+            await message.reply(
+                f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
+                f"\U0001F305 Восход солнца в: {tzsunr}\n\U0001F307 Закат солнца в: {tzsuns}\n"
+                f"\U0001F4CD Координаты: \n{lat}° с. ш.,  {lon}° в. д.\n"
+                f"\nНа данный момент, погода в {city}, {us_state_rus}, {full_country_name}{country_flag}"
+                f":\n\n\U0001F321"
+                f"Температура: {current_w}{format_sign},  {wd}\n"
+                f"\U0001F4C8Макс. температура за сегодня: {max_temp}{format_sign}\n\U0001F4C9"
+                f"Мин. температура за сегодня: {min_temp}{format_sign}\n"
+                f"\U0001F321Ощущается как: {fls_like}{format_sign}\n"
+                f"\U0001F33FТочка росы: {dew_p}{format_sign}\n"
+                f"\U0001F4A6Влажность: {humidity}%\n"
+                f"\U0001F4A8Скорость ветра: {wind_sp} {ws_sign}\n"
+                f"\U0001F9EDНаправление ветра: {w_dir1}\n\U0001F32BВидимость: {vis} км\n"
+                f"\U0001F30EАтмосферное давление: {pressure} гПА\n"
+                f"\U0001F3EDУровень загрязнения воздуха: {ap_lvl} ({ap_text1})\n"
+                f"\U00003030УФ-индекс: {uvi} ({uvi_text})\n"
+                f"\nСпасибо, что используете Weather Bot!\U0001F601"
+            )
         else:
             await message.reply(
                 f"\U0001F310 Местное время: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
@@ -3459,12 +3415,10 @@ async def get_weather_pol(message: types.Message):
                 us_state_pol = us_state2
             elif us_state2 == "Wyoming":
                 us_state_pol = us_state2
-            elif us_state2 == "00":
-                us_state_pol = ""
             await message.reply(
                 f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
                 f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
+                f"\U0001F4CD Współrzędne: \n{lat}° N,  {lon}° E.\n"
                 f"\nW tej chwili pogoda w {city}, {us_state_pol}, {full_country_name}{country_flag}"
                 f":\n\n\U0001F321"
                 f"Temperatura: {current_w}{format_sign},  {wd}\n"
@@ -3484,7 +3438,7 @@ async def get_weather_pol(message: types.Message):
             await message.reply(
                 f"\U0001F310 Czas lokalny: \n{tz_loc_time_1}, {tz_loc_time}{day_emoji}\n"
                 f"\U0001F305 Wschód słońca w: {tzsunr}\n\U0001F307 Zachód słońca w: {tzsuns}\n"
-                f"\U0001F4CD Współrzędne: \n{lat}° P,  {lon}° W.\n"
+                f"\U0001F4CD Współrzędne: \n{lat}° N,  {lon}° E.\n"
                 f"\nW tej chwili pogoda w {city}, {full_country_name}{country_flag}"
                 f":\n\n\U0001F321"
                 f"Temperatura: {current_w}{format_sign},  {wd}\n"
@@ -3499,7 +3453,6 @@ async def get_weather_pol(message: types.Message):
                 f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
                 f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
                 f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
-                f"\n(password: j0803j)"
             )
 
     except Exception as ex:
