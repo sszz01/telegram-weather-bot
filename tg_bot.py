@@ -3431,8 +3431,8 @@ async def get_weather_pol(message: types.Message):
                 f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
                 f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
                 f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
-                f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
-                f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                f"\U00003030Indeks UV: {uvi} ({uvi_text})\n"
+                f"\nDziękujemy za korzystanie z Weather Bot!\U0001F601"
             )
         else:
             await message.reply(
@@ -3451,8 +3451,8 @@ async def get_weather_pol(message: types.Message):
                 f"\U0001F9EDKierunek wiatru: {w_dir1}\n\U0001F32BWidoczność: {vis} km\n"
                 f"\U0001F30ECiśnienie atmosferyczne: {pressure} hPA\n"
                 f"\U0001F3EDPoziom zanieczyszczenia powietrza: {ap_lvl} ({ap_text2})\n"
-                f"\U00003030Wskaźnik promieniowania ultrafioletowego: {uvi} ({uvi_text})\n"
-                f"\nDzięki, Czego używasz Weather Bot!\U0001F601"
+                f"\U00003030Indeks UV: {uvi} ({uvi_text})\n"
+                f"\nDziękujemy za korzystanie z Weather Bot!\U0001F601"
             )
 
     except Exception as ex:
@@ -3574,7 +3574,7 @@ async def setlangpol(call: CallbackQuery):
                                "Postęp: 1/3\n"
                                "Pomyślnie zainstalowano język polski! \U0001F1F5\U0001F1F1"
                                "\nZostało jeszcze kilka kroków!\n"
-                               "Wybierz w jakim systemie pomiarowym chcesz otrzymywać dane pogodowe?",
+                               "Wybierz, w jakim systemie pomiarowym chcesz otrzymywać dane pogodowe?",
                                reply_markup=format_buttons_pol)
         print("here6")
         j += 1
